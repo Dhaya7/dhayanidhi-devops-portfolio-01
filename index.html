@@ -7,11 +7,11 @@
   <title>Dhayanidhi V | DevOps, SRE & AWS Cloud Engineer</title>
   <meta name="description" content="Portfolio of Dhayanidhi V — DevOps Engineer, SRE and AWS Cloud Engineer with 2+ years of experience in Kubernetes, OpenShift, GitOps, CI/CD, observability and cloud cost optimization.">
   <meta name="author" content="Dhayanidhi V">
-  <meta name="theme-color" content="#05070d">
+  <meta name="theme-color" content="#03050b">
   <meta name="color-scheme" content="dark">
 
   <meta property="og:title" content="Dhayanidhi V | DevOps, SRE & Cloud Engineer">
-  <meta property="og:description" content="Building resilient AWS & OCI platforms, automated delivery pipelines and observable cloud systems.">
+  <meta property="og:description" content="Core cloud infrastructure, container orchestration, GitOps automation, and SRE tooling engineered in production banking environments.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dhayanidhiv.in">
 
@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Press+Start+2P&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <script>document.documentElement.classList.add('js');</script>
 
@@ -44,7 +44,8 @@
       --line: rgba(100, 232, 255, 0.18);
       --line-bright: rgba(0, 240, 255, 0.55);
       --radius: 24px;
-      --max-width: 1200px;
+      --max: 1480px;
+      --max-width: 1480px;
       --shadow: 0 28px 90px rgba(0, 0, 0, 0.65), 0 0 40px rgba(0, 240, 255, 0.08);
     }
 
@@ -69,6 +70,19 @@
       font-family: "Inter", sans-serif;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* Conditional Custom Cursor */
+    body.custom-cursor-active,
+    body.custom-cursor-active a,
+    body.custom-cursor-active button,
+    body.custom-cursor-active summary,
+    body.custom-cursor-active [role="button"],
+    body.custom-cursor-active input,
+    body.custom-cursor-active textarea,
+    body.custom-cursor-active .tech-node,
+    body.custom-cursor-active .tool-card {
+      cursor: none !important;
     }
 
     body::before {
@@ -111,14 +125,11 @@
 
     button, input, textarea {
       font: inherit;
+      color: inherit;
     }
 
     button, a {
       -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-      color: inherit;
     }
 
     img {
@@ -144,10 +155,642 @@
       opacity: 0.95;
     }
 
-    header, main, footer {
-      position: relative;
-      z-index: 1;
+    /* Custom 3D Cloud & Lightning Flash Cursor */
+    #customCursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 58px;
+      height: 58px;
+      margin-left: -29px;
+      margin-top: -29px;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+      will-change: transform;
+      filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.75));
+      transition: filter 0.18s ease;
     }
+
+    body.custom-cursor-active #customCursor {
+      display: block;
+    }
+
+    .cursor-ring {
+      position: absolute;
+      inset: 4px;
+      border: 1.5px dashed rgba(0, 240, 255, 0.45);
+      border-radius: 50%;
+      opacity: 0.55;
+      transform: scale(0.82);
+      transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      animation: cursorSpin 9s linear infinite;
+    }
+
+    .cursor-svg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+    }
+
+    #customCursor.is-hover .cursor-ring {
+      transform: scale(1.18);
+      border-color: var(--orange);
+      opacity: 0.95;
+      box-shadow: 0 0 18px rgba(255, 153, 0, 0.4), inset 0 0 12px rgba(0, 240, 255, 0.3);
+    }
+
+    #customCursor.is-hover .cursor-svg {
+      transform: scale(1.14) rotate(-5deg);
+    }
+
+    #customCursor.is-clicking .cursor-svg {
+      transform: scale(0.9) translateY(3px);
+    }
+
+    .cursor-badge-label {
+      position: absolute;
+      left: 50%;
+      bottom: -14px;
+      transform: translateX(-50%);
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: rgba(3, 8, 20, 0.9);
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      color: var(--cyan);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.44rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    #customCursor.is-hover .cursor-badge-label {
+      opacity: 1;
+      transform: translateX(-50%) translateY(2px);
+      color: #ffd37a;
+      border-color: var(--orange);
+    }
+
+    @keyframes cursorSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =========================================================================
+       CYBERPUNK SRE KERNEL TERMINAL PRELOADER (AUTO-ENABLED AUDIO)
+       ========================================================================= */
+    #bootLoader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 22% 30%, rgba(0, 240, 255, 0.09), transparent 45%),
+        radial-gradient(circle at 78% 72%, rgba(184, 92, 255, 0.08), transparent 48%),
+        radial-gradient(circle at 50% 50%, rgba(7, 13, 28, 0.94), #020409 85%);
+      color: var(--text);
+      user-select: none;
+      overflow: hidden;
+      transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease, transform 0.65s ease;
+    }
+
+    #bootLoader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 240, 255, 0.03) 0px,
+          rgba(0, 240, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 3px
+        ),
+        linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 3px, 56px 56px, 56px 56px;
+      opacity: 0.85;
+    }
+
+    #bootLoader.boot-complete {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: scale(1.04);
+    }
+
+    .boot-corner-telemetry {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      right: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      z-index: 3;
+    }
+
+    .boot-audio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(0, 245, 160, 0.45);
+      background: rgba(0, 245, 160, 0.1);
+      color: #b7f9d8;
+      font-size: 0.62rem;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(0, 245, 160, 0.2);
+    }
+
+    .boot-terminal-wrap {
+      position: relative;
+      z-index: 2;
+      width: min(760px, 94vw);
+      padding: 36px 40px;
+      border-radius: 22px;
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      background: linear-gradient(160deg, rgba(8, 15, 30, 0.88), rgba(3, 6, 14, 0.95));
+      box-shadow:
+        0 35px 95px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(0, 240, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    .boot-kernel-header {
+      margin: 0 0 28px;
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      font-size: clamp(1.18rem, 2.8vw, 1.95rem);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 0 14px rgba(0, 240, 255, 0.75),
+        0 0 34px rgba(0, 240, 255, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .boot-kernel-cursor {
+      display: inline-block;
+      width: 11px;
+      height: 1.15em;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      vertical-align: middle;
+      animation: blinkCursor 0.8s steps(2, start) infinite;
+    }
+
+    @keyframes blinkCursor {
+      to { opacity: 0; }
+    }
+
+    .boot-log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(0.75rem, 1.5vw, 0.96rem);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .boot-log-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: rgba(158, 178, 204, 0.22);
+      transform: translateX(-6px);
+      transition: color 0.22s ease, transform 0.22s ease, text-shadow 0.22s ease;
+    }
+
+    .boot-log-item .log-arrow {
+      color: rgba(0, 240, 255, 0.25);
+      margin-right: 8px;
+      font-weight: 700;
+    }
+
+    .boot-log-item.active {
+      color: #d9ecff;
+      transform: translateX(0);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
+    }
+
+    .boot-log-item.active .log-arrow {
+      color: var(--cyan);
+    }
+
+    .boot-log-item.done {
+      color: #9eb6d4;
+      transform: translateX(0);
+    }
+
+    .boot-log-item.done .log-arrow {
+      color: var(--green);
+    }
+
+    .boot-log-status {
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .boot-log-item.active .boot-log-status {
+      opacity: 1;
+      color: var(--cyan);
+      border-color: rgba(0, 240, 255, 0.35);
+      background: rgba(0, 240, 255, 0.08);
+    }
+
+    .boot-log-item.done .boot-log-status {
+      opacity: 1;
+      color: var(--green);
+      border-color: rgba(0, 245, 160, 0.35);
+      background: rgba(0, 245, 160, 0.08);
+    }
+
+    .boot-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .boot-bracket {
+      font-family: "Orbitron", "JetBrains Mono", monospace;
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      font-weight: 800;
+      color: var(--red);
+      text-shadow: 0 0 14px rgba(255, 59, 92, 0.85);
+      line-height: 1;
+    }
+
+    .boot-bar-track {
+      position: relative;
+      flex: 1;
+      height: 22px;
+      border: 1px solid rgba(0, 240, 255, 0.28);
+      border-radius: 3px;
+      background: rgba(4, 12, 24, 0.9);
+      padding: 2px;
+      overflow: hidden;
+      box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.9);
+    }
+
+    .boot-bar-fill {
+      position: relative;
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #00b8ff 0%, #00f0ff 65%, #7affff 100%);
+      box-shadow:
+        0 0 20px rgba(0, 240, 255, 0.95),
+        0 0 42px rgba(0, 240, 255, 0.55);
+      transition: width 0.06s linear;
+    }
+
+    .boot-percent-readout {
+      min-width: 78px;
+      text-align: right;
+      font-family: "Orbitron", "Space Grotesk", sans-serif;
+      font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+      font-weight: 800;
+      color: var(--cyan);
+      text-shadow:
+        0 0 16px rgba(0, 240, 255, 0.85),
+        0 0 32px rgba(0, 240, 255, 0.4);
+      letter-spacing: 0.04em;
+    }
+
+    .boot-wd2-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0, 240, 255, 0.15);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.63rem;
+      color: var(--muted);
+    }
+
+    .wd2-eq-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 18px;
+    }
+
+    .wd2-eq-bars span {
+      display: block;
+      width: 3px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--cyan), var(--violet));
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+      transition: height 0.08s ease;
+    }
+
+    .boot-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .boot-btn {
+      padding: 7px 13px;
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      border-radius: 7px;
+      background: rgba(0, 240, 255, 0.1);
+      color: #ffffff;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .boot-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 240, 255, 0.22);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .boot-btn.secondary {
+      border-color: rgba(255, 59, 92, 0.45);
+      background: rgba(255, 59, 92, 0.08);
+      color: #ffb3c1;
+    }
+
+    @media (max-width: 640px) {
+      .boot-terminal-wrap { padding: 24px 20px; }
+      .boot-log-status { display: none; }
+      .boot-percent-readout { min-width: 62px; }
+    }
+
+    /* =========================================================================
+       DEVOPS & CLOUD INTERACTIVE ARCADE SECTION (#arcade)
+       ========================================================================= */
+    .arcade-shell {
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(0, 240, 255, 0.14), transparent 45%),
+        radial-gradient(circle at 88% 85%, rgba(255, 153, 0, 0.12), transparent 45%),
+        linear-gradient(155deg, rgba(12, 22, 44, 0.92), rgba(5, 10, 22, 0.96));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
+
+    .arcade-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+      background: rgba(2, 6, 15, 0.65);
+    }
+
+    .arcade-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .arcade-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 12px;
+      background: rgba(14, 25, 48, 0.75);
+      color: var(--muted);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .arcade-tab:hover {
+      border-color: var(--cyan);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .arcade-tab[aria-selected="true"] {
+      border-color: #f7b801;
+      color: #041019;
+      background: linear-gradient(125deg, #00f0ff 0%, #f7b801 100%);
+      box-shadow: 0 10px 26px rgba(0, 240, 255, 0.28);
+    }
+
+    .arcade-score-pill {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 14px;
+      border: 1px solid rgba(247, 184, 1, 0.4);
+      border-radius: 11px;
+      background: rgba(247, 184, 1, 0.08);
+      font-family: "Press Start 2P", "JetBrains Mono", monospace;
+      font-size: 0.55rem;
+      color: #ffd57e;
+    }
+
+    .arcade-body { padding: 28px; }
+
+    .arcade-pane {
+      display: none;
+      grid-template-columns: 1fr 310px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .arcade-pane.active { display: grid; }
+
+    .game-stage-wrap {
+      position: relative;
+      border: 1px solid rgba(0, 240, 255, 0.32);
+      border-radius: 20px;
+      background: #040812;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0, 240, 255, 0.08);
+    }
+
+    .game-canvas {
+      display: block;
+      width: 100%;
+      height: 380px;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.1), transparent 65%),
+        #040814;
+      touch-action: none;
+    }
+
+    .game-hud-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.18);
+      background: rgba(8, 16, 32, 0.92);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+    }
+
+    .game-hud-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .game-hud-metrics span strong {
+      color: var(--cyan);
+      font-family: "Press Start 2P", "JetBrains Mono", monospace;
+      font-size: 0.62rem;
+      margin-left: 6px;
+    }
+
+    .game-side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 20px;
+      background: rgba(9, 17, 34, 0.8);
+    }
+
+    .game-side-panel h3 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.22rem;
+    }
+
+    .game-side-panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .game-legend {
+      display: grid;
+      gap: 8px;
+      margin: 6px 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(2, 6, 15, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.66rem;
+    }
+
+    .game-legend div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .game-touch-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-top: 1px solid rgba(0, 240, 255, 0.16);
+      background: rgba(5, 11, 22, 0.9);
+    }
+
+    .terminal-game-box {
+      padding: 26px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(0, 245, 160, 0.1), transparent 55%),
+        #040812;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .cmd-target-display {
+      padding: 18px 20px;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 14px;
+      background: rgba(9, 18, 36, 0.9);
+      font-size: clamp(0.82rem, 1.5vw, 1.05rem);
+      line-height: 1.6;
+      letter-spacing: 0.03em;
+      word-break: break-all;
+    }
+
+    .cmd-char-ok { color: var(--green); text-shadow: 0 0 10px rgba(0, 245, 160, 0.5); }
+    .cmd-char-err { color: #ffffff; background: var(--red); border-radius: 3px; }
+    .cmd-char-pending { color: #7c93b2; }
+
+    .cmd-input-field {
+      width: 100%;
+      margin-top: 16px;
+      padding: 15px 18px;
+      border: 2px solid rgba(0, 240, 255, 0.45);
+      border-radius: 12px;
+      background: rgba(2, 6, 14, 0.95);
+      color: #ffffff;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .cmd-input-field:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 24px rgba(0, 245, 160, 0.25);
+    }
+
+    @media (max-width: 960px) {
+      .arcade-pane.active { grid-template-columns: 1fr; }
+    }
+
+    header, main, footer { position: relative; z-index: 1; }
 
     .container {
       width: min(var(--max-width), calc(100% - 44px));
@@ -173,13 +816,9 @@
       transition: transform 0.2s ease;
     }
 
-    .skip-link:focus {
-      transform: translateY(0);
-    }
+    .skip-link:focus { transform: translateY(0); }
 
-    .mono {
-      font-family: "JetBrains Mono", monospace;
-    }
+    .mono { font-family: "JetBrains Mono", monospace; }
 
     .gradient-text {
       color: transparent;
@@ -260,12 +899,12 @@
       font-size: 0.85rem;
       font-weight: 700;
       line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
     }
 
-    .btn:hover {
-      transform: translateY(-3px) scale(1.01);
-    }
+    .btn:hover { transform: translateY(-3px) scale(1.01); }
 
     .btn-primary {
       color: #020c14;
@@ -291,27 +930,31 @@
     }
 
     .btn-small {
-      min-height: 40px;
-      padding-inline: 14px;
+      min-height: 36px;
+      padding-inline: 11px;
       border-radius: 10px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .weather-btn {
-      border-color: rgba(0, 245, 160, 0.35);
+    .hud-btn {
+      border-color: rgba(0, 245, 160, 0.38);
       color: #a8ffdf;
-      background: rgba(0, 245, 160, 0.08);
+      background: rgba(0, 245, 160, 0.09);
       font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .weather-btn[aria-pressed="false"] {
+    .hud-btn[aria-pressed="false"] {
       border-color: var(--line);
       color: var(--muted);
       background: rgba(255, 255, 255, 0.03);
     }
 
-    /* Navigation */
+    /* Navigation - Ultra-Wide Non-Wrapping HUD Bar */
     .site-header {
       position: fixed;
       top: 0;
@@ -322,28 +965,33 @@
       transition: padding 200ms ease;
     }
 
-    .site-header.scrolled {
-      padding-top: 8px;
+    .site-header.scrolled { padding-top: 8px; }
+
+    .navbar.container {
+      width: min(1680px, calc(100% - 40px));
+      margin-inline: auto;
     }
 
     .navbar {
       position: relative;
       display: flex;
       height: 72px;
-      padding: 0 14px 0 18px;
-      border: 1px solid rgba(0, 240, 255, 0.22);
+      padding: 0 20px;
+      border: 1px solid rgba(0, 240, 255, 0.24);
       border-radius: 18px;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
-      background: rgba(5, 10, 22, 0.78);
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      flex-wrap: nowrap;
+      background: rgba(5, 10, 22, 0.82);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
     }
 
     .site-header.scrolled .navbar {
-      background: rgba(4, 9, 20, 0.92);
-      border-color: rgba(0, 240, 255, 0.38);
+      background: rgba(4, 9, 20, 0.94);
+      border-color: rgba(0, 240, 255, 0.42);
     }
 
     .brand {
@@ -351,6 +999,7 @@
       flex-shrink: 0;
       align-items: center;
       gap: 11px;
+      white-space: nowrap;
     }
 
     .brand-mark {
@@ -365,6 +1014,7 @@
       font-family: "Space Grotesk", sans-serif;
       font-size: 0.94rem;
       font-weight: 700;
+      flex-shrink: 0;
       box-shadow: 0 0 22px rgba(0, 240, 255, 0.25), inset 0 0 14px rgba(0, 240, 255, 0.15);
     }
 
@@ -374,8 +1024,9 @@
       font-family: "Space Grotesk", sans-serif;
       font-size: 0.82rem;
       font-weight: 700;
-      line-height: 1.25;
-      letter-spacing: 0.07em;
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
     }
 
     .brand-copy small {
@@ -384,35 +1035,135 @@
       font-family: "JetBrains Mono", monospace;
       font-size: 0.5rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      margin-left: auto;
+      margin-inline: auto;
       align-items: center;
-      gap: 3px;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-links a {
-      padding: 8px 10px;
-      border-radius: 8px;
+      padding: 8px 11px;
+      border-radius: 9px;
       color: var(--muted);
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 600;
-      transition: color 180ms ease, background 180ms ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 180ms ease, background 180ms ease, transform 180ms ease;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
       color: var(--cyan);
-      background: rgba(0, 240, 255, 0.09);
+      background: rgba(0, 240, 255, 0.1);
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 240, 255, 0.16);
+      background: rgba(2, 6, 15, 0.55);
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Linux & Server Audio Deck Drawer */
+    .audio-deck {
+      position: fixed;
+      top: 94px;
+      right: max(20px, calc((100vw - 1680px) / 2 + 20px));
+      z-index: 150;
+      width: min(350px, calc(100vw - 32px));
+      padding: 16px 18px;
+      border: 1px solid rgba(0, 240, 255, 0.42);
+      border-radius: 18px;
+      background: linear-gradient(155deg, rgba(9, 17, 34, 0.96), rgba(4, 8, 18, 0.98));
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78), 0 0 35px rgba(0, 240, 255, 0.18);
+      backdrop-filter: blur(20px);
+      transform: translateY(-12px) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .audio-deck.open {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .audio-deck-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.16);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.64rem;
+      color: var(--cyan);
+    }
+
+    .audio-eq {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 13px;
+    }
+
+    .audio-eq i {
+      width: 3px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--green);
+      transition: height 0.15s ease;
+    }
+
+    .audio-eq.active i:nth-child(1) { animation: eqBar 0.55s ease-in-out infinite alternate; }
+    .audio-eq.active i:nth-child(2) { animation: eqBar 0.4s ease-in-out infinite alternate 0.15s; }
+    .audio-eq.active i:nth-child(3) { animation: eqBar 0.65s ease-in-out infinite alternate 0.25s; }
+    .audio-eq.active i:nth-child(4) { animation: eqBar 0.48s ease-in-out infinite alternate 0.08s; }
+
+    @keyframes eqBar {
+      0% { height: 3px; background: var(--cyan); }
+      100% { height: 13px; background: var(--orange); }
+    }
+
+    .audio-deck-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .sfx-test-btn {
+      padding: 8px 10px;
+      border: 1px solid rgba(0, 240, 255, 0.22);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.03);
+      color: #d6e6ff;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.59rem;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+    }
+
+    .sfx-test-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 240, 255, 0.1);
+      transform: translateY(-2px);
     }
 
     .menu-toggle {
@@ -437,7 +1188,7 @@
       transition: transform 180ms ease, opacity 180ms ease;
     }
 
-    /* 3D Spotlight Glare Effect on Cards */
+    /* Spotlight Card */
     .spotlight-card {
       position: relative;
       transform-style: preserve-3d;
@@ -462,9 +1213,7 @@
       z-index: 1;
     }
 
-    .spotlight-card:hover::after {
-      opacity: 1;
-    }
+    .spotlight-card:hover::after { opacity: 1; }
 
     /* Hero */
     .hero {
@@ -590,7 +1339,7 @@
       font-size: 0.6rem;
     }
 
-    /* Hero 3D System Control Plane Visual */
+    /* Hero Visual Control Plane */
     .hero-visual {
       position: relative;
       width: 100%;
@@ -754,11 +1503,7 @@
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.12), inset 0 0 25px rgba(0, 240, 255, 0.08);
     }
 
-    .orbit-ring.one {
-      width: 390px;
-      height: 280px;
-    }
-
+    .orbit-ring.one { width: 390px; height: 280px; }
     .orbit-ring.two {
       width: 255px;
       height: 255px;
@@ -766,7 +1511,6 @@
       border-color: rgba(255, 153, 0, 0.35);
       animation: ringRotate 22s linear infinite;
     }
-
     .orbit-ring.three {
       width: 185px;
       height: 185px;
@@ -851,11 +1595,10 @@
       letter-spacing: 0.1em;
     }
 
-    /* 3D Orbiting Brand Nodes */
     .tech-node {
       position: absolute;
       display: flex;
-      width: 78px;
+      width: 82px;
       align-items: center;
       flex-direction: column;
       gap: 6px;
@@ -909,14 +1652,12 @@
       white-space: nowrap;
     }
 
-    .node-1 { top: 14px; left: 4%; --node-glow: rgba(50, 108, 229, 0.55); animation-delay: -0.5s; }
-    .node-2 { top: 14px; right: 4%; --node-glow: rgba(239, 123, 77, 0.55); animation-delay: -2.2s; }
-    .node-3 { top: 122px; left: 0%; --node-glow: rgba(36, 150, 237, 0.55); animation-delay: -1.4s; }
-    .node-4 { top: 122px; right: 0%; --node-glow: rgba(238, 0, 0, 0.55); animation-delay: -3.4s; }
-    .node-5 { bottom: 14px; left: 6%; --node-glow: rgba(252, 198, 36, 0.55); animation-delay: -2.8s; }
-    .node-6 { bottom: 14px; right: 6%; --node-glow: rgba(244, 104, 0, 0.55); animation-delay: -1.1s; }
-    .node-7 { top: 2px; left: 42%; --node-glow: rgba(240, 80, 50, 0.55); animation-delay: -3.9s; }
-    .node-8 { bottom: 2px; left: 42%; --node-glow: rgba(238, 0, 0, 0.55); animation-delay: -1.9s; }
+    .node-1 { top: 20px; left: 6%; --node-glow: rgba(50, 108, 229, 0.55); animation-delay: -0.5s; }
+    .node-2 { top: 20px; right: 6%; --node-glow: rgba(239, 123, 77, 0.55); animation-delay: -2.2s; }
+    .node-3 { bottom: 20px; left: 6%; --node-glow: rgba(252, 198, 36, 0.55); animation-delay: -1.4s; }
+    .node-4 { bottom: 20px; right: 6%; --node-glow: rgba(238, 0, 0, 0.55); animation-delay: -3.4s; }
+    .node-5 { top: 2px; left: 42%; --node-glow: rgba(240, 80, 50, 0.55); animation-delay: -2.8s; }
+    .node-6 { bottom: 2px; left: 42%; --node-glow: rgba(244, 104, 0, 0.55); animation-delay: -1.1s; }
 
     .deploy-flow {
       display: flex;
@@ -960,22 +1701,10 @@
       line-height: 1.85;
     }
 
-    .terminal-command {
-      color: #d6e4f7;
-    }
-
-    .terminal-command span {
-      margin-right: 7px;
-      color: var(--cyan);
-    }
-
-    .terminal-success {
-      color: var(--green);
-    }
-
-    .terminal-success span {
-      color: #8fa6c4;
-    }
+    .terminal-command { color: #d6e4f7; }
+    .terminal-command span { margin-right: 7px; color: var(--cyan); }
+    .terminal-success { color: var(--green); }
+    .terminal-success span { color: #8fa6c4; }
 
     .visual-caption {
       display: flex;
@@ -988,10 +1717,7 @@
       text-transform: uppercase;
     }
 
-    .visual-caption strong {
-      color: var(--cyan);
-      font-weight: 600;
-    }
+    .visual-caption strong { color: var(--cyan); font-weight: 600; }
 
     /* Technology Marquee Rail */
     .technology-rail {
@@ -1035,9 +1761,7 @@
     }
 
     /* Metrics */
-    .metrics-section {
-      padding: 54px 0 20px;
-    }
+    .metrics-section { padding: 54px 0 20px; }
 
     .metrics-grid {
       display: grid;
@@ -1054,9 +1778,7 @@
       padding: 30px 28px;
     }
 
-    .metric + .metric {
-      border-left: 1px solid rgba(0, 240, 255, 0.16);
-    }
+    .metric + .metric { border-left: 1px solid rgba(0, 240, 255, 0.16); }
 
     .metric strong {
       display: flex;
@@ -1127,13 +1849,8 @@
       filter: blur(38px);
     }
 
-    .expertise-card:nth-child(2) {
-      --card-glow: rgba(184, 92, 255, 0.18);
-    }
-
-    .expertise-card:nth-child(3) {
-      --card-glow: rgba(0, 245, 160, 0.16);
-    }
+    .expertise-card:nth-child(2) { --card-glow: rgba(184, 92, 255, 0.18); }
+    .expertise-card:nth-child(3) { --card-glow: rgba(0, 245, 160, 0.16); }
 
     .expertise-card:hover {
       border-color: var(--cyan);
@@ -1304,7 +2021,7 @@
       color: var(--cyan);
     }
 
-    /* Tool stack with 3D Original Brand Logos */
+    /* Stack section */
     .stack-toolbar {
       display: flex;
       margin-bottom: 26px;
@@ -1367,7 +2084,6 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.28);
     }
 
-    /* 3D Floating Cube Pedestal for Brand Logo */
     .tool-logo {
       position: relative;
       display: grid;
@@ -1519,22 +2235,15 @@
       border-bottom: 1px solid rgba(0, 240, 255, 0.16);
     }
 
-    .experience-intro strong {
-      color: #ffffff;
-    }
+    .experience-intro strong { color: #ffffff; }
 
     details {
       border-bottom: 1px solid rgba(0, 240, 255, 0.14);
       transition: background 0.2s ease;
     }
 
-    details[open] {
-      background: rgba(0, 240, 255, 0.03);
-    }
-
-    details:last-child {
-      border-bottom: 0;
-    }
+    details[open] { background: rgba(0, 240, 255, 0.03); }
+    details:last-child { border-bottom: 0; }
 
     summary {
       display: flex;
@@ -1548,9 +2257,7 @@
       font-weight: 600;
     }
 
-    summary::-webkit-details-marker {
-      display: none;
-    }
+    summary::-webkit-details-marker { display: none; }
 
     summary span {
       padding: 4px 9px;
@@ -1570,9 +2277,7 @@
       font-size: 1.25rem;
     }
 
-    details[open] summary::after {
-      content: "−";
-    }
+    details[open] summary::after { content: "−"; }
 
     details ul {
       display: grid;
@@ -1582,16 +2287,10 @@
       color: #b5c8e0;
     }
 
-    details li {
-      padding-left: 5px;
-      font-size: 0.83rem;
-    }
+    details li { padding-left: 5px; font-size: 0.83rem; }
+    details li::marker { color: var(--cyan); }
 
-    details li::marker {
-      color: var(--cyan);
-    }
-
-    /* Credentials & 3D Holographic AWS Shield Section */
+    /* Credentials */
     .credentials-grid {
       display: grid;
       grid-template-columns: 1.38fr 0.82fr;
@@ -1631,9 +2330,7 @@
       transition: transform 250ms ease;
     }
 
-    .cert-seal:hover {
-      transform: translateZ(55px) scale(1.06) rotateY(12deg);
-    }
+    .cert-seal:hover { transform: translateZ(55px) scale(1.06) rotateY(12deg); }
 
     .cert-seal svg {
       position: absolute;
@@ -1689,9 +2386,7 @@
       font-weight: 700;
     }
 
-    .certificate-content {
-      transform: translateZ(22px);
-    }
+    .certificate-content { transform: translateZ(22px); }
 
     .certificate-content h3 {
       margin: 8px 0 10px;
@@ -1700,11 +2395,7 @@
       line-height: 1.25;
     }
 
-    .certificate-content p {
-      margin: 6px 0;
-      color: var(--muted);
-      font-size: 0.83rem;
-    }
+    .certificate-content p { margin: 6px 0; color: var(--muted); font-size: 0.83rem; }
 
     .credly-id {
       display: inline-flex;
@@ -1727,10 +2418,7 @@
       margin-top: 20px;
     }
 
-    .side-credentials {
-      display: grid;
-      gap: 18px;
-    }
+    .side-credentials { display: grid; gap: 18px; }
 
     .side-card {
       padding: 26px;
@@ -1741,10 +2429,7 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
     }
 
-    .side-card:hover {
-      border-color: var(--cyan);
-      transform: translateY(-5px);
-    }
+    .side-card:hover { border-color: var(--cyan); transform: translateY(-5px); }
 
     .side-card h3 {
       margin: 6px 0 10px;
@@ -1752,11 +2437,7 @@
       font-size: 1.16rem;
     }
 
-    .side-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
+    .side-card p { margin: 0; color: var(--muted); font-size: 0.8rem; }
 
     /* Contact */
     .contact-box {
@@ -1808,9 +2489,7 @@
       font-size: 0.67rem;
     }
 
-    .contact-links a:hover {
-      color: var(--cyan);
-    }
+    .contact-links a:hover { color: var(--cyan); }
 
     /* Footer */
     footer {
@@ -1828,9 +2507,7 @@
       font-size: 0.75rem;
     }
 
-    .footer-inner a {
-      color: var(--cyan);
-    }
+    .footer-inner a { color: var(--cyan); }
 
     /* Certificate Modal Viewer */
     .modal-backdrop {
@@ -1847,10 +2524,7 @@
       transition: opacity 0.22s ease;
     }
 
-    .modal-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal-backdrop.open { opacity: 1; pointer-events: auto; }
 
     .modal-dialog {
       position: relative;
@@ -1866,9 +2540,7 @@
       transition: transform 0.22s ease;
     }
 
-    .modal-backdrop.open .modal-dialog {
-      transform: translateY(0) scale(1);
-    }
+    .modal-backdrop.open .modal-dialog { transform: translateY(0) scale(1); }
 
     .modal-close {
       position: absolute;
@@ -1883,10 +2555,7 @@
       cursor: pointer;
     }
 
-    .modal-close:hover {
-      color: var(--text);
-      border-color: var(--cyan);
-    }
+    .modal-close:hover { color: var(--text); border-color: var(--cyan); }
 
     .modal-badge-layout {
       display: grid;
@@ -1920,67 +2589,49 @@
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateY(0); }
 
-    /* Scroll Reveal */
     .js .reveal {
       opacity: 0;
       transform: translateY(22px);
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
+    .js .reveal.visible { opacity: 1; transform: none; }
 
-    .js .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* Animations */
     @keyframes statusPulse {
       0% { transform: scale(0.9); opacity: 0.9; }
       100% { transform: scale(2.2); opacity: 0; }
     }
-
     @keyframes dashFlow {
       to { stroke-dashoffset: -120; }
     }
-
     @keyframes ringRotate {
       to { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(350deg); }
     }
-
     @keyframes ringRotateReverse {
       to { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-370deg); }
     }
-
     @keyframes corePulse {
       0%, 100% { transform: scale(1); opacity: 0.75; }
       50% { transform: scale(1.06); opacity: 1; }
     }
-
     @keyframes nodeFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-9px); }
     }
-
     @keyframes marquee {
       to { transform: translateX(-50%); }
     }
 
-    /* Responsive Breakpoints */
-    @media (max-width: 1120px) {
-      .menu-toggle {
-        display: grid;
-      }
-
+    @media (max-width: 1280px) {
+      .menu-toggle { display: grid; margin-left: 4px; flex-shrink: 0; }
       .nav-links {
         position: absolute;
         top: 80px;
         left: 0;
         right: 0;
         display: none;
+        margin-inline: 0;
         padding: 14px;
         border: 1px solid rgba(0, 240, 255, 0.3);
         border-radius: 16px;
@@ -1989,150 +2640,47 @@
         background: rgba(5, 10, 22, 0.98);
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
       }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .nav-links a {
-        padding: 12px 14px;
-      }
-
-      .hero {
-        grid-template-columns: 1fr 460px;
-        gap: 36px;
-      }
-
-      .tools-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 14px; }
+      .nav-actions { margin-left: auto; }
+      .hero { grid-template-columns: 1fr 480px; gap: 36px; }
+      .tools-grid { grid-template-columns: repeat(4, 1fr); }
     }
 
     @media (max-width: 920px) {
-      .hero {
-        min-height: auto;
-        padding-top: 140px;
-        grid-template-columns: 1fr;
-      }
-
-      .hero-visual {
-        margin: 16px auto 0;
-      }
-
-      .section-heading,
-      .expertise-grid,
-      .case-grid,
-      .credentials-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .expertise-card {
-        min-height: auto;
-      }
-
-      .side-credentials {
-        grid-template-columns: 1fr 1fr;
-      }
+      .hero { min-height: auto; padding-top: 140px; grid-template-columns: 1fr; }
+      .hero-visual { margin: 16px auto 0; }
+      .section-heading, .expertise-grid, .case-grid, .credentials-grid { grid-template-columns: 1fr; }
+      .expertise-card { min-height: auto; }
+      .side-credentials { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (max-width: 700px) {
-      .container {
-        width: min(100% - 28px, var(--max-width));
-      }
-
-      .section {
-        padding: 76px 0;
-      }
-
-      .navbar > .nav-actions .weather-btn {
-        display: none;
-      }
-
-      .metrics-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .metric:nth-child(3) {
-        border-left: 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .metric:nth-child(4) {
-        border-top: 1px solid var(--line);
-      }
-
-      .tools-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .services-panel {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .experience-header {
-        grid-template-columns: 1fr;
-        padding: 25px;
-      }
-
-      .experience-intro {
-        padding: 22px 25px;
-      }
-
-      summary {
-        padding: 19px 25px;
-      }
-
-      details ul {
-        padding: 0 25px 23px 45px;
-      }
-
-      .certificate,
-      .modal-badge-layout {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .cert-seal {
-        margin-inline: auto;
-      }
-
-      .cert-actions {
-        justify-content: center;
-      }
-
-      .side-credentials {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-box {
-        padding: 40px 24px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        text-align: center;
-      }
+    @media (max-width: 740px) {
+      .container { width: min(100% - 28px, var(--max-width)); }
+      .section { padding: 76px 0; }
+      .navbar > .nav-actions .hud-btn { display: none; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+      .metric:nth-child(4) { border-top: 1px solid var(--line); }
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+      .services-panel { grid-template-columns: 1fr; gap: 14px; }
+      .experience-header { grid-template-columns: 1fr; padding: 25px; }
+      .experience-intro { padding: 22px 25px; }
+      summary { padding: 19px 25px; }
+      details ul { padding: 0 25px 23px 45px; }
+      .certificate, .modal-badge-layout { grid-template-columns: 1fr; text-align: center; }
+      .cert-seal { margin-inline: auto; }
+      .cert-actions { justify-content: center; }
+      .side-credentials { grid-template-columns: 1fr; }
+      .contact-box { padding: 40px 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
     }
 
     @media (max-width: 480px) {
-      .brand-copy small {
-        display: none;
-      }
-
-      .hero-actions .btn {
-        width: 100%;
-      }
-
-      .cloud-scene {
-        height: 295px;
-        transform: scale(0.86);
-        margin: -14px -20px;
-      }
-
-      .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .brand-copy small { display: none; }
+      .hero-actions .btn { width: 100%; }
+      .cloud-scene { height: 295px; transform: scale(0.86); margin: -14px -20px; }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2144,37 +2692,137 @@
   </style>
 </head>
 
-<body>
+<body class="custom-cursor-active">
+  <!-- =========================================================================
+       CYBERPUNK SRE KERNEL TERMINAL PRELOADER (AUTO-ENABLED AUDIO)
+       ========================================================================= -->
+  <div id="bootLoader" role="dialog" aria-label="DV_CLOUD_SRE Kernel Initialization Screen">
+    <div class="boot-corner-telemetry">
+      <span>MEM_ADDR: <strong id="bootHexAddr" style="color:var(--cyan);">0x7FFF8A00</strong> // DEDSEC_GITOPS_SYNC</span>
+      <span class="boot-audio-pill">🔊 WATCH_DOGS SYNTH: AUTO-STREAMING</span>
+    </div>
+
+    <div class="boot-terminal-wrap">
+      <h2 class="boot-kernel-header">
+        <span id="bootHeaderTitle">DV_CLOUD_SRE KERNEL v4.2 INITIATED...</span>
+        <span class="boot-kernel-cursor" aria-hidden="true"></span>
+      </h2>
+
+      <ul class="boot-log-list" id="bootLogList">
+        <li class="boot-log-item" data-step="0">
+          <span><b class="log-arrow">&gt;</b>MOUNTING AWS_VPC &amp; OPENSHIFT_ROSA VIRTUAL DRIVES...</span>
+          <span class="boot-log-status">[MOUNTED]</span>
+        </li>
+        <li class="boot-log-item" data-step="1">
+          <span><b class="log-arrow">&gt;</b>KERNEL LOADED. VERIFYING K8S_CONTROL_PLANE MEMORY...</span>
+          <span class="boot-log-status">[OK 64GB]</span>
+        </li>
+        <li class="boot-log-item" data-step="2">
+          <span><b class="log-arrow">&gt;</b>BYPASSING PRISMA_CLOUD &amp; ZERO-TRUST IAM PROTOCOLS...</span>
+          <span class="boot-log-status">[BYPASSED]</span>
+        </li>
+        <li class="boot-log-item" data-step="3">
+          <span><b class="log-arrow">&gt;</b>EXTRACTING FINOPS_36K_SAVINGS_TELEMETRY.DAT...</span>
+          <span class="boot-log-status">[EXTRACTED]</span>
+        </li>
+        <li class="boot-log-item" data-step="4">
+          <span><b class="log-arrow">&gt;</b>DECRYPTING ARGOCD_150_PIPELINES_DOSSIER...</span>
+          <span class="boot-log-status">[DECRYPTED]</span>
+        </li>
+      </ul>
+
+      <div class="boot-progress-row">
+        <span class="boot-bracket" aria-hidden="true">[</span>
+        <div class="boot-bar-track" id="bootBarFrame" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="boot-bar-fill" id="bootBarFill"></div>
+        </div>
+        <span class="boot-bracket" aria-hidden="true">]</span>
+        <strong class="boot-percent-readout" id="bootPercentText">0%</strong>
+      </div>
+
+      <div class="boot-wd2-strip">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="wd2-eq-bars" id="wd2EqBars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span id="bootPacketRate">EXFIL_STREAM: 0.00 GB/s // PACKETS: 0</span>
+        </div>
+
+        <div class="boot-controls">
+          <button type="button" class="boot-btn" id="bootSoundToggleBtn">🔊 Mute Synth Track</button>
+          <button type="button" class="boot-btn secondary" id="bootSkipBtn">Skip Boot ⏭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Multi-Layer 3D Volumetric Cloud, Lightning & Cyber Data-Rain Canvas -->
+  <!-- Custom Interactive 3D Cloud + Lightning Flash Cursor -->
+  <div id="customCursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <svg class="cursor-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cursorCloudGrad" x1="10" y1="14" x2="54" y2="42" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.95"/>
+          <stop offset="55%" stop-color="#4D7CFF" stop-opacity="0.88"/>
+          <stop offset="100%" stop-color="#B85CFF" stop-opacity="0.9"/>
+        </linearGradient>
+        <linearGradient id="cursorBoltGrad" x1="24" y1="24" x2="38" y2="58" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFF6B7"/>
+          <stop offset="45%" stop-color="#FF9900"/>
+          <stop offset="100%" stop-color="#FF3B5C"/>
+        </linearGradient>
+      </defs>
+      <path class="cursor-cloud-path" d="M20 39H46C51.5 39 56 34.8 56 29.5C56 24.5 52.1 20.4 47.2 20C45.4 13.6 39.5 9 32.5 9C24.2 9 17.4 15.5 17 23.7C12.4 24.8 9 28.9 9 33.8C9 36.8 11.4 39 14.5 39H20Z" fill="rgba(8, 18, 38, 0.9)" stroke="url(#cursorCloudGrad)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path class="cursor-bolt-path" d="M34 22L22 38H32L28 56L44 36H33.5L34 22Z" fill="url(#cursorBoltGrad)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+      <path class="cursor-strike-arc" d="M14 44L6 52M50 44L58 52M28 57L28 63" stroke="#00F0FF" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="cursor-badge-label" id="cursorModeText">⚡ FLASH READY</span>
+  </div>
+
+  <!-- Background 3D Canvas -->
   <canvas id="webgl" aria-hidden="true"></canvas>
 
-  <!-- Site Header -->
+  <!-- Ultra-Wide HUD Navbar -->
   <header class="site-header" id="siteHeader">
     <nav class="navbar container" aria-label="Main navigation">
       <a class="brand" href="#home" aria-label="Dhayanidhi V home">
         <span class="brand-mark">DV</span>
         <span class="brand-copy">
           DHAYANIDHI V
-          <small>DEVOPS · SRE · AWS &amp; OCI CLOUD</small>
+          <small>DEVOPS · SRE · AWS &amp; OCI</small>
         </span>
       </a>
 
       <div class="nav-links" id="navLinks">
         <a href="#expertise">Expertise</a>
         <a href="#impact">Impact</a>
-        <a href="#stack">3D Brand Stack</a>
+        <a href="#stack">Services</a>
+        <a href="#arcade">🎮 Arcade</a>
         <a href="#experience">Experience</a>
         <a href="#credentials">Certification</a>
         <a href="#contact">Contact</a>
       </div>
 
       <div class="nav-actions">
-        <button class="btn btn-small weather-btn" type="button" id="toggleWeatherBtn" aria-pressed="true" title="Toggle 3D Cloud Storm & Cyber Rain">
-          🌧️ Cloud Rain: ON
+        <button class="btn btn-small btn-secondary" type="button" id="replayBootBtn" title="Replay DV_CLOUD_SRE Kernel Boot Screen">
+          👾 Boot
         </button>
-        <a class="btn btn-secondary btn-small" href="https://www.credly.com/badges/0d0788cd-0b2c-4f5c-b3f0-9e39a6c185f9/public_url" target="_blank" rel="noopener">Credly ↗</a>
+        <button class="btn btn-small hud-btn" type="button" id="toggleAudioBtn" aria-pressed="true" title="Toggle Server Room & Linux Terminal Audio Synthesizer">
+          🔊 Audio: ON
+        </button>
+        <button class="btn btn-small btn-secondary" type="button" id="openAudioDeckBtn" title="Open Linux & Data-Center Sound Tester">
+          🎛️ SFX
+        </button>
+        <button class="btn btn-small hud-btn" type="button" id="toggleCursorBtn" aria-pressed="true" title="Switch between Custom Cloud Cursor and Normal System Cursor">
+          ✨ Cursor: Flash
+        </button>
+        <button class="btn btn-small hud-btn" type="button" id="toggleWeatherBtn" aria-pressed="true" title="Toggle Weather Mode">
+          🌧️ Storm: ON
+        </button>
         <a class="btn btn-primary btn-small" href="https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf" download="Dhayanidhi_V_Resume.pdf" data-download-resume>Resume ↓</a>
       </div>
 
@@ -2184,6 +2832,23 @@
         <span></span>
       </button>
     </nav>
+
+    <!-- Linux & Data-Center Sound Deck Drawer -->
+    <div class="audio-deck" id="audioDeck" role="region" aria-label="Linux & Server Audio Synthesizer Controls">
+      <div class="audio-deck-head">
+        <span>LINUX / SERVER AUDIO SYNTH</span>
+        <span class="audio-eq active" id="audioEq"><i></i><i></i><i></i><i></i></span>
+      </div>
+      <p style="margin: 0; color: var(--muted); font-size: 0.7rem; line-height: 1.45;">
+        Procedural Web Audio synthesizer: Data-center cooling fan drone, NVMe disk seeks, Linux mechanical keystrokes &amp; lightning strikes.
+      </p>
+      <div class="audio-deck-grid">
+        <button type="button" class="sfx-test-btn" data-sfx="hum">🖥️ Toggle Rack Drone</button>
+        <button type="button" class="sfx-test-btn" data-sfx="bell">🔔 Linux Terminal Bell</button>
+        <button type="button" class="sfx-test-btn" data-sfx="ssh">📡 SSH / K8s Blip</button>
+        <button type="button" class="sfx-test-btn" data-sfx="thunder">⚡ Cloud Lightning</button>
+      </div>
+    </div>
   </header>
 
   <main id="main">
@@ -2209,7 +2874,8 @@
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#stack">Explore 3D Cloud Stack <span>↗</span></a>
+          <a class="btn btn-primary" href="#stack">Explore Services &amp; Tech <span>↗</span></a>
+          <a class="btn btn-secondary" href="#arcade">🎮 Play DevOps Arcade</a>
           <a class="btn btn-secondary" href="https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf" download="Dhayanidhi_V_Resume.pdf" data-download-resume>Download Résumé <span>↓</span></a>
           <button class="btn btn-secondary" type="button" id="openCertModalHero">3D AWS Badge <span>✦</span></button>
         </div>
@@ -2221,7 +2887,7 @@
         </div>
       </div>
 
-      <!-- 3D Interactive Control-Plane Visual with Official Brand Logos -->
+      <!-- 3D Control Plane Visual -->
       <div class="hero-visual reveal">
         <div class="system-card spotlight-card" id="tiltCard">
           <div class="system-topbar">
@@ -2238,33 +2904,22 @@
 
             <div class="cloud-scene" aria-label="Interactive 3D Cloud Architecture Orbit">
               <svg class="connections" viewBox="0 0 520 335" preserveAspectRatio="none" aria-hidden="true">
-                <path id="p1" class="wire" d="M260 168 L65 48" />
-                <path id="p2" class="wire" d="M260 168 L455 48" />
-                <path id="p3" class="wire" d="M260 168 L42 165" />
-                <path id="p4" class="wire" d="M260 168 L478 165" />
-                <path id="p5" class="wire" d="M260 168 L75 288" />
-                <path id="p6" class="wire" d="M260 168 L445 288" />
-                <path id="p7" class="wire" d="M260 168 L260 32" />
-                <path id="p8" class="wire" d="M260 168 L260 305" />
-                <circle class="packet" r="3.2">
-                  <animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion>
-                </circle>
-                <circle class="packet" r="3.2">
-                  <animateMotion dur="3.1s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion>
-                </circle>
-                <circle class="packet" r="3.2">
-                  <animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion>
-                </circle>
-                <circle class="packet" r="3.2">
-                  <animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p6"/></animateMotion>
-                </circle>
+                <path id="p1" class="wire" d="M260 168 L72 52" />
+                <path id="p2" class="wire" d="M260 168 L448 52" />
+                <path id="p3" class="wire" d="M260 168 L72 282" />
+                <path id="p4" class="wire" d="M260 168 L448 282" />
+                <path id="p5" class="wire" d="M260 168 L260 32" />
+                <path id="p6" class="wire" d="M260 168 L260 305" />
+                <circle class="packet" r="3.2"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+                <circle class="packet" r="3.2"><animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+                <circle class="packet" r="3.2"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+                <circle class="packet" r="3.2"><animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
               </svg>
 
               <div class="orbit-ring one"></div>
               <div class="orbit-ring two"></div>
               <div class="orbit-ring three"></div>
 
-              <!-- Central 3D Holographic AWS + OCI Cloud Reactor -->
               <div class="cloud-core">
                 <div class="core-logos">
                   <div class="core-aws-badge" title="Amazon Web Services">
@@ -2276,12 +2931,12 @@
                   </div>
                   <span class="core-oci-badge" title="Oracle Cloud Infrastructure">OCI</span>
                 </div>
-                <strong>CLOUD CORE</strong>
-                <small>EKS × ROSA × GITOPS</small>
+                <strong>AWS + OCI + ROSA</strong>
+                <small>EKS × OPENSHIFT × GITOPS</small>
               </div>
 
-              <!-- 8 Orbiting 3D Official Brand Logo Nodes -->
-              <div class="tech-node node-1" data-node-info="Kubernetes (EKS) Production Orchestration">
+              <!-- 6 Orbiting 3D Official Brand Nodes -->
+              <div class="tech-node node-1" data-node-info="Kubernetes (EKS) & OpenShift ROSA Orchestration">
                 <div class="node-icon" title="Kubernetes">
                   <img src="https://cdn.simpleicons.org/kubernetes/326CE5" alt="Kubernetes" onerror="this.style.display='none'" />
                 </div>
@@ -2295,11 +2950,11 @@
                 <small>Argo CD</small>
               </div>
 
-              <div class="tech-node node-3" data-node-info="Docker Containers & Cross-Region Amazon ECR">
-                <div class="node-icon" title="Docker">
-                  <img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" onerror="this.style.display='none'" />
+              <div class="tech-node node-3" data-node-info="Enterprise Linux (RHEL) & Docker Containers">
+                <div class="node-icon" title="Linux & Docker">
+                  <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux & Docker" onerror="this.style.display='none'" />
                 </div>
-                <small>Docker</small>
+                <small>Linux &amp; Docker</small>
               </div>
 
               <div class="tech-node node-4" data-node-info="Ansible Playbooks & Infrastructure Automation">
@@ -2309,32 +2964,18 @@
                 <small>Ansible</small>
               </div>
 
-              <div class="tech-node node-5" data-node-info="Enterprise Linux (RHEL / Ubuntu) Administration">
-                <div class="node-icon" title="Linux">
-                  <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" onerror="this.style.display='none'" />
+              <div class="tech-node node-5" data-node-info="Tekton & Git — 150+ Automated CI/CD Pipelines">
+                <div class="node-icon" title="Tekton & Git">
+                  <img src="https://cdn.simpleicons.org/git/F05032" alt="Tekton & Git" onerror="this.style.display='none'" />
                 </div>
-                <small>Linux RHEL</small>
+                <small>Tekton &amp; Git</small>
               </div>
 
-              <div class="tech-node node-6" data-node-info="Grafana & Prometheus Full-Stack SRE Observability">
+              <div class="tech-node node-6" data-node-info="Grafana, Prometheus & Splunk Full-Stack SRE">
                 <div class="node-icon" title="Grafana">
                   <img src="https://cdn.simpleicons.org/grafana/F46800" alt="Grafana" onerror="this.style.display='none'" />
                 </div>
                 <small>Grafana</small>
-              </div>
-
-              <div class="tech-node node-7" data-node-info="Git, GitHub Actions & 150+ Tekton CI/CD Pipelines">
-                <div class="node-icon" title="Git">
-                  <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" onerror="this.style.display='none'" />
-                </div>
-                <small>Git / Tekton</small>
-              </div>
-
-              <div class="tech-node node-8" data-node-info="Red Hat OpenShift Service on AWS (Classic & HCP ROSA)">
-                <div class="node-icon" title="Red Hat OpenShift">
-                  <img src="https://cdn.simpleicons.org/redhatopenshift/EE0000" alt="OpenShift" onerror="this.style.display='none'" />
-                </div>
-                <small>OpenShift</small>
               </div>
             </div>
 
@@ -2354,13 +2995,13 @@
         </div>
 
         <div class="visual-caption">
-          <span>3D Holographic Control Plane (Hover Nodes)</span>
-          <strong>Cloud Storm &amp; Data-Rain Active</strong>
+          <span>3D Holographic Control Plane (Hover Nodes for Linux SFX)</span>
+          <strong>Cloud Cursor &amp; Server Audio Active</strong>
         </div>
       </div>
     </section>
 
-    <!-- Technology Marquee Rail -->
+    <!-- Marquee Rail -->
     <div class="technology-rail" aria-hidden="true">
       <div class="marquee-track">
         <div class="marquee-group">
@@ -2378,7 +3019,7 @@
       </div>
     </div>
 
-    <!-- Key Metrics -->
+    <!-- Measurable Impact Metrics -->
     <section class="metrics-section container reveal" aria-label="Career impact metrics">
       <div class="metrics-grid">
         <div class="metric">
@@ -2417,12 +3058,7 @@
           <h3>Cloud &amp; Kubernetes Platforms</h3>
           <p>Designing and operating highly available AWS and Oracle Cloud (OCI) infrastructure, Amazon EKS, and Red Hat OpenShift Service on AWS (ROSA) with zero-downtime migration and DR readiness.</p>
           <div class="tag-list">
-            <span class="tag">AWS</span>
-            <span class="tag">OCI</span>
-            <span class="tag">EKS</span>
-            <span class="tag">OpenShift ROSA</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Docker</span>
+            <span class="tag">AWS</span><span class="tag">OCI</span><span class="tag">EKS</span><span class="tag">OpenShift ROSA</span><span class="tag">Linux</span><span class="tag">Docker</span>
           </div>
         </article>
 
@@ -2432,12 +3068,7 @@
           <h3>CI/CD, GitOps &amp; Automation</h3>
           <p>Architecting reusable Tekton, Jenkins, and Ansible automation workflows. Managing declarative Kubernetes delivery via Argo CD with automated drift detection and rollout gates.</p>
           <div class="tag-list">
-            <span class="tag">Argo CD</span>
-            <span class="tag">Tekton</span>
-            <span class="tag">Jenkins</span>
-            <span class="tag">Ansible</span>
-            <span class="tag">Git</span>
-            <span class="tag">Python / Bash</span>
+            <span class="tag">Argo CD</span><span class="tag">Tekton</span><span class="tag">Jenkins</span><span class="tag">Ansible</span><span class="tag">Git</span><span class="tag">Python / Bash</span>
           </div>
         </article>
 
@@ -2447,12 +3078,7 @@
           <h3>SRE, FinOps &amp; Observability</h3>
           <p>Enhancing production reliability with full-stack metrics, centralized log forwarders, container vulnerability scanning, and proactive FinOps cost optimization ($36K/year saved).</p>
           <div class="tag-list">
-            <span class="tag">Prometheus</span>
-            <span class="tag">Grafana</span>
-            <span class="tag">CloudWatch</span>
-            <span class="tag">Splunk</span>
-            <span class="tag">LokiStack</span>
-            <span class="tag">Prisma Cloud</span>
+            <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">CloudWatch</span><span class="tag">Splunk</span><span class="tag">LokiStack</span><span class="tag">Prisma Cloud</span>
           </div>
         </article>
       </div>
@@ -2515,22 +3141,22 @@
       </div>
     </section>
 
-    <!-- 03 / Interactive 3D Technology Stack with Original Brand Logos -->
+    <!-- 03 / Services & Technologies Mastered -->
     <section class="section container" id="stack">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">03 / 3D Official Brand Stack</p>
-          <h2>Original cloud &amp; DevOps logos in 3D motion.</h2>
+          <p class="section-kicker">03 / Services &amp; Technologies Mastered</p>
+          <h2>Core cloud infrastructure, container orchestration, GitOps automation, and SRE tooling engineered in production banking environments.</h2>
         </div>
-        <p>Filter the engineering stack by discipline. Move your cursor across any card to tilt the 3D pedestal and activate its brand aura.</p>
+        <p>Filter the engineering stack by discipline. Hover over any card to tilt the 3D pedestal and trigger Linux SSH telemetry audio.</p>
       </div>
 
       <div class="stack-toolbar reveal" role="group" aria-label="Filter technologies">
-        <button class="filter-button" data-filter="all" aria-pressed="true">All Tools (20)</button>
-        <button class="filter-button" data-filter="cloud" aria-pressed="false">Cloud (AWS &amp; OCI)</button>
-        <button class="filter-button" data-filter="platform" aria-pressed="false">Kubernetes &amp; OpenShift</button>
-        <button class="filter-button" data-filter="delivery" aria-pressed="false">Git, Argo CD &amp; CI/CD</button>
-        <button class="filter-button" data-filter="systems" aria-pressed="false">Linux, Ansible &amp; Code</button>
+        <button class="filter-button" data-filter="all" aria-pressed="true">All (20)</button>
+        <button class="filter-button" data-filter="cloud" aria-pressed="false">Cloud</button>
+        <button class="filter-button" data-filter="platform" aria-pressed="false">Kubernetes &amp; Containers</button>
+        <button class="filter-button" data-filter="delivery" aria-pressed="false">Git, CI/CD &amp; GitOps</button>
+        <button class="filter-button" data-filter="systems" aria-pressed="false">Linux, Ansible &amp; Scripting</button>
         <button class="filter-button" data-filter="observe" aria-pressed="false">SRE, Logs &amp; Security</button>
       </div>
 
@@ -2539,34 +3165,174 @@
       <div class="services-panel reveal">
         <h3>AWS &amp; Cloud Services <span>NETWORKING · COMPUTE · SECURITY · FINOPS</span></h3>
         <div class="service-chips">
-          <span class="tag">VPC</span>
-          <span class="tag">Route 53</span>
-          <span class="tag">S3</span>
-          <span class="tag">EC2</span>
-          <span class="tag">EKS</span>
-          <span class="tag">OpenShift ROSA</span>
-          <span class="tag">RDS</span>
-          <span class="tag">API Gateway</span>
-          <span class="tag">CloudFront</span>
-          <span class="tag">ALB / NLB</span>
-          <span class="tag">IAM</span>
-          <span class="tag">AWS Network Firewall</span>
-          <span class="tag">KMS / CMK</span>
-          <span class="tag">ECR Cross-Region</span>
-          <span class="tag">CodeCommit</span>
-          <span class="tag">CodeBuild</span>
-          <span class="tag">CloudTrail</span>
-          <span class="tag">Cost Explorer</span>
-          <span class="tag">OCI Compute &amp; VCN</span>
+          <span class="tag">VPC</span><span class="tag">Route 53</span><span class="tag">S3</span><span class="tag">EC2</span>
+          <span class="tag">EKS</span><span class="tag">OpenShift ROSA</span><span class="tag">RDS</span><span class="tag">API Gateway</span>
+          <span class="tag">CloudFront</span><span class="tag">ALB / NLB</span><span class="tag">IAM</span><span class="tag">AWS Network Firewall</span>
+          <span class="tag">KMS / CMK</span><span class="tag">ECR Cross-Region</span><span class="tag">CodeCommit</span><span class="tag">CodeBuild</span>
+          <span class="tag">CloudTrail</span><span class="tag">Cost Explorer</span><span class="tag">OCI Compute &amp; VCN</span>
         </div>
       </div>
     </section>
 
-    <!-- 04 / Production Experience -->
+    <!-- 04 / DevOps & Cloud Arcade -->
+    <section class="section container" id="arcade">
+      <div class="section-heading reveal">
+        <div>
+          <p class="section-kicker">04 / Interactive DevOps &amp; Cloud Arcade</p>
+          <h2>Play real-world cloud &amp; SRE challenges.</h2>
+        </div>
+        <p>Take a break and test your reflexes! Slash idle AWS costs, defend Kubernetes pods from production outages, or race the SLA clock in the Linux &amp; GitOps terminal.</p>
+      </div>
+
+      <div class="arcade-shell spotlight-card reveal">
+        <div class="arcade-topbar">
+          <div class="arcade-tabs" role="tablist" aria-label="Select DevOps Arcade Game">
+            <button type="button" class="arcade-tab" role="tab" aria-selected="true" data-arcade-tab="slasher">
+              ⚡ 1. AWS FinOps Cost Slasher
+            </button>
+            <button type="button" class="arcade-tab" role="tab" aria-selected="false" data-arcade-tab="defender">
+              ☸️ 2. K8s Pod Defender
+            </button>
+            <button type="button" class="arcade-tab" role="tab" aria-selected="false" data-arcade-tab="terminal">
+              💻 3. Linux &amp; GitOps Speed CLI
+            </button>
+          </div>
+
+          <div class="arcade-score-pill">
+            <span>🏆 HIGH SAVED: <strong id="arcadeGlobalBest">$36K</strong></span>
+          </div>
+        </div>
+
+        <div class="arcade-body">
+          <!-- GAME 1: AWS FINOPS COST SLASHER -->
+          <div class="arcade-pane active" id="pane-slasher" role="tabpanel">
+            <div class="game-stage-wrap">
+              <div class="game-hud-bar">
+                <div class="game-hud-metrics">
+                  <span>SAVED:<strong id="slasherScore">$0K/yr</strong></span>
+                  <span>STREAK:<strong id="slasherStreak">x1</strong></span>
+                  <span>SLA HEALTH:<strong id="slasherLives">♥♥♥</strong></span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="btn btn-primary btn-small" id="slasherStartBtn">▶ Start FinOps Run</button>
+                </div>
+              </div>
+              <canvas class="game-canvas" id="slasherCanvas" width="680" height="380" aria-label="AWS FinOps Cost Slasher Game Canvas"></canvas>
+              <div class="game-touch-controls">
+                <button type="button" class="btn btn-secondary btn-small" id="slasherLeftBtn">◀ Move Left</button>
+                <button type="button" class="btn btn-secondary btn-small" id="slasherDashBtn">⚡ EMP Right-Size All</button>
+                <button type="button" class="btn btn-secondary btn-small" id="slasherRightBtn">Move Right ▶</button>
+              </div>
+            </div>
+
+            <aside class="game-side-panel">
+              <span class="section-kicker">Mission Briefing</span>
+              <h3>AWS FinOps Cost Slasher</h3>
+              <p>Inspired by Dhayanidhi’s <strong>50% AWS cost reduction ($36K/yr saved)</strong>. Move your mouse, touch, or use <code>◀ / ▶</code> keys to intercept idle cloud waste before it bills your account!</p>
+              <div class="game-legend">
+                <div><span>🧟 Idle EC2 Instance</span><strong style="color:var(--green)">+$2K Saved</strong></div>
+                <div><span>💾 Orphaned EBS / Snap</span><strong style="color:var(--cyan)">+$1K Saved</strong></div>
+                <div><span>🌟 Spot / Savings Plan</span><strong style="color:#f7b801">+$5K + Shield</strong></div>
+                <div><span>💣 Prod DB Drop (AVOID!)</span><strong style="color:var(--red)">-1 SLA Heart</strong></div>
+              </div>
+              <p style="font-size: 0.72rem; color: var(--cyan);">Tip: Reach <strong>$36K/yr saved</strong> to unlock the FinOps Architect badge &amp; victory fanfare!</p>
+            </aside>
+          </div>
+
+          <!-- GAME 2: K8S POD DEFENDER -->
+          <div class="arcade-pane" id="pane-defender" role="tabpanel">
+            <div class="game-stage-wrap">
+              <div class="game-hud-bar">
+                <div class="game-hud-metrics">
+                  <span>SCORE:<strong id="defenderScore">0</strong></span>
+                  <span>WAVE:<strong id="defenderWave">1</strong></span>
+                  <span>UPTIME:<strong id="defenderUptime">99.99%</strong></span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="btn btn-primary btn-small" id="defenderStartBtn">▶ Deploy Ingress Turret</button>
+                </div>
+              </div>
+              <canvas class="game-canvas" id="defenderCanvas" width="680" height="380" aria-label="Kubernetes Pod Defender Game Canvas"></canvas>
+              <div class="game-touch-controls">
+                <button type="button" class="btn btn-secondary btn-small" id="defLeftBtn">◀ Left</button>
+                <button type="button" class="btn btn-primary btn-small" id="defFireBtn">🚀 Fire kubectl Rollout</button>
+                <button type="button" class="btn btn-secondary btn-small" id="defRightBtn">Right ▶</button>
+              </div>
+            </div>
+
+            <aside class="game-side-panel">
+              <span class="section-kicker">Cluster Defense</span>
+              <h3>K8s &amp; ROSA Pod Defender</h3>
+              <p>Protect the Equitas Banking OpenShift ROSA cluster! Move with mouse or arrow keys and click / press <code>Space</code> to fire <strong>Argo CD Sync Lasers</strong> at incoming pod errors.</p>
+              <div class="game-legend">
+                <div><span>👾 CrashLoopBackOff</span><strong style="color:var(--cyan)">+100 PTS</strong></div>
+                <div><span>🔥 OOMKilled Pod</span><strong style="color:#f7b801">+200 PTS</strong></div>
+                <div><span>🛡️ CVE-Critical Image</span><strong style="color:var(--violet)">+350 PTS</strong></div>
+                <div><span>⚡ Auto-Fire on Hover</span><strong style="color:var(--green)">ENABLED</strong></div>
+              </div>
+            </aside>
+          </div>
+
+          <!-- GAME 3: LINUX & GITOPS SPEED TERMINAL -->
+          <div class="arcade-pane" id="pane-terminal" role="tabpanel">
+            <div class="game-stage-wrap">
+              <div class="game-hud-bar">
+                <div class="game-hud-metrics">
+                  <span>CMDS:<strong id="termScore">0</strong></span>
+                  <span>SPEED:<strong id="termWpm">0 WPM</strong></span>
+                  <span>TIME:<strong id="termTimer">45s</strong></span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="btn btn-primary btn-small" id="termStartBtn">▶ Start SSH Sprint</button>
+                </div>
+              </div>
+
+              <div class="terminal-game-box">
+                <div>
+                  <div class="mono" style="font-size:0.65rem; color:var(--cyan); margin-bottom:8px;">
+                    root@rosa-prod-control-plane:~# <span id="termTaskLabel" style="color:#f7b801;">// Type the production command below:</span>
+                  </div>
+                  <div class="cmd-target-display" id="termTargetDisplay">
+                    argocd app sync banking-platform --prune
+                  </div>
+                  <input
+                    type="text"
+                    class="cmd-input-field"
+                    id="termInputField"
+                    placeholder="Click 'Start SSH Sprint' or start typing here..."
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                  />
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-top:18px; padding-top:14px; border-top:1px solid rgba(0,240,255,0.16); font-size:0.72rem; color:var(--muted);">
+                  <span id="termFeedbackMsg">✓ Ready: Every keystroke triggers authentic mechanical Linux switch synth audio.</span>
+                  <button type="button" class="btn btn-secondary btn-small" id="termSkipCmdBtn">Next Command ↻</button>
+                </div>
+              </div>
+            </div>
+
+            <aside class="game-side-panel">
+              <span class="section-kicker">SRE CLI Challenge</span>
+              <h3>Linux &amp; GitOps Speed Terminal</h3>
+              <p>Execute real Kubernetes, OpenShift ROSA, Argo CD, Tekton, and Ansible commands before the 45-second incident SLA timer expires.</p>
+              <div class="game-legend">
+                <div><span>⌨️ Mechanical Synth</span><strong style="color:var(--green)">ACTIVE</strong></div>
+                <div><span>⚡ Exact Command Match</span><strong style="color:var(--cyan)">+250 PTS</strong></div>
+                <div><span>🔥 Streak Bonus</span><strong style="color:#f7b801">+3s SLA Time</strong></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / Professional Experience -->
     <section class="section container" id="experience">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">04 / Professional Experience</p>
+          <p class="section-kicker">05 / Professional Experience</p>
           <h2>Production engineering in regulated banking.</h2>
         </div>
         <p>Operating high-availability cloud infrastructure where security, auditability, zero-trust networking, and controlled change are mandatory.</p>
@@ -2624,11 +3390,11 @@
       </article>
     </section>
 
-    <!-- 05 / Credentials & Verified 3D AWS Certification Shield -->
+    <!-- 06 / Certification & Credentials -->
     <section class="section container" id="credentials">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">05 / Credentials &amp; Verification</p>
+          <p class="section-kicker">06 / Certification &amp; Credentials</p>
           <h2>Verified AWS Certified Solutions Architect badge.</h2>
         </div>
         <p>Click the 3D holographic AWS shield to inspect the credential details in-page or verify directly via the official Credly public URL.</p>
@@ -2694,10 +3460,10 @@
       </div>
     </section>
 
-    <!-- 06 / Contact & Resume Download -->
+    <!-- 07 / Contact & Resume Download -->
     <section class="section container" id="contact">
       <div class="contact-box spotlight-card reveal">
-        <p class="section-kicker">06 / Ready for Impact</p>
+        <p class="section-kicker">07 / Ready for Impact</p>
         <h2>Let’s build resilient, automated cloud platforms together.</h2>
         <p>Available for DevOps Engineer, Site Reliability Engineer (SRE), Platform Engineer, and AWS / Multi-Cloud Engineering opportunities.</p>
 
@@ -2717,7 +3483,6 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container footer-inner">
       <div>© <span id="yearSpan">2026</span> Dhayanidhi V · DevOps, SRE &amp; AWS Cloud Engineer</div>
@@ -2727,7 +3492,7 @@
     </div>
   </footer>
 
-  <!-- Interactive Certificate Preview Modal -->
+  <!-- Certificate Modal Viewer -->
   <div class="modal-backdrop" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" hidden>
     <div class="modal-dialog">
       <button class="modal-close" id="closeCertModal" aria-label="Close certificate preview">✕</button>
@@ -2777,7 +3542,6 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -2786,7 +3550,6 @@
 
       const CREDLY_URL = "https://www.credly.com/badges/0d0788cd-0b2c-4f5c-b3f0-9e39a6c185f9/public_url";
 
-      // Toast helper
       const toastEl = document.getElementById("toast");
       let toastTimer = null;
       function showToast(message) {
@@ -2799,10 +3562,584 @@
         }, 3200);
       }
 
-      // Header scroll state & mobile menu
+      // =========================================================================
+      // WEB AUDIO API: AUTOMATICALLY ENABLED SOUND SYNTHESIZER
+      // =========================================================================
+      let audioCtx = null;
+      let audioEnabled = true; // Automatically enabled on page load
+      let serverDroneNodes = null;
+      let nvmeTickInterval = null;
+
+      const toggleAudioBtn = document.getElementById("toggleAudioBtn");
+      const openAudioDeckBtn = document.getElementById("openAudioDeckBtn");
+      const audioDeck = document.getElementById("audioDeck");
+      const audioEq = document.getElementById("audioEq");
+
+      function ensureAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+          }
+        }
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function startServerRoomAmbience() {
+        const ctx = ensureAudioContext();
+        if (!ctx || serverDroneNodes) return;
+
+        const now = ctx.currentTime;
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.001, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.032, now + 0.8);
+        masterGain.connect(ctx.destination);
+
+        const osc60 = ctx.createOscillator();
+        const osc120 = ctx.createOscillator();
+        osc60.type = "sawtooth";
+        osc120.type = "sine";
+        osc60.frequency.value = 58;
+        osc120.frequency.value = 116;
+
+        const lowpass = ctx.createBiquadFilter();
+        lowpass.type = "lowpass";
+        lowpass.frequency.value = 165;
+
+        osc60.connect(lowpass);
+        osc120.connect(lowpass);
+        lowpass.connect(masterGain);
+
+        const bufferSize = ctx.sampleRate * 2;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * 0.35;
+        }
+        const whiteNoise = ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const fanFilter = ctx.createBiquadFilter();
+        fanFilter.type = "bandpass";
+        fanFilter.frequency.value = 340;
+        fanFilter.Q.value = 1.4;
+
+        const fanGain = ctx.createGain();
+        fanGain.gain.value = 0.25;
+
+        whiteNoise.connect(fanFilter);
+        fanFilter.connect(fanGain);
+        fanGain.connect(masterGain);
+
+        osc60.start();
+        osc120.start();
+        whiteNoise.start();
+
+        serverDroneNodes = { osc60, osc120, whiteNoise, masterGain };
+
+        nvmeTickInterval = setInterval(() => {
+          if (audioEnabled && Math.random() < 0.65) {
+            playNvmeSeekTick();
+          }
+        }, 900);
+      }
+
+      function stopServerRoomAmbience() {
+        if (nvmeTickInterval) {
+          clearInterval(nvmeTickInterval);
+          nvmeTickInterval = null;
+        }
+        if (!serverDroneNodes || !audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          serverDroneNodes.masterGain.gain.setValueAtTime(serverDroneNodes.masterGain.gain.value, now);
+          serverDroneNodes.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+          const nodesRef = serverDroneNodes;
+          serverDroneNodes = null;
+          setTimeout(() => {
+            try {
+              nodesRef.osc60.stop();
+              nodesRef.osc120.stop();
+              nodesRef.whiteNoise.stop();
+            } catch (e) {}
+          }, 280);
+        } catch (e) {
+          serverDroneNodes = null;
+        }
+      }
+
+      function playNvmeSeekTick() {
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(2400 + Math.random() * 1400, now);
+        gain.gain.setValueAtTime(0.012, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.018);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.02);
+      }
+
+      function playLinuxHoverBlip(freqOffset = 0) {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(980 + freqOffset, now);
+        osc.frequency.exponentialRampToValueAtTime(1480 + freqOffset, now + 0.045);
+
+        gain.gain.setValueAtTime(0.028, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.055);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.06);
+      }
+
+      function playLinuxTerminalBell() {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc1.type = "sine";
+        osc2.type = "triangle";
+        osc1.frequency.setValueAtTime(880, now);
+        osc2.frequency.setValueAtTime(1760, now);
+
+        gain.gain.setValueAtTime(0.055, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.17);
+        osc2.stop(now + 0.17);
+      }
+
+      function playLightningClickSynth(forcePlay = false) {
+        if (!audioEnabled && !forcePlay) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const zapGain = ctx.createGain();
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(68, now + 0.11);
+
+        zapGain.gain.setValueAtTime(0.045, now);
+        zapGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+        osc.connect(zapGain);
+        zapGain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.13);
+
+        const bufLen = Math.floor(ctx.sampleRate * 0.09);
+        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.35));
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buf;
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.value = 1200;
+
+        const nGain = ctx.createGain();
+        nGain.gain.value = 0.05;
+
+        noise.connect(filter);
+        filter.connect(nGain);
+        nGain.connect(ctx.destination);
+        noise.start(now);
+      }
+
+      let wd2StepCounter = 0;
+      function playWatchDogsDataPacketTick(percent) {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx || ctx.state !== "running") return;
+
+        const now = ctx.currentTime;
+        wd2StepCounter++;
+
+        const chirpOsc = ctx.createOscillator();
+        const chirpGain = ctx.createGain();
+        const wd2DataFreqs = [1480, 1760, 1975, 2349, 2637, 2960, 3520, 3951];
+        const f1 = wd2DataFreqs[(percent + wd2StepCounter) % wd2DataFreqs.length];
+        const f2 = wd2DataFreqs[(percent * 3 + 2) % wd2DataFreqs.length];
+
+        chirpOsc.type = percent % 2 === 0 ? "square" : "sawtooth";
+        chirpOsc.frequency.setValueAtTime(f1, now);
+        chirpOsc.frequency.setValueAtTime(f2, now + 0.018);
+
+        const bandFilter = ctx.createBiquadFilter();
+        bandFilter.type = "bandpass";
+        bandFilter.frequency.setValueAtTime(2400, now);
+        bandFilter.Q.value = 2.8;
+
+        chirpGain.gain.setValueAtTime(0.022, now);
+        chirpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.036);
+
+        chirpOsc.connect(bandFilter);
+        bandFilter.connect(chirpGain);
+        chirpGain.connect(ctx.destination);
+
+        chirpOsc.start(now);
+        chirpOsc.stop(now + 0.038);
+
+        if (percent % 3 === 0) {
+          const bassNotes = [73.42, 87.31, 110.0, 146.83, 130.81, 110.0, 164.81, 146.83];
+          const noteFreq = bassNotes[(percent / 3) % bassNotes.length];
+
+          const bassOsc = ctx.createOscillator();
+          const subOsc = ctx.createOscillator();
+          const bassFilter = ctx.createBiquadFilter();
+          const bassGain = ctx.createGain();
+
+          bassOsc.type = "sawtooth";
+          subOsc.type = "square";
+          bassOsc.frequency.setValueAtTime(noteFreq, now);
+          subOsc.frequency.setValueAtTime(noteFreq * 0.5, now);
+
+          bassFilter.type = "lowpass";
+          const cutoff = 320 + (percent / 100) * 1400;
+          bassFilter.frequency.setValueAtTime(cutoff, now);
+          bassFilter.frequency.exponentialRampToValueAtTime(160, now + 0.11);
+          bassFilter.Q.value = 4.5;
+
+          bassGain.gain.setValueAtTime(0.042, now);
+          bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+          bassOsc.connect(bassFilter);
+          subOsc.connect(bassFilter);
+          bassFilter.connect(bassGain);
+          bassGain.connect(ctx.destination);
+
+          bassOsc.start(now);
+          subOsc.start(now);
+          bassOsc.stop(now + 0.125);
+          subOsc.stop(now + 0.125);
+        }
+      }
+
+      function playKernelLogLockSfx(stepIdx) {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx || ctx.state !== "running") return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        const base = 660 + stepIdx * 140;
+        osc.frequency.setValueAtTime(base, now);
+        osc.frequency.setValueAtTime(base * 1.5, now + 0.04);
+
+        gain.gain.setValueAtTime(0.038, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      }
+
+      function playRetroBootFanfare() {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx || ctx.state !== "running") return;
+        const notes = [293.66, 440.0, 587.33, 739.99, 880.0, 1174.66];
+        notes.forEach((freq, idx) => {
+          const now = ctx.currentTime + idx * 0.055;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = idx < 2 ? "sawtooth" : "triangle";
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.034, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.34);
+        });
+      }
+
+      function playArcadePowerupSfx(isGood = true) {
+        if (!audioEnabled) return;
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = isGood ? "square" : "sawtooth";
+        if (isGood) {
+          osc.frequency.setValueAtTime(587.33, now);
+          osc.frequency.setValueAtTime(880, now + 0.05);
+        } else {
+          osc.frequency.setValueAtTime(190, now);
+          osc.frequency.linearRampToValueAtTime(75, now + 0.18);
+        }
+        gain.gain.setValueAtTime(0.032, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + (isGood ? 0.12 : 0.2));
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + (isGood ? 0.13 : 0.21));
+      }
+
+      // =========================================================================
+      // BOOT LOADER CONTROLLER
+      // =========================================================================
+      const bootLoader = document.getElementById("bootLoader");
+      const bootBarFrame = document.getElementById("bootBarFrame");
+      const bootBarFill = document.getElementById("bootBarFill");
+      const bootPercentText = document.getElementById("bootPercentText");
+      const bootLogItems = document.querySelectorAll("#bootLogList .boot-log-item");
+      const bootHexAddr = document.getElementById("bootHexAddr");
+      const bootPacketRate = document.getElementById("bootPacketRate");
+      const wd2EqBars = document.querySelectorAll("#wd2EqBars span");
+      const bootSoundToggleBtn = document.getElementById("bootSoundToggleBtn");
+      const bootSkipBtn = document.getElementById("bootSkipBtn");
+      const replayBootBtn = document.getElementById("replayBootBtn");
+
+      let bootInterval = null;
+      let bootPercent = 0;
+      let lastActivatedLogIdx = -1;
+
+      function setAudioState(enable, announce = true) {
+        audioEnabled = enable;
+        if (toggleAudioBtn) {
+          toggleAudioBtn.setAttribute("aria-pressed", String(audioEnabled));
+          toggleAudioBtn.textContent = audioEnabled ? "🔊 Audio: ON" : "🔇 Audio: OFF";
+        }
+        if (bootSoundToggleBtn) {
+          bootSoundToggleBtn.textContent = audioEnabled ? "🔊 Mute Synth Track" : "⚡ Enable Synth Track";
+        }
+        if (audioEq) {
+          audioEq.classList.toggle("active", audioEnabled);
+        }
+        if (audioEnabled) {
+          startServerRoomAmbience();
+          if (announce) showToast("🔊 Server Room Drone & Linux Audio: ACTIVE");
+        } else {
+          stopServerRoomAmbience();
+          if (announce) showToast("🔇 Server & Linux Audio Muted");
+        }
+      }
+
+      if (toggleAudioBtn) {
+        toggleAudioBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setAudioState(!audioEnabled, true);
+        });
+      }
+
+      if (bootSoundToggleBtn) {
+        bootSoundToggleBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setAudioState(!audioEnabled, true);
+        });
+      }
+
+      if (openAudioDeckBtn && audioDeck) {
+        openAudioDeckBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          audioDeck.classList.toggle("open");
+        });
+        document.addEventListener("click", (e) => {
+          if (!audioDeck.contains(e.target) && e.target !== openAudioDeckBtn) {
+            audioDeck.classList.remove("open");
+          }
+        });
+      }
+
+      document.querySelectorAll("[data-sfx]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const type = btn.getAttribute("data-sfx");
+          ensureAudioContext();
+          if (type === "hum") {
+            setAudioState(!audioEnabled, true);
+          } else if (type === "bell") {
+            playLinuxTerminalBell();
+            showToast("🔔 Linux Terminal Bell (880Hz / 1760Hz)");
+          } else if (type === "ssh") {
+            playLinuxHoverBlip(180);
+            showToast("📡 SSH / Kubernetes Telemetry Blip");
+          } else if (type === "thunder") {
+            playLightningClickSynth(true);
+            showToast("⚡ Electrostatic Cloud Lightning Strike");
+          }
+        });
+      });
+
+      function animateWd2Equalizer(active) {
+        if (!wd2EqBars.length) return;
+        wd2EqBars.forEach((bar) => {
+          if (!active) {
+            bar.style.height = "3px";
+          } else {
+            const h = 3 + Math.floor(Math.random() * 16);
+            bar.style.height = `${h}px`;
+          }
+        });
+      }
+
+      function completeBootSequence() {
+        clearInterval(bootInterval);
+        if (!bootLoader || bootLoader.classList.contains("boot-complete")) return;
+
+        bootPercent = 100;
+        if (bootBarFill) bootBarFill.style.width = "100%";
+        if (bootPercentText) bootPercentText.textContent = "100%";
+        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "100");
+
+        bootLogItems.forEach((item) => {
+          item.classList.remove("active");
+          item.classList.add("done");
+        });
+
+        if (bootPacketRate) {
+          bootPacketRate.textContent = "EXFIL_COMPLETE // 150+ PIPELINES & 3D CLOUD ONLINE";
+        }
+        animateWd2Equalizer(false);
+        playRetroBootFanfare();
+
+        setTimeout(() => {
+          bootLoader.classList.add("boot-complete");
+        }, 360);
+      }
+
+      function startBootSequence() {
+        if (!bootLoader) return;
+        clearInterval(bootInterval);
+        bootPercent = 0;
+        lastActivatedLogIdx = -1;
+        bootLoader.classList.remove("boot-complete");
+
+        if (bootBarFill) bootBarFill.style.width = "0%";
+        if (bootPercentText) bootPercentText.textContent = "0%";
+        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "0");
+
+        bootLogItems.forEach((item) => {
+          item.classList.remove("active", "done");
+        });
+
+        // Ensure audio context active automatically on load
+        const ctx = ensureAudioContext();
+        if (ctx && ctx.state === "suspended") {
+          ctx.resume();
+        }
+        startServerRoomAmbience();
+
+        bootInterval = setInterval(() => {
+          if (bootPercent < 100) {
+            bootPercent += 1;
+            if (bootBarFill) bootBarFill.style.width = `${bootPercent}%`;
+            if (bootPercentText) bootPercentText.textContent = `${bootPercent}%`;
+            if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", String(bootPercent));
+
+            if (bootHexAddr) {
+              const hexVal = (0x7FFF8A00 + bootPercent * 256).toString(16).toUpperCase();
+              bootHexAddr.textContent = `0x${hexVal}`;
+            }
+            if (bootPacketRate) {
+              const rate = (1.15 + Math.sin(bootPercent * 0.2) * 0.45).toFixed(2);
+              bootPacketRate.textContent = `EXFIL_STREAM: ${rate} GB/s // PACKETS: ${bootPercent * 48}/4800`;
+            }
+
+            const totalLogs = bootLogItems.length || 5;
+            const currentLogIdx = Math.min(
+              totalLogs - 1,
+              Math.floor((bootPercent / 100) * totalLogs)
+            );
+
+            bootLogItems.forEach((item, idx) => {
+              if (idx < currentLogIdx) {
+                item.classList.remove("active");
+                item.classList.add("done");
+              } else if (idx === currentLogIdx) {
+                item.classList.add("active");
+                item.classList.remove("done");
+              } else {
+                item.classList.remove("active", "done");
+              }
+            });
+
+            if (currentLogIdx !== lastActivatedLogIdx) {
+              lastActivatedLogIdx = currentLogIdx;
+              playKernelLogLockSfx(currentLogIdx);
+            }
+
+            playWatchDogsDataPacketTick(bootPercent);
+            animateWd2Equalizer(true);
+          } else {
+            completeBootSequence();
+          }
+        }, 38);
+      }
+
+      if (bootSkipBtn) {
+        bootSkipBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          completeBootSequence();
+        });
+      }
+
+      if (replayBootBtn) {
+        replayBootBtn.addEventListener("click", () => {
+          startBootSequence();
+        });
+      }
+
+      // Start preloader on load automatically
+      startBootSequence();
+
+      // =========================================================================
+      // HEADER, NAV & CURSOR TOGGLE (CUSTOM CLOUD <-> NORMAL CURSOR)
+      // =========================================================================
       const siteHeader = document.getElementById("siteHeader");
       const menuButton = document.getElementById("menuButton");
       const navLinks = document.getElementById("navLinks");
+      const toggleCursorBtn = document.getElementById("toggleCursorBtn");
+      const customCursor = document.getElementById("customCursor");
+      const cursorModeText = document.getElementById("cursorModeText");
+      let customCursorActive = true;
+
+      if (toggleCursorBtn) {
+        toggleCursorBtn.addEventListener("click", () => {
+          customCursorActive = !customCursorActive;
+          toggleCursorBtn.setAttribute("aria-pressed", String(customCursorActive));
+          toggleCursorBtn.textContent = customCursorActive ? "✨ Cursor: Flash" : "🖱️ Cursor: Normal";
+          document.body.classList.toggle("custom-cursor-active", customCursorActive);
+          showToast(customCursorActive ? "✨ Custom 3D Cloud & Flash Cursor enabled" : "🖱️ Normal system cursor enabled");
+        });
+      }
 
       window.addEventListener("scroll", () => {
         if (window.scrollY > 24) {
@@ -2826,7 +4163,7 @@
         });
       }
 
-      // Interactive Terminal Cycling in Hero
+      // Terminal & node hover sounds
       const terminalCommands = [
         {
           cmd: "argocd app sync equitas-banking-platform --prune",
@@ -2855,15 +4192,17 @@
         if (cmdEl && outEl) {
           cmdEl.textContent = terminalCommands[termIdx].cmd;
           outEl.textContent = terminalCommands[termIdx].out;
+          playNvmeSeekTick();
         }
       }, 4200);
 
-      document.querySelectorAll(".tech-node").forEach((node) => {
+      document.querySelectorAll(".tech-node").forEach((node, idx) => {
         node.addEventListener("mouseenter", () => {
           const info = node.getAttribute("data-node-info");
           if (info && activeNodeLabel) {
             activeNodeLabel.textContent = info;
           }
+          playLinuxHoverBlip(idx * 65);
         });
         node.addEventListener("mouseleave", () => {
           if (activeNodeLabel) {
@@ -2872,7 +4211,7 @@
         });
       });
 
-      // 20 Complete DevOps & Cloud Stack Tools with Authentic Full-Color Official Brand Logos
+      // 20 Complete DevOps & Cloud Stack Tools with Official Logos
       const toolsData = [
         {
           name: "Amazon Web Services",
@@ -2894,9 +4233,7 @@
           badge: "OCI CLOUD",
           color: "#F80000",
           glow: "rgba(248, 0, 0, 0.35)",
-          logo: `<svg viewBox="0 0 64 40" fill="none">
-            <rect x="8" y="9" width="48" height="22" rx="11" stroke="#F80000" stroke-width="5"/>
-          </svg>`
+          logo: `<svg viewBox="0 0 64 40" fill="none"><rect x="8" y="9" width="48" height="22" rx="11" stroke="#F80000" stroke-width="5"/></svg>`
         },
         {
           name: "Kubernetes (EKS)",
@@ -3020,13 +4357,26 @@
           </svg>`
         },
         {
-          name: "Splunk & LokiStack",
-          role: "OpenShift Vector Log Forwarding",
+          name: "Splunk",
+          role: "Enterprise SIEM & Audit Log Analytics",
           cat: "observe",
-          badge: "LOGGING",
+          badge: "SIEM LOGS",
           color: "#65A637",
           glow: "rgba(101, 166, 55, 0.38)",
           iconUrl: "https://cdn.simpleicons.org/splunk/65A637"
+        },
+        {
+          name: "OpenShift LokiStack",
+          role: "Vector Log Forwarder & Aggregator",
+          cat: "observe",
+          badge: "LOKISTACK",
+          color: "#F46800",
+          glow: "rgba(244, 104, 0, 0.38)",
+          logo: `<svg viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="10" width="32" height="7" rx="3.5" fill="rgba(244,104,0,0.25)" stroke="#F46800" stroke-width="2.4"/>
+            <rect x="8" y="21" width="32" height="7" rx="3.5" fill="rgba(0,240,255,0.2)" stroke="#00F0FF" stroke-width="2.4"/>
+            <rect x="8" y="32" width="22" height="7" rx="3.5" fill="rgba(0,245,160,0.2)" stroke="#00F5A0" stroke-width="2.4"/>
+          </svg>`
         },
         {
           name: "Prisma Cloud",
@@ -3057,19 +4407,6 @@
             <circle cx="24" cy="24" r="18" fill="rgba(0,245,160,0.14)" stroke="#00F5A0" stroke-width="2.6"/>
             <path d="M24 12V36M29 17H21.5C19.5 17 18 18.5 18 20.5C18 22.5 19.5 24 21.5 24H26.5C28.5 24 30 25.5 30 27.5C30 29.5 28.5 31 26.5 31H18" stroke="#00F5A0" stroke-width="2.8" stroke-linecap="round"/>
           </svg>`
-        },
-        {
-          name: "AWS Network Firewall & KMS",
-          role: "Zero-Trust Banking Encryption",
-          cat: "cloud",
-          badge: "SECURITY",
-          color: "#B85CFF",
-          glow: "rgba(184, 92, 255, 0.38)",
-          logo: `<svg viewBox="0 0 48 48" fill="none">
-            <path d="M24 6L39 13V24C39 33.5 32.5 40.5 24 43C15.5 40.5 9 33.5 9 24V13L24 6Z" fill="rgba(184,92,255,0.16)" stroke="#B85CFF" stroke-width="2.6"/>
-            <circle cx="24" cy="23" r="4" stroke="#00F0FF" stroke-width="2.5"/>
-            <path d="M24 27V33" stroke="#00F0FF" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>`
         }
       ];
 
@@ -3097,7 +4434,7 @@
         toolsGrid.innerHTML = "";
         const filtered = filter === "all" ? toolsData : toolsData.filter((t) => t.cat === filter);
 
-        filtered.forEach((tool) => {
+        filtered.forEach((tool, index) => {
           const card = document.createElement("article");
           card.className = "tool-card spotlight-card";
           card.style.setProperty("--brand-color", tool.color);
@@ -3114,6 +4451,9 @@
             <small>${tool.role}</small>
           `;
           bind3DTilt(card, 14);
+          card.addEventListener("mouseenter", () => {
+            playLinuxHoverBlip((index % 8) * 45);
+          });
           toolsGrid.appendChild(card);
         });
       }
@@ -3125,19 +4465,21 @@
           filterButtons.forEach((b) => b.setAttribute("aria-pressed", "false"));
           btn.setAttribute("aria-pressed", "true");
           renderTools(btn.getAttribute("data-filter"));
+          playLinuxTerminalBell();
         });
       });
 
-      // Bind 3D tilt & spotlight glare to Hero Control Plane and Feature Cards
       const heroTiltCard = document.getElementById("tiltCard");
-      if (heroTiltCard) {
-        bind3DTilt(heroTiltCard, 9);
-      }
-      document.querySelectorAll("[data-tilt-card]").forEach((card) => {
-        bind3DTilt(card, 7);
+      if (heroTiltCard) bind3DTilt(heroTiltCard, 9);
+      document.querySelectorAll("[data-tilt-card]").forEach((card) => bind3DTilt(card, 7));
+
+      document.querySelectorAll("details summary").forEach((sum) => {
+        sum.addEventListener("click", () => {
+          playLinuxTerminalBell();
+        });
       });
 
-      // Scroll Reveal & Animated Metric Counters
+      // Scroll Reveal & Counters
       const revealEls = document.querySelectorAll(".reveal");
       const counterEls = document.querySelectorAll("[data-count]");
       const countedSet = new WeakSet();
@@ -3156,9 +4498,7 @@
           const eased = 1 - Math.pow(1 - progress, 3);
           const current = Math.round(target * eased);
           el.textContent = `${prefix}${current}${suffix}`;
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          }
+          if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
       }
@@ -3193,17 +4533,14 @@
       function openCertModal() {
         if (!certModal) return;
         certModal.hidden = false;
-        requestAnimationFrame(() => {
-          certModal.classList.add("open");
-        });
+        requestAnimationFrame(() => { certModal.classList.add("open"); });
+        playLinuxTerminalBell();
       }
 
       function closeCertModal() {
         if (!certModal) return;
         certModal.classList.remove("open");
-        setTimeout(() => {
-          certModal.hidden = true;
-        }, 220);
+        setTimeout(() => { certModal.hidden = true; }, 220);
       }
 
       openCertBtns.forEach((btn) => {
@@ -3217,23 +4554,16 @@
         });
       });
 
-      if (closeCertModalBtn) {
-        closeCertModalBtn.addEventListener("click", closeCertModal);
-      }
-
+      if (closeCertModalBtn) closeCertModalBtn.addEventListener("click", closeCertModal);
       if (certModal) {
         certModal.addEventListener("click", (e) => {
           if (e.target === certModal) closeCertModal();
         });
       }
-
       window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && certModal && !certModal.hidden) {
-          closeCertModal();
-        }
+        if (e.key === "Escape" && certModal && !certModal.hidden) closeCertModal();
       });
 
-      // Clipboard helper
       function copyText(text, successMsg) {
         const tempInput = document.createElement("textarea");
         tempInput.value = text;
@@ -3264,21 +4594,18 @@
         });
       }
 
-      // Direct PDF Resume Downloader from GitHub with forced filename "Dhayanidhi_V_Resume.pdf"
+      // Resume downloader
       const RESUME_RAW_URL = "https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf";
       const RESUME_FILENAME = "Dhayanidhi_V_Resume.pdf";
 
       async function downloadResume(event) {
-        if (event) {
-          event.preventDefault();
-        }
+        if (event) event.preventDefault();
         showToast("Downloading Dhayanidhi_V_Resume.pdf...");
+        playLinuxTerminalBell();
 
         try {
           const response = await fetch(RESUME_RAW_URL);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
+          if (!response.ok) throw new Error("Network response not ok");
           const blob = await response.blob();
           const pdfBlob = new Blob([blob], { type: "application/pdf" });
           const blobUrl = URL.createObjectURL(pdfBlob);
@@ -3314,19 +4641,543 @@
       });
 
       // =========================================================================
-      // MULTI-LAYER 3D VOLUMETRIC CLOUD STORM, LIGHTNING & CYBER DATA-RAIN ENGINE
+      // ARCADE MINI-GAMES
+      // =========================================================================
+      const arcadeTabs = document.querySelectorAll("[data-arcade-tab]");
+      const arcadePanes = {
+        slasher: document.getElementById("pane-slasher"),
+        defender: document.getElementById("pane-defender"),
+        terminal: document.getElementById("pane-terminal")
+      };
+      const arcadeGlobalBestEl = document.getElementById("arcadeGlobalBest");
+      let bestFinOpsSaved = 36;
+
+      arcadeTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-arcade-tab");
+          arcadeTabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+          Object.keys(arcadePanes).forEach((k) => {
+            if (arcadePanes[k]) arcadePanes[k].classList.toggle("active", k === target);
+          });
+          playLinuxTerminalBell();
+        });
+      });
+
+      // Game 1: Slasher
+      const slasherCanvas = document.getElementById("slasherCanvas");
+      const slasherStartBtn = document.getElementById("slasherStartBtn");
+      const slasherScoreEl = document.getElementById("slasherScore");
+      const slasherStreakEl = document.getElementById("slasherStreak");
+      const slasherLivesEl = document.getElementById("slasherLives");
+      const slasherLeftBtn = document.getElementById("slasherLeftBtn");
+      const slasherRightBtn = document.getElementById("slasherRightBtn");
+      const slasherDashBtn = document.getElementById("slasherDashBtn");
+
+      if (slasherCanvas) {
+        const sctx = slasherCanvas.getContext("2d");
+        let slasherRunning = false;
+        let savedK = 0;
+        let streak = 1;
+        let lives = 3;
+        let items = [];
+        let popups = [];
+        let spawnTick = 0;
+        const player = { x: 300, width: 112, height: 22, speed: 8, moveDir: 0 };
+
+        const ITEM_TYPES = [
+          { label: "IDLE EC2", val: 2, color: "#00f5a0", bad: false },
+          { label: "OLD EBS", val: 1, color: "#00f0ff", bad: false },
+          { label: "SNAP-OLD", val: 2, color: "#4d7cff", bad: false },
+          { label: "SPOT PLAN", val: 5, color: "#f7b801", bad: false },
+          { label: "PROD DROP!", val: 0, color: "#ff3b5c", bad: true }
+        ];
+
+        function updateSlasherHud() {
+          if (slasherScoreEl) slasherScoreEl.textContent = `$${savedK}K/yr`;
+          if (slasherStreakEl) slasherStreakEl.textContent = `x${streak}`;
+          if (slasherLivesEl) slasherLivesEl.textContent = lives > 0 ? "♥".repeat(lives) : "OUTAGE";
+          if (savedK > bestFinOpsSaved) {
+            bestFinOpsSaved = savedK;
+            if (arcadeGlobalBestEl) arcadeGlobalBestEl.textContent = `$${bestFinOpsSaved}K`;
+          }
+        }
+
+        function startSlasherGame() {
+          ensureAudioContext();
+          savedK = 0;
+          streak = 1;
+          lives = 3;
+          items = [];
+          popups = [];
+          slasherRunning = true;
+          updateSlasherHud();
+          if (slasherStartBtn) slasherStartBtn.textContent = "↻ Restart FinOps Run";
+          playRetroBootFanfare();
+        }
+
+        if (slasherStartBtn) slasherStartBtn.addEventListener("click", startSlasherGame);
+
+        slasherCanvas.addEventListener("mousemove", (e) => {
+          const rect = slasherCanvas.getBoundingClientRect();
+          player.x = (e.clientX - rect.left) * (slasherCanvas.width / rect.width) - player.width / 2;
+        });
+
+        if (slasherLeftBtn) {
+          slasherLeftBtn.addEventListener("mousedown", () => { player.moveDir = -1; });
+          slasherLeftBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
+        }
+        if (slasherRightBtn) {
+          slasherRightBtn.addEventListener("mousedown", () => { player.moveDir = 1; });
+          slasherRightBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
+        }
+
+        if (slasherDashBtn) {
+          slasherDashBtn.addEventListener("click", () => {
+            if (!slasherRunning) startSlasherGame();
+            let empGain = 0;
+            items.forEach((it) => {
+              if (!it.bad) {
+                empGain += it.val;
+                popups.push({ x: it.x, y: it.y, text: `+$${it.val}K`, color: "#f7b801", alpha: 1 });
+              }
+            });
+            items = [];
+            if (empGain > 0) {
+              savedK += empGain;
+              updateSlasherHud();
+              playLightningClickSynth(true);
+              showToast(`⚡ FinOps EMP saved +$${empGain}K/yr!`);
+            }
+          });
+        }
+
+        function renderSlasherLoop() {
+          const W = slasherCanvas.width;
+          const H = slasherCanvas.height;
+          sctx.clearRect(0, 0, W, H);
+
+          sctx.strokeStyle = "rgba(0, 240, 255, 0.08)";
+          sctx.lineWidth = 1;
+          for (let gx = 0; gx < W; gx += 45) {
+            sctx.beginPath(); sctx.moveTo(gx, 0); sctx.lineTo(gx, H); sctx.stroke();
+          }
+          for (let gy = 0; gy < H; gy += 45) {
+            sctx.beginPath(); sctx.moveTo(0, gy); sctx.lineTo(W, gy); sctx.stroke();
+          }
+
+          player.x = Math.max(10, Math.min(W - player.width - 10, player.x + player.moveDir * player.speed));
+
+          const py = H - 38;
+          const grad = sctx.createLinearGradient(player.x, py, player.x + player.width, py);
+          grad.addColorStop(0, "#00f0ff"); grad.addColorStop(0.5, "#f7b801"); grad.addColorStop(1, "#00f5a0");
+          sctx.fillStyle = grad;
+          sctx.shadowColor = "#00f0ff"; sctx.shadowBlur = 14;
+          sctx.beginPath(); sctx.roundRect(player.x, py, player.width, player.height, 8); sctx.fill();
+          sctx.shadowBlur = 0;
+
+          sctx.fillStyle = "#031018";
+          sctx.font = '700 10px "JetBrains Mono", monospace';
+          sctx.textAlign = "center";
+          sctx.fillText("⚡ FINOPS SHIELD", player.x + player.width / 2, py + 14);
+
+          if (!slasherRunning) {
+            sctx.fillStyle = "rgba(3, 8, 20, 0.76)";
+            sctx.fillRect(0, 0, W, H);
+            sctx.fillStyle = "#ffffff";
+            sctx.font = '15px "Press Start 2P", monospace';
+            sctx.fillText(lives <= 0 ? "SLA BREACHED!" : "AWS COST SLASHER", W / 2, H / 2 - 20);
+            sctx.fillStyle = "#00f0ff";
+            sctx.font = '12px "JetBrains Mono", monospace';
+            sctx.fillText(
+              lives <= 0 ? `Total Cloud Savings: $${savedK}K/year` : "Click 'Start FinOps Run' to play!",
+              W / 2, H / 2 + 18
+            );
+          } else {
+            spawnTick++;
+            if (spawnTick % 36 === 0) {
+              const t = ITEM_TYPES[Math.floor(Math.random() * ITEM_TYPES.length)];
+              items.push({
+                x: 40 + Math.random() * (W - 80),
+                y: -20,
+                vy: 2.3 + Math.random() * 2.2 + Math.min(savedK * 0.02, 2.2),
+                label: t.label,
+                val: t.val,
+                color: t.color,
+                bad: t.bad
+              });
+            }
+
+            for (let i = items.length - 1; i >= 0; i--) {
+              const it = items[i];
+              it.y += it.vy;
+
+              sctx.fillStyle = "rgba(8, 16, 32, 0.92)";
+              sctx.strokeStyle = it.color;
+              sctx.lineWidth = 2;
+              sctx.beginPath(); sctx.roundRect(it.x - 42, it.y - 14, 84, 28, 7); sctx.fill(); sctx.stroke();
+
+              sctx.fillStyle = it.color;
+              sctx.font = '700 10px "JetBrains Mono", monospace';
+              sctx.fillText(it.label, it.x, it.y + 4);
+
+              if (
+                it.y + 14 >= py && it.y - 14 <= py + player.height &&
+                it.x + 36 >= player.x && it.x - 36 <= player.x + player.width
+              ) {
+                if (it.bad) {
+                  lives--; streak = 1;
+                  playArcadePowerupSfx(false);
+                  popups.push({ x: it.x, y: py - 10, text: "OUTAGE! -1♥", color: "#ff3b5c", alpha: 1 });
+                  if (lives <= 0) slasherRunning = false;
+                } else {
+                  savedK += it.val;
+                  streak = Math.min(streak + 1, 8);
+                  playArcadePowerupSfx(true);
+                  popups.push({ x: it.x, y: py - 10, text: `+$${it.val}K/yr`, color: it.color, alpha: 1 });
+                }
+                updateSlasherHud();
+                items.splice(i, 1);
+                continue;
+              }
+              if (it.y > H + 20) items.splice(i, 1);
+            }
+          }
+
+          for (let i = popups.length - 1; i >= 0; i--) {
+            const p = popups[i];
+            p.y -= 1.2; p.alpha -= 0.025;
+            sctx.save();
+            sctx.globalAlpha = Math.max(0, p.alpha);
+            sctx.fillStyle = p.color;
+            sctx.font = '700 11px "Press Start 2P", monospace';
+            sctx.fillText(p.text, p.x, p.y);
+            sctx.restore();
+            if (p.alpha <= 0) popups.splice(i, 1);
+          }
+
+          requestAnimationFrame(renderSlasherLoop);
+        }
+        requestAnimationFrame(renderSlasherLoop);
+      }
+
+      // Game 2: Defender
+      const defenderCanvas = document.getElementById("defenderCanvas");
+      const defenderStartBtn = document.getElementById("defenderStartBtn");
+      const defenderScoreEl = document.getElementById("defenderScore");
+      const defenderWaveEl = document.getElementById("defenderWave");
+      const defenderUptimeEl = document.getElementById("defenderUptime");
+      const defLeftBtn = document.getElementById("defLeftBtn");
+      const defRightBtn = document.getElementById("defRightBtn");
+      const defFireBtn = document.getElementById("defFireBtn");
+
+      if (defenderCanvas) {
+        const dctx = defenderCanvas.getContext("2d");
+        let defRunning = false;
+        let defScore = 0;
+        let defWave = 1;
+        let defUptime = 99.99;
+        let turretX = 340;
+        let turretDir = 0;
+        let lasers = [];
+        let bugs = [];
+        let defTick = 0;
+
+        const BUG_LABELS = [
+          { name: "CrashLoop", pts: 100, color: "#00f0ff" },
+          { name: "OOMKilled", pts: 200, color: "#f7b801" },
+          { name: "CVE-Crit", pts: 350, color: "#b85cff" }
+        ];
+
+        function updateDefenderHud() {
+          if (defenderScoreEl) defenderScoreEl.textContent = String(defScore);
+          if (defenderWaveEl) defenderWaveEl.textContent = String(defWave);
+          if (defenderUptimeEl) defenderUptimeEl.textContent = Math.max(0, defUptime).toFixed(2) + "%";
+        }
+
+        function fireArgoLaser() {
+          if (!defRunning) return;
+          lasers.push({ x: turretX, y: defenderCanvas.height - 46 });
+          playLinuxHoverBlip(320);
+        }
+
+        function startDefenderGame() {
+          ensureAudioContext();
+          defScore = 0; defWave = 1; defUptime = 99.99;
+          lasers = []; bugs = []; defRunning = true;
+          updateDefenderHud();
+          if (defenderStartBtn) defenderStartBtn.textContent = "↻ Redeploy Cluster";
+          playRetroBootFanfare();
+        }
+
+        if (defenderStartBtn) defenderStartBtn.addEventListener("click", startDefenderGame);
+        if (defFireBtn) defFireBtn.addEventListener("click", () => {
+          if (!defRunning) startDefenderGame(); else fireArgoLaser();
+        });
+
+        defenderCanvas.addEventListener("mousemove", (e) => {
+          const rect = defenderCanvas.getBoundingClientRect();
+          turretX = ((e.clientX - rect.left) / rect.width) * defenderCanvas.width;
+        });
+
+        function renderDefenderLoop() {
+          const W = defenderCanvas.width;
+          const H = defenderCanvas.height;
+          dctx.clearRect(0, 0, W, H);
+
+          turretX = Math.max(36, Math.min(W - 36, turretX + turretDir * 7));
+
+          dctx.fillStyle = "#326ce5"; dctx.strokeStyle = "#00f0ff"; dctx.lineWidth = 2;
+          dctx.beginPath(); dctx.roundRect(turretX - 34, H - 36, 68, 22, 6); dctx.fill(); dctx.stroke();
+
+          dctx.fillStyle = "#ffffff";
+          dctx.font = '700 9px "JetBrains Mono", monospace';
+          dctx.textAlign = "center";
+          dctx.fillText("☸ ROSA-INGRESS", turretX, H - 21);
+
+          if (!defRunning) {
+            dctx.fillStyle = "rgba(3, 8, 20, 0.78)";
+            dctx.fillRect(0, 0, W, H);
+            dctx.fillStyle = "#ffffff";
+            dctx.font = '15px "Press Start 2P", monospace';
+            dctx.fillText(defUptime <= 95 ? "CLUSTER DEGRADED!" : "K8S POD DEFENDER", W / 2, H / 2 - 18);
+            dctx.fillStyle = "#00f0ff";
+            dctx.font = '12px "JetBrains Mono", monospace';
+            dctx.fillText("Click 'Deploy Ingress Turret' to play!", W / 2, H / 2 + 18);
+          } else {
+            defTick++;
+            if (defTick % 16 === 0) fireArgoLaser();
+            if (defTick % Math.max(24, 52 - defWave * 4) === 0) {
+              const b = BUG_LABELS[Math.floor(Math.random() * BUG_LABELS.length)];
+              bugs.push({
+                x: 50 + Math.random() * (W - 100),
+                y: -18,
+                vy: 1.4 + Math.random() * 1.4 + defWave * 0.22,
+                name: b.name,
+                pts: b.pts,
+                color: b.color
+              });
+            }
+
+            for (let i = lasers.length - 1; i >= 0; i--) {
+              const l = lasers[i];
+              l.y -= 9;
+              dctx.fillStyle = "#00f5a0";
+              dctx.fillRect(l.x - 2, l.y - 12, 4, 14);
+              if (l.y < -15) lasers.splice(i, 1);
+            }
+
+            for (let i = bugs.length - 1; i >= 0; i--) {
+              const bg = bugs[i];
+              bg.y += bg.vy;
+
+              dctx.fillStyle = "rgba(18, 12, 34, 0.92)";
+              dctx.strokeStyle = bg.color;
+              dctx.lineWidth = 2;
+              dctx.beginPath(); dctx.roundRect(bg.x - 38, bg.y - 13, 76, 26, 6); dctx.fill(); dctx.stroke();
+
+              dctx.fillStyle = bg.color;
+              dctx.font = '700 10px "JetBrains Mono", monospace';
+              dctx.fillText(bg.name, bg.x, bg.y + 4);
+
+              let hit = false;
+              for (let j = lasers.length - 1; j >= 0; j--) {
+                const l = lasers[j];
+                if (Math.abs(l.x - bg.x) < 40 && Math.abs(l.y - bg.y) < 18) {
+                  lasers.splice(j, 1);
+                  hit = true;
+                  break;
+                }
+              }
+
+              if (hit) {
+                defScore += bg.pts;
+                defWave = 1 + Math.floor(defScore / 1200);
+                playArcadePowerupSfx(true);
+                updateDefenderHud();
+                bugs.splice(i, 1);
+                continue;
+              }
+
+              if (bg.y > H - 30) {
+                defUptime = Math.max(94.0, defUptime - 1.25);
+                playArcadePowerupSfx(false);
+                updateDefenderHud();
+                bugs.splice(i, 1);
+                if (defUptime <= 95.0) defRunning = false;
+              }
+            }
+          }
+
+          requestAnimationFrame(renderDefenderLoop);
+        }
+        requestAnimationFrame(renderDefenderLoop);
+      }
+
+      // Game 3: Terminal CLI
+      const PROD_COMMANDS = [
+        { cmd: "argocd app sync banking-platform --prune", task: "// Sync Equitas Banking GitOps Application" },
+        { cmd: "oc get pods -n banking-prod -o wide", task: "// Inspect OpenShift ROSA Production Pods" },
+        { cmd: "ansible-playbook hardening-rhel.yml --check", task: "// Run RHEL Security Compliance Playbook" },
+        { cmd: "kubectl rollout status deploy/payment-api", task: "// Verify Zero-Downtime K8s Deployment" },
+        { cmd: "tkn pipeline start release-build --showlog", task: "// Trigger Tekton CI/CD Release Pipeline" },
+        { cmd: "aws ce get-cost-and-usage --granularity DAILY", task: "// Audit AWS FinOps Cost Explorer Savings" }
+      ];
+
+      const termTargetDisplay = document.getElementById("termTargetDisplay");
+      const termTaskLabel = document.getElementById("termTaskLabel");
+      const termInputField = document.getElementById("termInputField");
+      const termStartBtn = document.getElementById("termStartBtn");
+      const termSkipCmdBtn = document.getElementById("termSkipCmdBtn");
+      const termScoreEl = document.getElementById("termScore");
+      const termWpmEl = document.getElementById("termWpm");
+      const termTimerEl = document.getElementById("termTimer");
+      const termFeedbackMsg = document.getElementById("termFeedbackMsg");
+
+      let currentCmdIdx = 0;
+      let termCompleted = 0;
+      let termCharsTyped = 0;
+      let termSecondsLeft = 45;
+      let termStartTime = 0;
+      let termInterval = null;
+      let termActive = false;
+
+      function renderTargetCommand(typedValue = "") {
+        if (!termTargetDisplay) return;
+        const target = PROD_COMMANDS[currentCmdIdx].cmd;
+        if (termTaskLabel) termTaskLabel.textContent = PROD_COMMANDS[currentCmdIdx].task;
+        let html = "";
+        for (let i = 0; i < target.length; i++) {
+          const ch = target[i];
+          if (i < typedValue.length) {
+            if (typedValue[i] === ch) html += `<span class="cmd-char-ok">${ch}</span>`;
+            else html += `<span class="cmd-char-err">${ch}</span>`;
+          } else {
+            html += `<span class="cmd-char-pending">${ch}</span>`;
+          }
+        }
+        termTargetDisplay.innerHTML = html;
+      }
+
+      function nextTerminalCommand() {
+        currentCmdIdx = (currentCmdIdx + 1) % PROD_COMMANDS.length;
+        if (termInputField) { termInputField.value = ""; termInputField.focus(); }
+        renderTargetCommand("");
+      }
+
+      function startTerminalSprint() {
+        ensureAudioContext();
+        clearInterval(termInterval);
+        termCompleted = 0; termCharsTyped = 0; termSecondsLeft = 45;
+        termStartTime = performance.now(); termActive = true;
+        if (termScoreEl) termScoreEl.textContent = "0";
+        if (termWpmEl) termWpmEl.textContent = "0 WPM";
+        if (termTimerEl) termTimerEl.textContent = "45s";
+        if (termInputField) { termInputField.value = ""; termInputField.focus(); }
+        renderTargetCommand("");
+        playRetroBootFanfare();
+
+        termInterval = setInterval(() => {
+          termSecondsLeft--;
+          if (termTimerEl) termTimerEl.textContent = `${Math.max(0, termSecondsLeft)}s`;
+          if (termSecondsLeft <= 0) {
+            clearInterval(termInterval);
+            termActive = false;
+            if (termFeedbackMsg) termFeedbackMsg.textContent = `🏁 SLA Sprint Complete! ${termCompleted} commands deployed.`;
+            playLinuxTerminalBell();
+          }
+        }, 1000);
+      }
+
+      if (termStartBtn) termStartBtn.addEventListener("click", startTerminalSprint);
+      if (termSkipCmdBtn) termSkipCmdBtn.addEventListener("click", () => {
+        nextTerminalCommand(); playNvmeSeekTick();
+      });
+
+      if (termInputField) {
+        renderTargetCommand("");
+        termInputField.addEventListener("input", () => {
+          if (!termActive) startTerminalSprint();
+          playNvmeSeekTick();
+          const val = termInputField.value;
+          const target = PROD_COMMANDS[currentCmdIdx].cmd;
+          renderTargetCommand(val);
+
+          const elapsedMin = Math.max(0.05, (performance.now() - termStartTime) / 60000);
+          const wpm = Math.round(((termCharsTyped + val.length) / 5) / elapsedMin);
+          if (termWpmEl) termWpmEl.textContent = `${wpm} WPM`;
+
+          if (val === target) {
+            termCompleted++;
+            termCharsTyped += target.length;
+            termSecondsLeft = Math.min(60, termSecondsLeft + 3);
+            if (termScoreEl) termScoreEl.textContent = String(termCompleted);
+            if (termFeedbackMsg) termFeedbackMsg.textContent = `✓ Executed: '${target}' (+3s SLA bonus!)`;
+            playArcadePowerupSfx(true);
+            nextTerminalCommand();
+          }
+        });
+      }
+
+      // =========================================================================
+      // BACKGROUND WEATHER ENGINE (CLOUD + LIGHTNING, RAIN, OFF MODES)
       // =========================================================================
       const canvas = document.getElementById("webgl");
       const toggleWeatherBtn = document.getElementById("toggleWeatherBtn");
-      let weatherEnabled = true;
+      let weatherMode = 2; // 2: Cloud+Lightning ON, 1: Rain Only, 0: OFF
 
       if (toggleWeatherBtn) {
         toggleWeatherBtn.addEventListener("click", () => {
-          weatherEnabled = !weatherEnabled;
-          toggleWeatherBtn.setAttribute("aria-pressed", String(weatherEnabled));
-          toggleWeatherBtn.textContent = weatherEnabled ? "🌧️ Cloud Rain: ON" : "☁️ Cloud Rain: OFF";
-          showToast(weatherEnabled ? "🌧️ 3D Cloud Storm & Data-Rain enabled" : "☁️ Minimal Cloud Mode enabled");
+          weatherMode = (weatherMode + 1) % 3;
+          if (weatherMode === 2) {
+            toggleWeatherBtn.setAttribute("aria-pressed", "true");
+            toggleWeatherBtn.textContent = "🌧️ Storm: ON";
+            showToast("🌧️ Storm Mode: Volumetric Clouds & Lightning Active");
+          } else if (weatherMode === 1) {
+            toggleWeatherBtn.setAttribute("aria-pressed", "true");
+            toggleWeatherBtn.textContent = "☁️ Rain Only";
+            showToast("☁️ Rain Only Mode Active");
+          } else {
+            toggleWeatherBtn.setAttribute("aria-pressed", "false");
+            toggleWeatherBtn.textContent = "⚡ Storm: OFF";
+            showToast("⚡ Minimal Cloud Mode Active");
+          }
         });
+      }
+
+      const cursorSparks = [];
+      const clickBolts = [];
+
+      function spawnCursorSpark(x, y, boost = false) {
+        if (!customCursorActive) return;
+        const count = boost ? 12 : 2;
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = boost ? 2 + Math.random() * 5.5 : 0.6 + Math.random() * 2.2;
+          cursorSparks.push({
+            x: x + (Math.random() - 0.5) * 14,
+            y: y + 8 + (Math.random() - 0.5) * 10,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed + (boost ? 0.5 : 1.6),
+            size: boost ? 2 + Math.random() * 2.5 : 1.3 + Math.random() * 1.8,
+            alpha: 0.95,
+            color: Math.random() > 0.42 ? "#00f0ff" : "#ff9900"
+          });
+        }
+        if (cursorSparks.length > 90) cursorSparks.splice(0, cursorSparks.length - 90);
+      }
+
+      function spawnClickLightningBolt(x, y) {
+        const segments = [];
+        let currX = x;
+        let currY = y + 10;
+        for (let i = 0; i < 6; i++) {
+          const nextX = currX + (Math.random() - 0.5) * 44;
+          const nextY = currY + 14 + Math.random() * 22;
+          segments.push({ x1: currX, y1: currY, x2: nextX, y2: nextY });
+          currX = nextX;
+          currY = nextY;
+        }
+        clickBolts.push({ segments, alpha: 1.0 });
       }
 
       if (canvas) {
@@ -3336,13 +5187,35 @@
 
         const mouse = { x: width * 0.5, y: height * 0.35, targetX: width * 0.5, targetY: height * 0.35 };
 
-        // 1. Volumetric Storm Clouds (Top & Horizon layers)
+        const INTERACTIVE_SELECTOR = "a, button, summary, [role='button'], .tech-node, .tool-card, details";
+        document.addEventListener("mouseover", (e) => {
+          if (!customCursor || !customCursorActive) return;
+          const target = e.target.closest(INTERACTIVE_SELECTOR);
+          if (target) {
+            customCursor.classList.add("is-hover");
+            if (cursorModeText) cursorModeText.textContent = "⚡ SUPERCHARGED";
+          } else {
+            customCursor.classList.remove("is-hover");
+          }
+        });
+
+        window.addEventListener("mousedown", (e) => {
+          if (customCursor && customCursorActive) customCursor.classList.add("is-clicking");
+          spawnCursorSpark(e.clientX, e.clientY, true);
+          spawnClickLightningBolt(e.clientX, e.clientY);
+          playLightningClickSynth(false);
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (customCursor) customCursor.classList.remove("is-clicking");
+        });
+
         const clouds = [];
         const CLOUD_COLORS = [
-          { r: 0, g: 240, b: 255 },   // Cyber Cyan
-          { r: 77, g: 124, b: 255 },  // Electric Blue
-          { r: 184, g: 92, b: 255 },  // Neon Violet
-          { r: 255, g: 153, b: 0 }    // AWS Amber accent
+          { r: 0, g: 240, b: 255 },
+          { r: 77, g: 124, b: 255 },
+          { r: 184, g: 92, b: 255 },
+          { r: 255, g: 153, b: 0 }
         ];
 
         for (let i = 0; i < 14; i++) {
@@ -3359,16 +5232,15 @@
           });
         }
 
-        // 2. 3D Rain Streaks & Cyber Data Drops
         const raindrops = [];
         const RAIN_COUNT = Math.min(135, Math.floor(width / 10));
-        const DATA_CHARS = ["0", "1", "K8S", "AWS", "OCI", "GIT", "SRE", "⚡"];
+        const DATA_CHARS = ["0", "1", "K8S", "AWS", "OCI", "GIT", "SRE", "LINUX", "⚡"];
 
         for (let i = 0; i < RAIN_COUNT; i++) {
           raindrops.push({
             x: Math.random() * width,
             y: Math.random() * height,
-            z: 0.4 + Math.random() * 1.4, // 3D depth factor
+            z: 0.4 + Math.random() * 1.4,
             length: 16 + Math.random() * 26,
             speed: 7 + Math.random() * 9,
             wind: -1.4,
@@ -3378,10 +5250,7 @@
           });
         }
 
-        // 3. 3D Splash Ripples on the Perspective Floor
         const ripples = [];
-
-        // 4. Floating 3D Cloud Nodes
         const nodes = [];
         const NODE_COUNT = Math.min(45, Math.floor((width * height) / 32000));
         for (let i = 0; i < NODE_COUNT; i++) {
@@ -3400,57 +5269,71 @@
           height = canvas.height = window.innerHeight;
         });
 
+        let lastSparkTime = 0;
         window.addEventListener("mousemove", (e) => {
           mouse.targetX = e.clientX;
           mouse.targetY = e.clientY;
+          const now = performance.now();
+          if (now - lastSparkTime > 26) {
+            spawnCursorSpark(e.clientX, e.clientY, false);
+            lastSparkTime = now;
+          }
         }, { passive: true });
 
         function renderScene() {
           ctx.clearRect(0, 0, width, height);
 
-          mouse.x += (mouse.targetX - mouse.x) * 0.06;
-          mouse.y += (mouse.targetY - mouse.y) * 0.06;
+          mouse.x += (mouse.targetX - mouse.x) * 0.22;
+          mouse.y += (mouse.targetY - mouse.y) * 0.22;
+
+          if (customCursor) {
+            if (customCursorActive) {
+              customCursor.style.display = "block";
+              customCursor.style.transform = `translate3d(${mouse.x.toFixed(1)}px, ${mouse.y.toFixed(1)}px, 0)`;
+            } else {
+              customCursor.style.display = "none";
+            }
+          }
 
           const parallaxX = (mouse.x - width / 2) * 0.03;
           const parallaxY = (mouse.y - height / 2) * 0.025;
 
-          // --- LAYER 1: Volumetric Glowing Cyber Clouds & Subtle Lightning Pulses ---
-          for (let i = 0; i < clouds.length; i++) {
-            const c = clouds[i];
-            c.x += c.vx;
-            if (c.x - c.radiusX > width) c.x = -c.radiusX;
-            if (c.x + c.radiusX < 0) c.x = width + c.radiusX;
+          // Clouds & Lightning (Mode 2)
+          if (weatherMode >= 2) {
+            for (let i = 0; i < clouds.length; i++) {
+              const c = clouds[i];
+              c.x += c.vx;
+              if (c.x - c.radiusX > width) c.x = -c.radiusX;
+              if (c.x + c.radiusX < 0) c.x = width + c.radiusX;
 
-            // Occasional subtle lightning pulse inside storm clouds
-            if (weatherEnabled && Math.random() < 0.0018) {
-              c.flash = 0.22;
+              if (Math.random() < 0.0022) {
+                c.flash = 0.28;
+              }
+              if (c.flash > 0) c.flash *= 0.9;
+
+              const cx = c.x + parallaxX * 0.5;
+              const cy = c.y + parallaxY * 0.3;
+              const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, c.radiusX);
+              const totalAlpha = Math.min(c.alpha + c.flash, 0.38);
+
+              grad.addColorStop(0, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${totalAlpha.toFixed(3)})`);
+              grad.addColorStop(0.55, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${(totalAlpha * 0.4).toFixed(3)})`);
+              grad.addColorStop(1, "rgba(3, 5, 11, 0)");
+
+              ctx.save();
+              ctx.translate(cx, cy);
+              ctx.scale(1, c.radiusY / c.radiusX);
+              ctx.translate(-cx, -cy);
+              ctx.fillStyle = grad;
+              ctx.beginPath();
+              ctx.arc(cx, cy, c.radiusX, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
             }
-            if (c.flash > 0) {
-              c.flash *= 0.9;
-            }
-
-            const cx = c.x + parallaxX * 0.5;
-            const cy = c.y + parallaxY * 0.3;
-            const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, c.radiusX);
-            const totalAlpha = Math.min(c.alpha + c.flash, 0.35);
-
-            grad.addColorStop(0, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${totalAlpha.toFixed(3)})`);
-            grad.addColorStop(0.55, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${(totalAlpha * 0.4).toFixed(3)})`);
-            grad.addColorStop(1, "rgba(3, 5, 11, 0)");
-
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.scale(1, c.radiusY / c.radiusX);
-            ctx.translate(-cx, -cy);
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(cx, cy, c.radiusX, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
           }
 
-          // --- LAYER 2: 3D Rain Streaks, Cyber Data Droplets & Floor Splash Ripples ---
-          if (weatherEnabled) {
+          // Rain & Data Drops (Modes 1 and 2)
+          if (weatherMode >= 1) {
             ctx.lineCap = "round";
             const windOffset = ((mouse.x - width / 2) / width) * 2.5;
 
@@ -3462,17 +5345,11 @@
               r.x += dx;
               r.y += dy;
 
-              // When raindrop hits the bottom 3D floor zone, spawn a splash ripple
               const floorY = height - 20 - (1.8 - r.z) * 45;
               if (r.y >= floorY) {
                 if (ripples.length < 45 && Math.random() < 0.35) {
                   ripples.push({
-                    x: r.x,
-                    y: floorY,
-                    radius: 1.5,
-                    maxRadius: 12 + r.z * 14,
-                    alpha: 0.45 * r.z,
-                    color: r.hue
+                    x: r.x, y: floorY, radius: 1.5, maxRadius: 12 + r.z * 14, alpha: 0.45 * r.z, color: r.hue
                   });
                 }
                 r.y = -20;
@@ -3504,7 +5381,6 @@
               }
             }
 
-            // Render expanding 3D splash ripples
             for (let i = ripples.length - 1; i >= 0; i--) {
               const rp = ripples[i];
               rp.radius += 0.65;
@@ -3519,13 +5395,11 @@
               ctx.stroke();
               ctx.restore();
 
-              if (rp.radius >= rp.maxRadius || rp.alpha < 0.03) {
-                ripples.splice(i, 1);
-              }
+              if (rp.radius >= rp.maxRadius || rp.alpha < 0.03) ripples.splice(i, 1);
             }
           }
 
-          // --- LAYER 3: 3D Connected Cloud Constellation Nodes ---
+          // Nodes
           for (let i = 0; i < nodes.length; i++) {
             const a = nodes[i];
             a.x += a.vx * a.z;
@@ -3562,12 +5436,35 @@
             }
           }
 
-          requestAnimationFrame(renderScene);
-        }
+          // Sparks & Bolts
+          if (customCursorActive) {
+            for (let i = cursorSparks.length - 1; i >= 0; i--) {
+              const sp = cursorSparks[i];
+              sp.x += sp.vx; sp.y += sp.vy; sp.alpha *= 0.92;
 
-        window.addEventListener("load", renderScene);
-      }
-    })();
-  </script>
-</body>
-</html>
+              ctx.save();
+              ctx.globalAlpha = sp.alpha;
+              ctx.fillStyle = sp.color;
+              ctx.shadowColor = sp.color;
+              ctx.shadowBlur = 8;
+              ctx.beginPath();
+              ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
+
+              if (sp.alpha < 0.04) cursorSparks.splice(i, 1);
+            }
+          }
+
+          for (let i = clickBolts.length - 1; i >= 0; i--) {
+            const bolt = clickBolts[i];
+            bolt.alpha *= 0.84;
+
+            ctx.save();
+            ctx.globalAlpha = bolt.alpha;
+            ctx.strokeStyle = "#ffdd77";
+            ctx.shadowColor = "#00f0ff";
+            ctx.shadowBlur = 16;
+            ctx.lineWidth = 2.2;
+            ctx.beginPath();
+            for (let s = 0; s < bolt.segments.length; s++) {

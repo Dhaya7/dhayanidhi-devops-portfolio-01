@@ -7,11 +7,11 @@
   <title>Dhayanidhi V | DevOps, SRE & AWS Cloud Engineer</title>
   <meta name="description" content="Portfolio of Dhayanidhi V — DevOps Engineer, SRE and AWS Cloud Engineer with 2+ years of experience in Kubernetes, OpenShift, GitOps, CI/CD, observability and cloud cost optimization.">
   <meta name="author" content="Dhayanidhi V">
-  <meta name="theme-color" content="#03050b">
+  <meta name="theme-color" content="#05070d">
   <meta name="color-scheme" content="dark">
 
   <meta property="og:title" content="Dhayanidhi V | DevOps, SRE & Cloud Engineer">
-  <meta property="og:description" content="Core cloud infrastructure, container orchestration, GitOps automation, and SRE tooling engineered in production banking environments.">
+  <meta property="og:description" content="Building resilient AWS & OCI platforms, automated delivery pipelines and observable cloud systems.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dhayanidhiv.in">
 
@@ -72,17 +72,11 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Conditional Custom Cursor */
-    body.custom-cursor-active,
-    body.custom-cursor-active a,
-    body.custom-cursor-active button,
-    body.custom-cursor-active summary,
-    body.custom-cursor-active [role="button"],
-    body.custom-cursor-active input,
-    body.custom-cursor-active textarea,
-    body.custom-cursor-active .tech-node,
-    body.custom-cursor-active .tool-card {
-      cursor: none !important;
+    /* Hide native cursor on desktop devices with fine pointer */
+    @media (hover: hover) and (pointer: fine) {
+      body, a, button, summary, [role="button"], input, textarea, .tech-node, .tool-card {
+        cursor: none !important;
+      }
     }
 
     body::before {
@@ -172,8 +166,10 @@
       transition: filter 0.18s ease;
     }
 
-    body.custom-cursor-active #customCursor {
-      display: block;
+    @media (hover: hover) and (pointer: fine) {
+      #customCursor {
+        display: block;
+      }
     }
 
     .cursor-ring {
@@ -194,6 +190,25 @@
       transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.3);
     }
 
+    .cursor-cloud-path {
+      transition: fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease;
+    }
+
+    .cursor-bolt-path {
+      transform-origin: 29px 32px;
+      transition: transform 0.18s ease, fill 0.18s ease, filter 0.18s ease;
+    }
+
+    .cursor-strike-arc {
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+
+    /* Hover State: Supercharged Flash Mode */
+    #customCursor.is-hover {
+      filter: drop-shadow(0 0 18px rgba(255, 153, 0, 0.95)) drop-shadow(0 0 32px rgba(0, 240, 255, 0.8));
+    }
+
     #customCursor.is-hover .cursor-ring {
       transform: scale(1.18);
       border-color: var(--orange);
@@ -205,8 +220,24 @@
       transform: scale(1.14) rotate(-5deg);
     }
 
+    #customCursor.is-hover .cursor-bolt-path {
+      transform: scale(1.25) translateY(-2px);
+    }
+
+    /* Click State: Thunder Strike */
     #customCursor.is-clicking .cursor-svg {
       transform: scale(0.9) translateY(3px);
+    }
+
+    #customCursor.is-clicking .cursor-ring {
+      transform: scale(1.45);
+      border-style: solid;
+      border-color: #ffffff;
+      box-shadow: 0 0 30px #00f0ff, 0 0 50px #ff9900;
+    }
+
+    #customCursor.is-clicking .cursor-strike-arc {
+      opacity: 1;
     }
 
     .cursor-badge-label {
@@ -240,7 +271,7 @@
     }
 
     /* =========================================================================
-       CYBERPUNK SRE KERNEL TERMINAL PRELOADER (AUTO-ENABLED AUDIO)
+       CYBERPUNK SRE KERNEL TERMINAL PRELOADER + WATCH DOGS 2 DATA-COPY HUD
        ========================================================================= */
     #bootLoader {
       position: fixed;
@@ -261,6 +292,7 @@
       transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease, transform 0.65s ease;
     }
 
+    /* Subtle CRT Scanlines & Cyber Grid Overlay */
     #bootLoader::before {
       content: "";
       position: absolute;
@@ -310,12 +342,26 @@
       gap: 8px;
       padding: 6px 12px;
       border-radius: 99px;
-      border: 1px solid rgba(0, 245, 160, 0.45);
-      background: rgba(0, 245, 160, 0.1);
-      color: #b7f9d8;
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      background: rgba(0, 240, 255, 0.08);
+      color: var(--cyan);
       font-size: 0.62rem;
       font-weight: 600;
-      box-shadow: 0 0 18px rgba(0, 245, 160, 0.2);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.18);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .boot-audio-pill.locked {
+      border-color: rgba(255, 59, 92, 0.65);
+      background: rgba(255, 59, 92, 0.14);
+      color: #ff8da1;
+      animation: statusPulsePill 1.4s ease-in-out infinite;
+    }
+
+    @keyframes statusPulsePill {
+      0%, 100% { box-shadow: 0 0 12px rgba(255, 59, 92, 0.25); }
+      50% { box-shadow: 0 0 26px rgba(255, 59, 92, 0.65); }
     }
 
     .boot-terminal-wrap {
@@ -364,6 +410,7 @@
       to { opacity: 0; }
     }
 
+    /* Sequential Kernel Log Lines */
     .boot-log-list {
       display: flex;
       flex-direction: column;
@@ -436,6 +483,7 @@
       background: rgba(0, 245, 160, 0.08);
     }
 
+    /* Bracketed Neon Cyan Glow Progress Bar + Percentage Readout */
     .boot-progress-row {
       display: flex;
       align-items: center;
@@ -476,6 +524,17 @@
       transition: width 0.06s linear;
     }
 
+    .boot-bar-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #ffffff);
+      opacity: 0.85;
+    }
+
     .boot-percent-readout {
       min-width: 78px;
       text-align: right;
@@ -489,6 +548,7 @@
       letter-spacing: 0.04em;
     }
 
+    /* Watch Dogs 2 Data-Exfiltration Audio Visualizer Strip */
     .boot-wd2-strip {
       display: flex;
       align-items: center;
@@ -555,10 +615,22 @@
       color: #ffb3c1;
     }
 
+    .boot-btn.secondary:hover {
+      border-color: var(--red);
+      background: rgba(255, 59, 92, 0.2);
+      box-shadow: 0 0 18px rgba(255, 59, 92, 0.35);
+    }
+
     @media (max-width: 640px) {
-      .boot-terminal-wrap { padding: 24px 20px; }
-      .boot-log-status { display: none; }
-      .boot-percent-readout { min-width: 62px; }
+      .boot-terminal-wrap {
+        padding: 24px 20px;
+      }
+      .boot-log-status {
+        display: none;
+      }
+      .boot-percent-readout {
+        min-width: 62px;
+      }
     }
 
     /* =========================================================================
@@ -635,7 +707,9 @@
       color: #ffd57e;
     }
 
-    .arcade-body { padding: 28px; }
+    .arcade-body {
+      padding: 28px;
+    }
 
     .arcade-pane {
       display: none;
@@ -644,7 +718,9 @@
       align-items: start;
     }
 
-    .arcade-pane.active { display: grid; }
+    .arcade-pane.active {
+      display: grid;
+    }
 
     .game-stage-wrap {
       position: relative;
@@ -740,6 +816,7 @@
       background: rgba(5, 11, 22, 0.9);
     }
 
+    /* Game 3: Speed Terminal Challenge UI */
     .terminal-game-box {
       padding: 26px;
       min-height: 380px;
@@ -763,9 +840,20 @@
       word-break: break-all;
     }
 
-    .cmd-char-ok { color: var(--green); text-shadow: 0 0 10px rgba(0, 245, 160, 0.5); }
-    .cmd-char-err { color: #ffffff; background: var(--red); border-radius: 3px; }
-    .cmd-char-pending { color: #7c93b2; }
+    .cmd-char-ok {
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(0, 245, 160, 0.5);
+    }
+
+    .cmd-char-err {
+      color: #ffffff;
+      background: var(--red);
+      border-radius: 3px;
+    }
+
+    .cmd-char-pending {
+      color: #7c93b2;
+    }
 
     .cmd-input-field {
       width: 100%;
@@ -787,10 +875,15 @@
     }
 
     @media (max-width: 960px) {
-      .arcade-pane.active { grid-template-columns: 1fr; }
+      .arcade-pane.active {
+        grid-template-columns: 1fr;
+      }
     }
 
-    header, main, footer { position: relative; z-index: 1; }
+    header, main, footer {
+      position: relative;
+      z-index: 1;
+    }
 
     .container {
       width: min(var(--max-width), calc(100% - 44px));
@@ -816,9 +909,13 @@
       transition: transform 0.2s ease;
     }
 
-    .skip-link:focus { transform: translateY(0); }
+    .skip-link:focus {
+      transform: translateY(0);
+    }
 
-    .mono { font-family: "JetBrains Mono", monospace; }
+    .mono {
+      font-family: "JetBrains Mono", monospace;
+    }
 
     .gradient-text {
       color: transparent;
@@ -904,7 +1001,9 @@
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
     }
 
-    .btn:hover { transform: translateY(-3px) scale(1.01); }
+    .btn:hover {
+      transform: translateY(-3px) scale(1.01);
+    }
 
     .btn-primary {
       color: #020c14;
@@ -938,7 +1037,9 @@
       flex-shrink: 0;
     }
 
-    .hud-btn {
+    .weather-btn,
+    .audio-btn,
+    .weather-toggle {
       border-color: rgba(0, 245, 160, 0.38);
       color: #a8ffdf;
       background: rgba(0, 245, 160, 0.09);
@@ -948,13 +1049,22 @@
       flex-shrink: 0;
     }
 
-    .hud-btn[aria-pressed="false"] {
+    .weather-btn[aria-pressed="false"],
+    .audio-btn[aria-pressed="false"],
+    .weather-toggle[aria-pressed="false"] {
       border-color: var(--line);
       color: var(--muted);
       background: rgba(255, 255, 255, 0.03);
     }
 
-    /* Navigation - Ultra-Wide Non-Wrapping HUD Bar */
+    .audio-btn[aria-pressed="true"] {
+      border-color: rgba(255, 153, 0, 0.55);
+      color: #ffd591;
+      background: rgba(255, 153, 0, 0.12);
+      box-shadow: 0 0 20px rgba(255, 153, 0, 0.2);
+    }
+
+    /* Navigation - Full-Screen 3-Zone Non-Wrapping HUD Bar */
     .site-header {
       position: fixed;
       top: 0;
@@ -965,7 +1075,9 @@
       transition: padding 200ms ease;
     }
 
-    .site-header.scrolled { padding-top: 8px; }
+    .site-header.scrolled {
+      padding-top: 8px;
+    }
 
     .navbar.container {
       width: min(1680px, calc(100% - 40px));
@@ -1078,7 +1190,7 @@
       flex-shrink: 0;
     }
 
-    /* Linux & Server Audio Deck Drawer */
+    /* Interactive Linux & Server Room Audio Deck Drawer */
     .audio-deck {
       position: fixed;
       top: 94px;
@@ -1188,7 +1300,7 @@
       transition: transform 180ms ease, opacity 180ms ease;
     }
 
-    /* Spotlight Card */
+    /* 3D Spotlight Glare Effect on Cards */
     .spotlight-card {
       position: relative;
       transform-style: preserve-3d;
@@ -1213,7 +1325,9 @@
       z-index: 1;
     }
 
-    .spotlight-card:hover::after { opacity: 1; }
+    .spotlight-card:hover::after {
+      opacity: 1;
+    }
 
     /* Hero */
     .hero {
@@ -1339,7 +1453,7 @@
       font-size: 0.6rem;
     }
 
-    /* Hero Visual Control Plane */
+    /* Hero 3D System Control Plane Visual */
     .hero-visual {
       position: relative;
       width: 100%;
@@ -1503,7 +1617,11 @@
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.12), inset 0 0 25px rgba(0, 240, 255, 0.08);
     }
 
-    .orbit-ring.one { width: 390px; height: 280px; }
+    .orbit-ring.one {
+      width: 390px;
+      height: 280px;
+    }
+
     .orbit-ring.two {
       width: 255px;
       height: 255px;
@@ -1511,6 +1629,7 @@
       border-color: rgba(255, 153, 0, 0.35);
       animation: ringRotate 22s linear infinite;
     }
+
     .orbit-ring.three {
       width: 185px;
       height: 185px;
@@ -1595,6 +1714,7 @@
       letter-spacing: 0.1em;
     }
 
+    /* 3D Orbiting Brand Nodes */
     .tech-node {
       position: absolute;
       display: flex;
@@ -1701,10 +1821,22 @@
       line-height: 1.85;
     }
 
-    .terminal-command { color: #d6e4f7; }
-    .terminal-command span { margin-right: 7px; color: var(--cyan); }
-    .terminal-success { color: var(--green); }
-    .terminal-success span { color: #8fa6c4; }
+    .terminal-command {
+      color: #d6e4f7;
+    }
+
+    .terminal-command span {
+      margin-right: 7px;
+      color: var(--cyan);
+    }
+
+    .terminal-success {
+      color: var(--green);
+    }
+
+    .terminal-success span {
+      color: #8fa6c4;
+    }
 
     .visual-caption {
       display: flex;
@@ -1717,7 +1849,10 @@
       text-transform: uppercase;
     }
 
-    .visual-caption strong { color: var(--cyan); font-weight: 600; }
+    .visual-caption strong {
+      color: var(--cyan);
+      font-weight: 600;
+    }
 
     /* Technology Marquee Rail */
     .technology-rail {
@@ -1761,7 +1896,9 @@
     }
 
     /* Metrics */
-    .metrics-section { padding: 54px 0 20px; }
+    .metrics-section {
+      padding: 54px 0 20px;
+    }
 
     .metrics-grid {
       display: grid;
@@ -1778,7 +1915,9 @@
       padding: 30px 28px;
     }
 
-    .metric + .metric { border-left: 1px solid rgba(0, 240, 255, 0.16); }
+    .metric + .metric {
+      border-left: 1px solid rgba(0, 240, 255, 0.16);
+    }
 
     .metric strong {
       display: flex;
@@ -1849,8 +1988,13 @@
       filter: blur(38px);
     }
 
-    .expertise-card:nth-child(2) { --card-glow: rgba(184, 92, 255, 0.18); }
-    .expertise-card:nth-child(3) { --card-glow: rgba(0, 245, 160, 0.16); }
+    .expertise-card:nth-child(2) {
+      --card-glow: rgba(184, 92, 255, 0.18);
+    }
+
+    .expertise-card:nth-child(3) {
+      --card-glow: rgba(0, 245, 160, 0.16);
+    }
 
     .expertise-card:hover {
       border-color: var(--cyan);
@@ -2021,7 +2165,7 @@
       color: var(--cyan);
     }
 
-    /* Stack section */
+    /* Tool stack with 3D Original Brand Logos */
     .stack-toolbar {
       display: flex;
       margin-bottom: 26px;
@@ -2084,6 +2228,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.28);
     }
 
+    /* 3D Floating Cube Pedestal for Brand Logo */
     .tool-logo {
       position: relative;
       display: grid;
@@ -2235,15 +2380,22 @@
       border-bottom: 1px solid rgba(0, 240, 255, 0.16);
     }
 
-    .experience-intro strong { color: #ffffff; }
+    .experience-intro strong {
+      color: #ffffff;
+    }
 
     details {
       border-bottom: 1px solid rgba(0, 240, 255, 0.14);
       transition: background 0.2s ease;
     }
 
-    details[open] { background: rgba(0, 240, 255, 0.03); }
-    details:last-child { border-bottom: 0; }
+    details[open] {
+      background: rgba(0, 240, 255, 0.03);
+    }
+
+    details:last-child {
+      border-bottom: 0;
+    }
 
     summary {
       display: flex;
@@ -2257,7 +2409,9 @@
       font-weight: 600;
     }
 
-    summary::-webkit-details-marker { display: none; }
+    summary::-webkit-details-marker {
+      display: none;
+    }
 
     summary span {
       padding: 4px 9px;
@@ -2277,7 +2431,9 @@
       font-size: 1.25rem;
     }
 
-    details[open] summary::after { content: "−"; }
+    details[open] summary::after {
+      content: "−";
+    }
 
     details ul {
       display: grid;
@@ -2287,10 +2443,16 @@
       color: #b5c8e0;
     }
 
-    details li { padding-left: 5px; font-size: 0.83rem; }
-    details li::marker { color: var(--cyan); }
+    details li {
+      padding-left: 5px;
+      font-size: 0.83rem;
+    }
 
-    /* Credentials */
+    details li::marker {
+      color: var(--cyan);
+    }
+
+    /* Credentials & 3D Holographic AWS Shield Section */
     .credentials-grid {
       display: grid;
       grid-template-columns: 1.38fr 0.82fr;
@@ -2330,7 +2492,9 @@
       transition: transform 250ms ease;
     }
 
-    .cert-seal:hover { transform: translateZ(55px) scale(1.06) rotateY(12deg); }
+    .cert-seal:hover {
+      transform: translateZ(55px) scale(1.06) rotateY(12deg);
+    }
 
     .cert-seal svg {
       position: absolute;
@@ -2386,7 +2550,9 @@
       font-weight: 700;
     }
 
-    .certificate-content { transform: translateZ(22px); }
+    .certificate-content {
+      transform: translateZ(22px);
+    }
 
     .certificate-content h3 {
       margin: 8px 0 10px;
@@ -2395,7 +2561,11 @@
       line-height: 1.25;
     }
 
-    .certificate-content p { margin: 6px 0; color: var(--muted); font-size: 0.83rem; }
+    .certificate-content p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
 
     .credly-id {
       display: inline-flex;
@@ -2418,7 +2588,10 @@
       margin-top: 20px;
     }
 
-    .side-credentials { display: grid; gap: 18px; }
+    .side-credentials {
+      display: grid;
+      gap: 18px;
+    }
 
     .side-card {
       padding: 26px;
@@ -2429,7 +2602,10 @@
       transition: border-color 0.2s ease, transform 0.2s ease;
     }
 
-    .side-card:hover { border-color: var(--cyan); transform: translateY(-5px); }
+    .side-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-5px);
+    }
 
     .side-card h3 {
       margin: 6px 0 10px;
@@ -2437,7 +2613,11 @@
       font-size: 1.16rem;
     }
 
-    .side-card p { margin: 0; color: var(--muted); font-size: 0.8rem; }
+    .side-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
 
     /* Contact */
     .contact-box {
@@ -2489,7 +2669,9 @@
       font-size: 0.67rem;
     }
 
-    .contact-links a:hover { color: var(--cyan); }
+    .contact-links a:hover {
+      color: var(--cyan);
+    }
 
     /* Footer */
     footer {
@@ -2507,7 +2689,9 @@
       font-size: 0.75rem;
     }
 
-    .footer-inner a { color: var(--cyan); }
+    .footer-inner a {
+      color: var(--cyan);
+    }
 
     /* Certificate Modal Viewer */
     .modal-backdrop {
@@ -2524,7 +2708,10 @@
       transition: opacity 0.22s ease;
     }
 
-    .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .modal-dialog {
       position: relative;
@@ -2540,7 +2727,9 @@
       transition: transform 0.22s ease;
     }
 
-    .modal-backdrop.open .modal-dialog { transform: translateY(0) scale(1); }
+    .modal-backdrop.open .modal-dialog {
+      transform: translateY(0) scale(1);
+    }
 
     .modal-close {
       position: absolute;
@@ -2555,7 +2744,10 @@
       cursor: pointer;
     }
 
-    .modal-close:hover { color: var(--text); border-color: var(--cyan); }
+    .modal-close:hover {
+      color: var(--text);
+      border-color: var(--cyan);
+    }
 
     .modal-badge-layout {
       display: grid;
@@ -2589,42 +2781,63 @@
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
+    /* Scroll Reveal */
     .js .reveal {
       opacity: 0;
       transform: translateY(22px);
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
-    .js .reveal.visible { opacity: 1; transform: none; }
 
+    .js .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Animations */
     @keyframes statusPulse {
       0% { transform: scale(0.9); opacity: 0.9; }
       100% { transform: scale(2.2); opacity: 0; }
     }
+
     @keyframes dashFlow {
       to { stroke-dashoffset: -120; }
     }
+
     @keyframes ringRotate {
       to { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(350deg); }
     }
+
     @keyframes ringRotateReverse {
       to { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-370deg); }
     }
+
     @keyframes corePulse {
       0%, 100% { transform: scale(1); opacity: 0.75; }
       50% { transform: scale(1.06); opacity: 1; }
     }
+
     @keyframes nodeFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-9px); }
     }
+
     @keyframes marquee {
       to { transform: translateX(-50%); }
     }
 
+    /* Responsive Breakpoints */
     @media (max-width: 1280px) {
-      .menu-toggle { display: grid; margin-left: 4px; flex-shrink: 0; }
+      .menu-toggle {
+        display: grid;
+        margin-left: 4px;
+        flex-shrink: 0;
+      }
+
       .nav-links {
         position: absolute;
         top: 80px;
@@ -2640,47 +2853,154 @@
         background: rgba(5, 10, 22, 0.98);
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
       }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 12px 14px; }
-      .nav-actions { margin-left: auto; }
-      .hero { grid-template-columns: 1fr 480px; gap: 36px; }
-      .tools-grid { grid-template-columns: repeat(4, 1fr); }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 14px;
+      }
+
+      .nav-actions {
+        margin-left: auto;
+      }
+
+      .hero {
+        grid-template-columns: 1fr 480px;
+        gap: 36px;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     @media (max-width: 920px) {
-      .hero { min-height: auto; padding-top: 140px; grid-template-columns: 1fr; }
-      .hero-visual { margin: 16px auto 0; }
-      .section-heading, .expertise-grid, .case-grid, .credentials-grid { grid-template-columns: 1fr; }
-      .expertise-card { min-height: auto; }
-      .side-credentials { grid-template-columns: 1fr 1fr; }
+      .hero {
+        min-height: auto;
+        padding-top: 140px;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        margin: 16px auto 0;
+      }
+
+      .section-heading,
+      .expertise-grid,
+      .case-grid,
+      .credentials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .expertise-card {
+        min-height: auto;
+      }
+
+      .side-credentials {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 740px) {
-      .container { width: min(100% - 28px, var(--max-width)); }
-      .section { padding: 76px 0; }
-      .navbar > .nav-actions .hud-btn { display: none; }
-      .metrics-grid { grid-template-columns: 1fr 1fr; }
-      .metric:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
-      .metric:nth-child(4) { border-top: 1px solid var(--line); }
-      .tools-grid { grid-template-columns: repeat(3, 1fr); }
-      .services-panel { grid-template-columns: 1fr; gap: 14px; }
-      .experience-header { grid-template-columns: 1fr; padding: 25px; }
-      .experience-intro { padding: 22px 25px; }
-      summary { padding: 19px 25px; }
-      details ul { padding: 0 25px 23px 45px; }
-      .certificate, .modal-badge-layout { grid-template-columns: 1fr; text-align: center; }
-      .cert-seal { margin-inline: auto; }
-      .cert-actions { justify-content: center; }
-      .side-credentials { grid-template-columns: 1fr; }
-      .contact-box { padding: 40px 24px; }
-      .footer-inner { flex-direction: column; text-align: center; }
+      .container {
+        width: min(100% - 28px, var(--max-width));
+      }
+
+      .section {
+        padding: 76px 0;
+      }
+
+      .navbar > .nav-actions .weather-btn {
+        display: none;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metric:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .metric:nth-child(4) {
+        border-top: 1px solid var(--line);
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .services-panel {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .experience-header {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      .experience-intro {
+        padding: 22px 25px;
+      }
+
+      summary {
+        padding: 19px 25px;
+      }
+
+      details ul {
+        padding: 0 25px 23px 45px;
+      }
+
+      .certificate,
+      .modal-badge-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .cert-seal {
+        margin-inline: auto;
+      }
+
+      .cert-actions {
+        justify-content: center;
+      }
+
+      .side-credentials {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        padding: 40px 24px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
     }
 
     @media (max-width: 480px) {
-      .brand-copy small { display: none; }
-      .hero-actions .btn { width: 100%; }
-      .cloud-scene { height: 295px; transform: scale(0.86); margin: -14px -20px; }
-      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      .brand-copy small {
+        display: none;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .cloud-scene {
+        height: 295px;
+        transform: scale(0.86);
+        margin: -14px -20px;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2692,14 +3012,16 @@
   </style>
 </head>
 
-<body class="custom-cursor-active">
+<body>
   <!-- =========================================================================
-       CYBERPUNK SRE KERNEL TERMINAL PRELOADER (AUTO-ENABLED AUDIO)
+       CYBERPUNK SRE KERNEL TERMINAL PRELOADER + WATCH DOGS 2 DATA-COPY AUDIO
        ========================================================================= -->
   <div id="bootLoader" role="dialog" aria-label="DV_CLOUD_SRE Kernel Initialization Screen">
     <div class="boot-corner-telemetry">
       <span>MEM_ADDR: <strong id="bootHexAddr" style="color:var(--cyan);">0x7FFF8A00</strong> // DEDSEC_GITOPS_SYNC</span>
-      <span class="boot-audio-pill">🔊 WATCH_DOGS SYNTH: AUTO-STREAMING</span>
+      <button type="button" class="boot-audio-pill" id="bootAudioEnableBtn">
+        🔊 WATCH_DOGS DATA-COPY SYNTH: ACTIVE
+      </button>
     </div>
 
     <div class="boot-terminal-wrap">
@@ -2751,7 +3073,7 @@
         </div>
 
         <div class="boot-controls">
-          <button type="button" class="boot-btn" id="bootSoundToggleBtn">🔊 Mute Synth Track</button>
+          <button type="button" class="boot-btn" id="bootSoundToggleBtn">⚡ Toggle Synth Track</button>
           <button type="button" class="boot-btn secondary" id="bootSkipBtn">Skip Boot ⏭</button>
         </div>
       </div>
@@ -2776,17 +3098,20 @@
           <stop offset="100%" stop-color="#FF3B5C"/>
         </linearGradient>
       </defs>
+      <!-- 3D Storm Cloud Silhouette -->
       <path class="cursor-cloud-path" d="M20 39H46C51.5 39 56 34.8 56 29.5C56 24.5 52.1 20.4 47.2 20C45.4 13.6 39.5 9 32.5 9C24.2 9 17.4 15.5 17 23.7C12.4 24.8 9 28.9 9 33.8C9 36.8 11.4 39 14.5 39H20Z" fill="rgba(8, 18, 38, 0.9)" stroke="url(#cursorCloudGrad)" stroke-width="2.6" stroke-linejoin="round"/>
+      <!-- High-Voltage Lightning Flash Bolt -->
       <path class="cursor-bolt-path" d="M34 22L22 38H32L28 56L44 36H33.5L34 22Z" fill="url(#cursorBoltGrad)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+      <!-- Click Thunder Arcs -->
       <path class="cursor-strike-arc" d="M14 44L6 52M50 44L58 52M28 57L28 63" stroke="#00F0FF" stroke-width="2" stroke-linecap="round"/>
     </svg>
     <span class="cursor-badge-label" id="cursorModeText">⚡ FLASH READY</span>
   </div>
 
-  <!-- Background 3D Canvas -->
+  <!-- Multi-Layer 3D Volumetric Cloud, Lightning, Cursor Sparks & Cyber Data-Rain Canvas -->
   <canvas id="webgl" aria-hidden="true"></canvas>
 
-  <!-- Ultra-Wide HUD Navbar -->
+  <!-- Site Header -->
   <header class="site-header" id="siteHeader">
     <nav class="navbar container" aria-label="Main navigation">
       <a class="brand" href="#home" aria-label="Dhayanidhi V home">
@@ -2800,10 +3125,10 @@
       <div class="nav-links" id="navLinks">
         <a href="#expertise">Expertise</a>
         <a href="#impact">Impact</a>
-        <a href="#stack">Services</a>
+        <a href="#stack">3D Stack</a>
         <a href="#arcade">🎮 Arcade</a>
         <a href="#experience">Experience</a>
-        <a href="#credentials">Certification</a>
+        <a href="#credentials">Credentials</a>
         <a href="#contact">Contact</a>
       </div>
 
@@ -2811,17 +3136,14 @@
         <button class="btn btn-small btn-secondary" type="button" id="replayBootBtn" title="Replay DV_CLOUD_SRE Kernel Boot Screen">
           👾 Boot
         </button>
-        <button class="btn btn-small hud-btn" type="button" id="toggleAudioBtn" aria-pressed="true" title="Toggle Server Room & Linux Terminal Audio Synthesizer">
-          🔊 Audio: ON
+        <button class="btn btn-small audio-btn" type="button" id="toggleAudioBtn" aria-pressed="false" title="Toggle Server Room & Linux Terminal Audio Synthesizer">
+          🔊 Audio: OFF
         </button>
         <button class="btn btn-small btn-secondary" type="button" id="openAudioDeckBtn" title="Open Linux & Data-Center Sound Tester">
           🎛️ SFX
         </button>
-        <button class="btn btn-small hud-btn" type="button" id="toggleCursorBtn" aria-pressed="true" title="Switch between Custom Cloud Cursor and Normal System Cursor">
-          ✨ Cursor: Flash
-        </button>
-        <button class="btn btn-small hud-btn" type="button" id="toggleWeatherBtn" aria-pressed="true" title="Toggle Weather Mode">
-          🌧️ Storm: ON
+        <button class="btn btn-small weather-btn weather-toggle" type="button" id="toggleWeatherBtn" aria-pressed="true" title="Toggle 3D Cloud Storm & Cyber Rain">
+          🌧️ Rain: ON
         </button>
         <a class="btn btn-primary btn-small" href="https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf" download="Dhayanidhi_V_Resume.pdf" data-download-resume>Resume ↓</a>
       </div>
@@ -2833,11 +3155,11 @@
       </button>
     </nav>
 
-    <!-- Linux & Data-Center Sound Deck Drawer -->
+    <!-- Interactive Server Room & Linux Terminal Audio Synthesizer Deck -->
     <div class="audio-deck" id="audioDeck" role="region" aria-label="Linux & Server Audio Synthesizer Controls">
       <div class="audio-deck-head">
         <span>LINUX / SERVER AUDIO SYNTH</span>
-        <span class="audio-eq active" id="audioEq"><i></i><i></i><i></i><i></i></span>
+        <span class="audio-eq" id="audioEq"><i></i><i></i><i></i><i></i></span>
       </div>
       <p style="margin: 0; color: var(--muted); font-size: 0.7rem; line-height: 1.45;">
         Procedural Web Audio synthesizer: Data-center cooling fan drone, NVMe disk seeks, Linux mechanical keystrokes &amp; lightning strikes.
@@ -2874,7 +3196,7 @@
         </p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#stack">Explore Services &amp; Tech <span>↗</span></a>
+          <a class="btn btn-primary" href="#stack">Explore 3D Cloud Stack <span>↗</span></a>
           <a class="btn btn-secondary" href="#arcade">🎮 Play DevOps Arcade</a>
           <a class="btn btn-secondary" href="https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf" download="Dhayanidhi_V_Resume.pdf" data-download-resume>Download Résumé <span>↓</span></a>
           <button class="btn btn-secondary" type="button" id="openCertModalHero">3D AWS Badge <span>✦</span></button>
@@ -2887,7 +3209,7 @@
         </div>
       </div>
 
-      <!-- 3D Control Plane Visual -->
+      <!-- 3D Interactive Control-Plane Visual with Official Brand Logos -->
       <div class="hero-visual reveal">
         <div class="system-card spotlight-card" id="tiltCard">
           <div class="system-topbar">
@@ -2910,16 +3232,25 @@
                 <path id="p4" class="wire" d="M260 168 L448 282" />
                 <path id="p5" class="wire" d="M260 168 L260 32" />
                 <path id="p6" class="wire" d="M260 168 L260 305" />
-                <circle class="packet" r="3.2"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
-                <circle class="packet" r="3.2"><animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
-                <circle class="packet" r="3.2"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
-                <circle class="packet" r="3.2"><animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
+                <circle class="packet" r="3.2">
+                  <animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion>
+                </circle>
+                <circle class="packet" r="3.2">
+                  <animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion>
+                </circle>
+                <circle class="packet" r="3.2">
+                  <animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion>
+                </circle>
+                <circle class="packet" r="3.2">
+                  <animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion>
+                </circle>
               </svg>
 
               <div class="orbit-ring one"></div>
               <div class="orbit-ring two"></div>
               <div class="orbit-ring three"></div>
 
+              <!-- Central 3D Holographic AWS + OCI + ROSA Cloud Reactor -->
               <div class="cloud-core">
                 <div class="core-logos">
                   <div class="core-aws-badge" title="Amazon Web Services">
@@ -2935,7 +3266,7 @@
                 <small>EKS × OPENSHIFT × GITOPS</small>
               </div>
 
-              <!-- 6 Orbiting 3D Official Brand Nodes -->
+              <!-- 6 Orbiting 3D Official Brand Logo Nodes -->
               <div class="tech-node node-1" data-node-info="Kubernetes (EKS) & OpenShift ROSA Orchestration">
                 <div class="node-icon" title="Kubernetes">
                   <img src="https://cdn.simpleicons.org/kubernetes/326CE5" alt="Kubernetes" onerror="this.style.display='none'" />
@@ -2996,12 +3327,12 @@
 
         <div class="visual-caption">
           <span>3D Holographic Control Plane (Hover Nodes for Linux SFX)</span>
-          <strong>Cloud Cursor &amp; Server Audio Active</strong>
+          <strong>Cloud Cursor &amp; Server Audio Ready</strong>
         </div>
       </div>
     </section>
 
-    <!-- Marquee Rail -->
+    <!-- Technology Marquee Rail -->
     <div class="technology-rail" aria-hidden="true">
       <div class="marquee-track">
         <div class="marquee-group">
@@ -3019,7 +3350,7 @@
       </div>
     </div>
 
-    <!-- Measurable Impact Metrics -->
+    <!-- Key Metrics -->
     <section class="metrics-section container reveal" aria-label="Career impact metrics">
       <div class="metrics-grid">
         <div class="metric">
@@ -3058,7 +3389,12 @@
           <h3>Cloud &amp; Kubernetes Platforms</h3>
           <p>Designing and operating highly available AWS and Oracle Cloud (OCI) infrastructure, Amazon EKS, and Red Hat OpenShift Service on AWS (ROSA) with zero-downtime migration and DR readiness.</p>
           <div class="tag-list">
-            <span class="tag">AWS</span><span class="tag">OCI</span><span class="tag">EKS</span><span class="tag">OpenShift ROSA</span><span class="tag">Linux</span><span class="tag">Docker</span>
+            <span class="tag">AWS</span>
+            <span class="tag">OCI</span>
+            <span class="tag">EKS</span>
+            <span class="tag">OpenShift ROSA</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Docker</span>
           </div>
         </article>
 
@@ -3068,7 +3404,12 @@
           <h3>CI/CD, GitOps &amp; Automation</h3>
           <p>Architecting reusable Tekton, Jenkins, and Ansible automation workflows. Managing declarative Kubernetes delivery via Argo CD with automated drift detection and rollout gates.</p>
           <div class="tag-list">
-            <span class="tag">Argo CD</span><span class="tag">Tekton</span><span class="tag">Jenkins</span><span class="tag">Ansible</span><span class="tag">Git</span><span class="tag">Python / Bash</span>
+            <span class="tag">Argo CD</span>
+            <span class="tag">Tekton</span>
+            <span class="tag">Jenkins</span>
+            <span class="tag">Ansible</span>
+            <span class="tag">Git</span>
+            <span class="tag">Python / Bash</span>
           </div>
         </article>
 
@@ -3078,7 +3419,12 @@
           <h3>SRE, FinOps &amp; Observability</h3>
           <p>Enhancing production reliability with full-stack metrics, centralized log forwarders, container vulnerability scanning, and proactive FinOps cost optimization ($36K/year saved).</p>
           <div class="tag-list">
-            <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">CloudWatch</span><span class="tag">Splunk</span><span class="tag">LokiStack</span><span class="tag">Prisma Cloud</span>
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">CloudWatch</span>
+            <span class="tag">Splunk</span>
+            <span class="tag">LokiStack</span>
+            <span class="tag">Prisma Cloud</span>
           </div>
         </article>
       </div>
@@ -3141,14 +3487,14 @@
       </div>
     </section>
 
-    <!-- 03 / Services & Technologies Mastered -->
+    <!-- 03 / Interactive 3D Technology Stack with Original Brand Logos -->
     <section class="section container" id="stack">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">03 / Services &amp; Technologies Mastered</p>
-          <h2>Core cloud infrastructure, container orchestration, GitOps automation, and SRE tooling engineered in production banking environments.</h2>
+          <p class="section-kicker">03 / 3D Official Brand Stack</p>
+          <h2>Original cloud &amp; DevOps logos in 3D motion.</h2>
         </div>
-        <p>Filter the engineering stack by discipline. Hover over any card to tilt the 3D pedestal and trigger Linux SSH telemetry audio.</p>
+        <p>Filter the engineering stack by discipline. Hover over any card with the Cloud-Flash cursor to tilt the 3D pedestal and trigger Linux SSH telemetry audio.</p>
       </div>
 
       <div class="stack-toolbar reveal" role="group" aria-label="Filter technologies">
@@ -3165,16 +3511,30 @@
       <div class="services-panel reveal">
         <h3>AWS &amp; Cloud Services <span>NETWORKING · COMPUTE · SECURITY · FINOPS</span></h3>
         <div class="service-chips">
-          <span class="tag">VPC</span><span class="tag">Route 53</span><span class="tag">S3</span><span class="tag">EC2</span>
-          <span class="tag">EKS</span><span class="tag">OpenShift ROSA</span><span class="tag">RDS</span><span class="tag">API Gateway</span>
-          <span class="tag">CloudFront</span><span class="tag">ALB / NLB</span><span class="tag">IAM</span><span class="tag">AWS Network Firewall</span>
-          <span class="tag">KMS / CMK</span><span class="tag">ECR Cross-Region</span><span class="tag">CodeCommit</span><span class="tag">CodeBuild</span>
-          <span class="tag">CloudTrail</span><span class="tag">Cost Explorer</span><span class="tag">OCI Compute &amp; VCN</span>
+          <span class="tag">VPC</span>
+          <span class="tag">Route 53</span>
+          <span class="tag">S3</span>
+          <span class="tag">EC2</span>
+          <span class="tag">EKS</span>
+          <span class="tag">OpenShift ROSA</span>
+          <span class="tag">RDS</span>
+          <span class="tag">API Gateway</span>
+          <span class="tag">CloudFront</span>
+          <span class="tag">ALB / NLB</span>
+          <span class="tag">IAM</span>
+          <span class="tag">AWS Network Firewall</span>
+          <span class="tag">KMS / CMK</span>
+          <span class="tag">ECR Cross-Region</span>
+          <span class="tag">CodeCommit</span>
+          <span class="tag">CodeBuild</span>
+          <span class="tag">CloudTrail</span>
+          <span class="tag">Cost Explorer</span>
+          <span class="tag">OCI Compute &amp; VCN</span>
         </div>
       </div>
     </section>
 
-    <!-- 04 / DevOps & Cloud Arcade -->
+    <!-- 03.5 / Interactive DevOps & Cloud Arcade Section -->
     <section class="section container" id="arcade">
       <div class="section-heading reveal">
         <div>
@@ -3235,7 +3595,7 @@
                 <div><span>🌟 Spot / Savings Plan</span><strong style="color:#f7b801">+$5K + Shield</strong></div>
                 <div><span>💣 Prod DB Drop (AVOID!)</span><strong style="color:var(--red)">-1 SLA Heart</strong></div>
               </div>
-              <p style="font-size: 0.72rem; color: var(--cyan);">Tip: Reach <strong>$36K/yr saved</strong> to unlock the FinOps Architect badge &amp; victory fanfare!</p>
+              <p style="font-size: 0.72rem; color: var(--cyan);">Tip: Reach <strong>$36K/yr saved</strong> to unlock the FinOps Architect badge &amp; 8-bit victory fanfare!</p>
             </aside>
           </div>
 
@@ -3328,7 +3688,7 @@
       </div>
     </section>
 
-    <!-- 05 / Professional Experience -->
+    <!-- 05 / Production Experience -->
     <section class="section container" id="experience">
       <div class="section-heading reveal">
         <div>
@@ -3390,11 +3750,11 @@
       </article>
     </section>
 
-    <!-- 06 / Certification & Credentials -->
+    <!-- 06 / Credentials & Verified 3D AWS Certification Shield -->
     <section class="section container" id="credentials">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">06 / Certification &amp; Credentials</p>
+          <p class="section-kicker">06 / Credentials &amp; Verification</p>
           <h2>Verified AWS Certified Solutions Architect badge.</h2>
         </div>
         <p>Click the 3D holographic AWS shield to inspect the credential details in-page or verify directly via the official Credly public URL.</p>
@@ -3483,6 +3843,7 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="container footer-inner">
       <div>© <span id="yearSpan">2026</span> Dhayanidhi V · DevOps, SRE &amp; AWS Cloud Engineer</div>
@@ -3492,7 +3853,7 @@
     </div>
   </footer>
 
-  <!-- Certificate Modal Viewer -->
+  <!-- Interactive Certificate Preview Modal -->
   <div class="modal-backdrop" id="certModal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" hidden>
     <div class="modal-dialog">
       <button class="modal-close" id="closeCertModal" aria-label="Close certificate preview">✕</button>
@@ -3542,6 +3903,7 @@
     </div>
   </div>
 
+  <!-- Toast Notification -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -3550,6 +3912,7 @@
 
       const CREDLY_URL = "https://www.credly.com/badges/0d0788cd-0b2c-4f5c-b3f0-9e39a6c185f9/public_url";
 
+      // Toast helper
       const toastEl = document.getElementById("toast");
       let toastTimer = null;
       function showToast(message) {
@@ -3563,10 +3926,10 @@
       }
 
       // =========================================================================
-      // WEB AUDIO API: AUTOMATICALLY ENABLED SOUND SYNTHESIZER
+      // WEB AUDIO API: SERVER ROOM HUM & LINUX TERMINAL SOUND ENGINE
       // =========================================================================
       let audioCtx = null;
-      let audioEnabled = true; // Automatically enabled on page load
+      let audioEnabled = false;
       let serverDroneNodes = null;
       let nvmeTickInterval = null;
 
@@ -3588,6 +3951,7 @@
         return audioCtx;
       }
 
+      // Ambient Data-Center Server Hum + Cooling Fan + NVMe Seek Clicks
       function startServerRoomAmbience() {
         const ctx = ensureAudioContext();
         if (!ctx || serverDroneNodes) return;
@@ -3598,6 +3962,7 @@
         masterGain.gain.exponentialRampToValueAtTime(0.032, now + 0.8);
         masterGain.connect(ctx.destination);
 
+        // 60Hz + 120Hz Server Rack Power Supply Hum
         const osc60 = ctx.createOscillator();
         const osc120 = ctx.createOscillator();
         osc60.type = "sawtooth";
@@ -3613,6 +3978,7 @@
         osc120.connect(lowpass);
         lowpass.connect(masterGain);
 
+        // Filtered Pink/White Noise for Server Rack Airflow Fan
         const bufferSize = ctx.sampleRate * 2;
         const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
@@ -3641,6 +4007,7 @@
 
         serverDroneNodes = { osc60, osc120, whiteNoise, masterGain };
 
+        // Subtle periodic NVMe / HDD RAID telemetry activity ticks
         nvmeTickInterval = setInterval(() => {
           if (audioEnabled && Math.random() < 0.65) {
             playNvmeSeekTick();
@@ -3687,6 +4054,7 @@
         osc.stop(now + 0.02);
       }
 
+      // Crisp Linux SSH / K8s Node Hover Blip
       function playLinuxHoverBlip(freqOffset = 0) {
         if (!audioEnabled) return;
         const ctx = ensureAudioContext();
@@ -3708,12 +4076,13 @@
         osc.stop(now + 0.06);
       }
 
+      // Linux Terminal Bell + Mechanical Enter Switch Click
       function playLinuxTerminalBell() {
-        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
 
+        // Classic Unix terminal bell (880Hz + 1760Hz harmonic)
         const osc1 = ctx.createOscillator();
         const osc2 = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -3736,12 +4105,14 @@
         osc2.stop(now + 0.17);
       }
 
+      // Electrostatic Cloud Lightning Strike + Mechanical Click
       function playLightningClickSynth(forcePlay = false) {
         if (!audioEnabled && !forcePlay) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
 
+        // 1. High-voltage zap sweep
         const osc = ctx.createOscillator();
         const zapGain = ctx.createGain();
         osc.type = "sawtooth";
@@ -3756,6 +4127,7 @@
         osc.start(now);
         osc.stop(now + 0.13);
 
+        // 2. Short noise burst for thunder crack
         const bufLen = Math.floor(ctx.sampleRate * 0.09);
         const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
         const data = buf.getChannelData(0);
@@ -3778,17 +4150,27 @@
         noise.start(now);
       }
 
+      // =========================================================================
+      // WATCH DOGS 2 / DEDSEC DATA-COPYING & PACKET EXFILTRATION SYNTH SEQUENCER
+      // =========================================================================
+      // Produces the signature Watch Dogs 2 hacking / data-download progress track:
+      // 1. Driving dark-electro bass arpeggio pulse (D-minor cyber synth)
+      // 2. High-speed frequency-hopped data-copy telemetry chirps (1.2kHz - 4.8kHz)
+      // 3. Bit-stream granular modem ticks on every 1% progress step
+      // 4. Dual-tone kernel log lock-in confirmation blips
       let wd2StepCounter = 0;
+
       function playWatchDogsDataPacketTick(percent) {
-        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
 
         const now = ctx.currentTime;
         wd2StepCounter++;
 
+        // Layer A: High-Speed Data-Copy Telemetry Chirp (every percent tick)
         const chirpOsc = ctx.createOscillator();
         const chirpGain = ctx.createGain();
+        // Watch Dogs 2 style pentatonic/cyber frequency hopping
         const wd2DataFreqs = [1480, 1760, 1975, 2349, 2637, 2960, 3520, 3951];
         const f1 = wd2DataFreqs[(percent + wd2StepCounter) % wd2DataFreqs.length];
         const f2 = wd2DataFreqs[(percent * 3 + 2) % wd2DataFreqs.length];
@@ -3812,8 +4194,9 @@
         chirpOsc.start(now);
         chirpOsc.stop(now + 0.038);
 
+        // Layer B: Driving Watch Dogs 2 Dark-Electro Synth Bass Arpeggio (every 3% step)
         if (percent % 3 === 0) {
-          const bassNotes = [73.42, 87.31, 110.0, 146.83, 130.81, 110.0, 164.81, 146.83];
+          const bassNotes = [73.42, 87.31, 110.0, 146.83, 130.81, 110.0, 164.81, 146.83]; // D2, F2, A2, D3, C3, A2, E3, D3
           const noteFreq = bassNotes[(percent / 3) % bassNotes.length];
 
           const bassOsc = ctx.createOscillator();
@@ -3827,6 +4210,7 @@
           subOsc.frequency.setValueAtTime(noteFreq * 0.5, now);
 
           bassFilter.type = "lowpass";
+          // Filter opens up as percentage increases from 0% to 100%
           const cutoff = 320 + (percent / 100) * 1400;
           bassFilter.frequency.setValueAtTime(cutoff, now);
           bassFilter.frequency.exponentialRampToValueAtTime(160, now + 0.11);
@@ -3847,8 +4231,8 @@
         }
       }
 
+      // Kernel Log Line Lock-In Confirmation Chirp
       function playKernelLogLockSfx(stepIdx) {
-        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
         const now = ctx.currentTime;
@@ -3870,10 +4254,10 @@
       }
 
       function playRetroBootFanfare() {
-        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
-        const notes = [293.66, 440.0, 587.33, 739.99, 880.0, 1174.66];
+        // Watch Dogs 2 "HACK COMPLETE / ACCESS GRANTED" Cyber Chord + Sub Drop
+        const notes = [293.66, 440.0, 587.33, 739.99, 880.0, 1174.66]; // D major/9th cyber chord
         notes.forEach((freq, idx) => {
           const now = ctx.currentTime + idx * 0.055;
           const osc = ctx.createOscillator();
@@ -3890,7 +4274,6 @@
       }
 
       function playArcadePowerupSfx(isGood = true) {
-        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
@@ -3913,7 +4296,7 @@
       }
 
       // =========================================================================
-      // BOOT LOADER CONTROLLER
+      // CYBERPUNK SRE KERNEL PRELOADER CONTROLLER (0% -> 100% + AUTO AUDIO)
       // =========================================================================
       const bootLoader = document.getElementById("bootLoader");
       const bootBarFrame = document.getElementById("bootBarFrame");
@@ -3923,6 +4306,7 @@
       const bootHexAddr = document.getElementById("bootHexAddr");
       const bootPacketRate = document.getElementById("bootPacketRate");
       const wd2EqBars = document.querySelectorAll("#wd2EqBars span");
+      const bootAudioEnableBtn = document.getElementById("bootAudioEnableBtn");
       const bootSoundToggleBtn = document.getElementById("bootSoundToggleBtn");
       const bootSkipBtn = document.getElementById("bootSkipBtn");
       const replayBootBtn = document.getElementById("replayBootBtn");
@@ -3930,37 +4314,238 @@
       let bootInterval = null;
       let bootPercent = 0;
       let lastActivatedLogIdx = -1;
+      let bootAudioMuted = false;
+
+      function updateBootAudioPillUI() {
+        if (!bootAudioEnableBtn) return;
+        if (bootAudioMuted) {
+          bootAudioEnableBtn.classList.add("locked");
+          bootAudioEnableBtn.textContent = "🔇 WATCH_DOGS SYNTH: MUTED (CLICK TO UNMUTE)";
+          return;
+        }
+        if (audioCtx && audioCtx.state === "running") {
+          bootAudioEnableBtn.classList.remove("locked");
+          bootAudioEnableBtn.textContent = "🔊 WATCH_DOGS DATA-COPY SYNTH: STREAMING";
+        } else {
+          bootAudioEnableBtn.classList.add("locked");
+          bootAudioEnableBtn.textContent = "⚡ MOVE CURSOR OR CLICK FOR WATCH_DOGS AUDIO STREAM";
+        }
+      }
+
+      // Attempt automatic Web Audio unlock on load & on first micro-interaction
+      function tryAutoUnlockBootAudio() {
+        if (bootAudioMuted) return;
+        const ctx = ensureAudioContext();
+        if (ctx && ctx.state === "running") {
+          if (!audioEnabled) {
+            setAudioState(true, false);
+          }
+          updateBootAudioPillUI();
+        } else {
+          updateBootAudioPillUI();
+        }
+      }
+
+      ["pointerdown", "pointermove", "mousemove", "keydown", "touchstart", "click"].forEach((evtName) => {
+        window.addEventListener(evtName, function onFirstInteract() {
+          if (!bootAudioMuted && (!audioCtx || audioCtx.state !== "running")) {
+            tryAutoUnlockBootAudio();
+          }
+          if (audioCtx && audioCtx.state === "running") {
+            updateBootAudioPillUI();
+            window.removeEventListener(evtName, onFirstInteract);
+          }
+        }, { passive: true });
+      });
+
+      function animateWd2Equalizer(active) {
+        if (!wd2EqBars.length) return;
+        wd2EqBars.forEach((bar, i) => {
+          if (!active) {
+            bar.style.height = "3px";
+          } else {
+            const h = 3 + Math.floor(Math.random() * 16);
+            bar.style.height = `${h}px`;
+          }
+        });
+      }
+
+      function completeBootSequence() {
+        clearInterval(bootInterval);
+        if (!bootLoader || bootLoader.classList.contains("boot-complete")) return;
+
+        bootPercent = 100;
+        if (bootBarFill) bootBarFill.style.width = "100%";
+        if (bootPercentText) bootPercentText.textContent = "100%";
+        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "100");
+
+        bootLogItems.forEach((item) => {
+          item.classList.remove("active");
+          item.classList.add("done");
+        });
+
+        if (bootPacketRate) {
+          bootPacketRate.textContent = "EXFIL_COMPLETE // 150+ PIPELINES & 3D CLOUD ONLINE";
+        }
+        animateWd2Equalizer(false);
+
+        if (!bootAudioMuted) {
+          playRetroBootFanfare();
+        }
+
+        setTimeout(() => {
+          bootLoader.classList.add("boot-complete");
+        }, 360);
+      }
+
+      function startBootSequence() {
+        if (!bootLoader) return;
+        clearInterval(bootInterval);
+        bootPercent = 0;
+        lastActivatedLogIdx = -1;
+        bootLoader.classList.remove("boot-complete");
+
+        if (bootBarFill) bootBarFill.style.width = "0%";
+        if (bootPercentText) bootPercentText.textContent = "0%";
+        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "0");
+
+        bootLogItems.forEach((item) => {
+          item.classList.remove("active", "done");
+        });
+
+        tryAutoUnlockBootAudio();
+
+        bootInterval = setInterval(() => {
+          if (bootPercent < 100) {
+            bootPercent += 1;
+            if (bootBarFill) bootBarFill.style.width = `${bootPercent}%`;
+            if (bootPercentText) bootPercentText.textContent = `${bootPercent}%`;
+            if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", String(bootPercent));
+
+            // Update live hex memory address & Watch Dogs packet rate
+            if (bootHexAddr) {
+              const hexVal = (0x7FFF8A00 + bootPercent * 256).toString(16).toUpperCase();
+              bootHexAddr.textContent = `0x${hexVal}`;
+            }
+            if (bootPacketRate) {
+              const rate = (1.15 + Math.sin(bootPercent * 0.2) * 0.45).toFixed(2);
+              bootPacketRate.textContent = `EXFIL_STREAM: ${rate} GB/s // PACKETS: ${bootPercent * 48}/4800`;
+            }
+
+            // Progressively reveal and lock in the 5 kernel log lines
+            const totalLogs = bootLogItems.length || 5;
+            const currentLogIdx = Math.min(
+              totalLogs - 1,
+              Math.floor((bootPercent / 100) * totalLogs)
+            );
+
+            bootLogItems.forEach((item, idx) => {
+              if (idx < currentLogIdx) {
+                item.classList.remove("active");
+                item.classList.add("done");
+              } else if (idx === currentLogIdx) {
+                item.classList.add("active");
+                item.classList.remove("done");
+              } else {
+                item.classList.remove("active", "done");
+              }
+            });
+
+            if (currentLogIdx !== lastActivatedLogIdx) {
+              lastActivatedLogIdx = currentLogIdx;
+              if (!bootAudioMuted) {
+                playKernelLogLockSfx(currentLogIdx);
+              }
+            }
+
+            // Play Watch Dogs 2 Data-Copy Synth + animate EQ bars
+            if (!bootAudioMuted) {
+              playWatchDogsDataPacketTick(bootPercent);
+              animateWd2Equalizer(true);
+            } else {
+              animateWd2Equalizer(false);
+            }
+
+            updateBootAudioPillUI();
+          } else {
+            completeBootSequence();
+          }
+        }, 38);
+      }
+
+      if (bootAudioEnableBtn) {
+        bootAudioEnableBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          bootAudioMuted = false;
+          ensureAudioContext();
+          setAudioState(true, false);
+          updateBootAudioPillUI();
+          playKernelLogLockSfx(2);
+        });
+      }
+
+      if (bootSoundToggleBtn) {
+        bootSoundToggleBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          bootAudioMuted = !bootAudioMuted;
+          if (!bootAudioMuted) {
+            ensureAudioContext();
+            setAudioState(true, false);
+            bootSoundToggleBtn.textContent = "🔊 Mute Synth Track";
+          } else {
+            setAudioState(false, false);
+            bootSoundToggleBtn.textContent = "⚡ Enable Synth Track";
+          }
+          updateBootAudioPillUI();
+        });
+      }
+
+      if (bootSkipBtn) {
+        bootSkipBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          completeBootSequence();
+        });
+      }
+
+      if (replayBootBtn) {
+        replayBootBtn.addEventListener("click", () => {
+          bootAudioMuted = false;
+          ensureAudioContext();
+          setAudioState(true, false);
+          startBootSequence();
+        });
+      }
+
+      // Start DV_CLOUD_SRE Kernel preloader & Watch Dogs 2 audio stream immediately
+      startBootSequence();
 
       function setAudioState(enable, announce = true) {
         audioEnabled = enable;
         if (toggleAudioBtn) {
           toggleAudioBtn.setAttribute("aria-pressed", String(audioEnabled));
-          toggleAudioBtn.textContent = audioEnabled ? "🔊 Audio: ON" : "🔇 Audio: OFF";
-        }
-        if (bootSoundToggleBtn) {
-          bootSoundToggleBtn.textContent = audioEnabled ? "🔊 Mute Synth Track" : "⚡ Enable Synth Track";
+          toggleAudioBtn.textContent = audioEnabled
+            ? "🔊 Audio: ON"
+            : "🔇 Audio: OFF";
         }
         if (audioEq) {
           audioEq.classList.toggle("active", audioEnabled);
         }
         if (audioEnabled) {
           startServerRoomAmbience();
-          if (announce) showToast("🔊 Server Room Drone & Linux Audio: ACTIVE");
+          playLinuxTerminalBell();
+          if (announce) {
+            showToast("🔊 Server Room Drone & Linux Terminal Audio: ACTIVE");
+          }
         } else {
           stopServerRoomAmbience();
-          if (announce) showToast("🔇 Server & Linux Audio Muted");
+          if (announce) {
+            showToast("🔇 Server & Linux Audio Muted");
+          }
         }
       }
 
       if (toggleAudioBtn) {
         toggleAudioBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          setAudioState(!audioEnabled, true);
-        });
-      }
-
-      if (bootSoundToggleBtn) {
-        bootSoundToggleBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           setAudioState(!audioEnabled, true);
         });
@@ -3989,7 +4574,10 @@
             playLinuxTerminalBell();
             showToast("🔔 Linux Terminal Bell (880Hz / 1760Hz)");
           } else if (type === "ssh") {
+            const prev = audioEnabled;
+            audioEnabled = true;
             playLinuxHoverBlip(180);
+            audioEnabled = prev;
             showToast("📡 SSH / Kubernetes Telemetry Blip");
           } else if (type === "thunder") {
             playLightningClickSynth(true);
@@ -3998,148 +4586,10 @@
         });
       });
 
-      function animateWd2Equalizer(active) {
-        if (!wd2EqBars.length) return;
-        wd2EqBars.forEach((bar) => {
-          if (!active) {
-            bar.style.height = "3px";
-          } else {
-            const h = 3 + Math.floor(Math.random() * 16);
-            bar.style.height = `${h}px`;
-          }
-        });
-      }
-
-      function completeBootSequence() {
-        clearInterval(bootInterval);
-        if (!bootLoader || bootLoader.classList.contains("boot-complete")) return;
-
-        bootPercent = 100;
-        if (bootBarFill) bootBarFill.style.width = "100%";
-        if (bootPercentText) bootPercentText.textContent = "100%";
-        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "100");
-
-        bootLogItems.forEach((item) => {
-          item.classList.remove("active");
-          item.classList.add("done");
-        });
-
-        if (bootPacketRate) {
-          bootPacketRate.textContent = "EXFIL_COMPLETE // 150+ PIPELINES & 3D CLOUD ONLINE";
-        }
-        animateWd2Equalizer(false);
-        playRetroBootFanfare();
-
-        setTimeout(() => {
-          bootLoader.classList.add("boot-complete");
-        }, 360);
-      }
-
-      function startBootSequence() {
-        if (!bootLoader) return;
-        clearInterval(bootInterval);
-        bootPercent = 0;
-        lastActivatedLogIdx = -1;
-        bootLoader.classList.remove("boot-complete");
-
-        if (bootBarFill) bootBarFill.style.width = "0%";
-        if (bootPercentText) bootPercentText.textContent = "0%";
-        if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", "0");
-
-        bootLogItems.forEach((item) => {
-          item.classList.remove("active", "done");
-        });
-
-        // Ensure audio context active automatically on load
-        const ctx = ensureAudioContext();
-        if (ctx && ctx.state === "suspended") {
-          ctx.resume();
-        }
-        startServerRoomAmbience();
-
-        bootInterval = setInterval(() => {
-          if (bootPercent < 100) {
-            bootPercent += 1;
-            if (bootBarFill) bootBarFill.style.width = `${bootPercent}%`;
-            if (bootPercentText) bootPercentText.textContent = `${bootPercent}%`;
-            if (bootBarFrame) bootBarFrame.setAttribute("aria-valuenow", String(bootPercent));
-
-            if (bootHexAddr) {
-              const hexVal = (0x7FFF8A00 + bootPercent * 256).toString(16).toUpperCase();
-              bootHexAddr.textContent = `0x${hexVal}`;
-            }
-            if (bootPacketRate) {
-              const rate = (1.15 + Math.sin(bootPercent * 0.2) * 0.45).toFixed(2);
-              bootPacketRate.textContent = `EXFIL_STREAM: ${rate} GB/s // PACKETS: ${bootPercent * 48}/4800`;
-            }
-
-            const totalLogs = bootLogItems.length || 5;
-            const currentLogIdx = Math.min(
-              totalLogs - 1,
-              Math.floor((bootPercent / 100) * totalLogs)
-            );
-
-            bootLogItems.forEach((item, idx) => {
-              if (idx < currentLogIdx) {
-                item.classList.remove("active");
-                item.classList.add("done");
-              } else if (idx === currentLogIdx) {
-                item.classList.add("active");
-                item.classList.remove("done");
-              } else {
-                item.classList.remove("active", "done");
-              }
-            });
-
-            if (currentLogIdx !== lastActivatedLogIdx) {
-              lastActivatedLogIdx = currentLogIdx;
-              playKernelLogLockSfx(currentLogIdx);
-            }
-
-            playWatchDogsDataPacketTick(bootPercent);
-            animateWd2Equalizer(true);
-          } else {
-            completeBootSequence();
-          }
-        }, 38);
-      }
-
-      if (bootSkipBtn) {
-        bootSkipBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          completeBootSequence();
-        });
-      }
-
-      if (replayBootBtn) {
-        replayBootBtn.addEventListener("click", () => {
-          startBootSequence();
-        });
-      }
-
-      // Start preloader on load automatically
-      startBootSequence();
-
-      // =========================================================================
-      // HEADER, NAV & CURSOR TOGGLE (CUSTOM CLOUD <-> NORMAL CURSOR)
-      // =========================================================================
+      // Header scroll state & mobile menu
       const siteHeader = document.getElementById("siteHeader");
       const menuButton = document.getElementById("menuButton");
       const navLinks = document.getElementById("navLinks");
-      const toggleCursorBtn = document.getElementById("toggleCursorBtn");
-      const customCursor = document.getElementById("customCursor");
-      const cursorModeText = document.getElementById("cursorModeText");
-      let customCursorActive = true;
-
-      if (toggleCursorBtn) {
-        toggleCursorBtn.addEventListener("click", () => {
-          customCursorActive = !customCursorActive;
-          toggleCursorBtn.setAttribute("aria-pressed", String(customCursorActive));
-          toggleCursorBtn.textContent = customCursorActive ? "✨ Cursor: Flash" : "🖱️ Cursor: Normal";
-          document.body.classList.toggle("custom-cursor-active", customCursorActive);
-          showToast(customCursorActive ? "✨ Custom 3D Cloud & Flash Cursor enabled" : "🖱️ Normal system cursor enabled");
-        });
-      }
 
       window.addEventListener("scroll", () => {
         if (window.scrollY > 24) {
@@ -4163,7 +4613,7 @@
         });
       }
 
-      // Terminal & node hover sounds
+      // Interactive Terminal Cycling in Hero + Subtle Keystroke Chime
       const terminalCommands = [
         {
           cmd: "argocd app sync equitas-banking-platform --prune",
@@ -4192,7 +4642,9 @@
         if (cmdEl && outEl) {
           cmdEl.textContent = terminalCommands[termIdx].cmd;
           outEl.textContent = terminalCommands[termIdx].out;
-          playNvmeSeekTick();
+          if (audioEnabled) {
+            playNvmeSeekTick();
+          }
         }
       }, 4200);
 
@@ -4211,7 +4663,7 @@
         });
       });
 
-      // 20 Complete DevOps & Cloud Stack Tools with Official Logos
+      // 20 Complete DevOps & Cloud Stack Tools with Authentic Full-Color Official Brand Logos
       const toolsData = [
         {
           name: "Amazon Web Services",
@@ -4233,7 +4685,9 @@
           badge: "OCI CLOUD",
           color: "#F80000",
           glow: "rgba(248, 0, 0, 0.35)",
-          logo: `<svg viewBox="0 0 64 40" fill="none"><rect x="8" y="9" width="48" height="22" rx="11" stroke="#F80000" stroke-width="5"/></svg>`
+          logo: `<svg viewBox="0 0 64 40" fill="none">
+            <rect x="8" y="9" width="48" height="22" rx="11" stroke="#F80000" stroke-width="5"/>
+          </svg>`
         },
         {
           name: "Kubernetes (EKS)",
@@ -4469,17 +4923,25 @@
         });
       });
 
+      // Bind 3D tilt & spotlight glare to Hero Control Plane and Feature Cards
       const heroTiltCard = document.getElementById("tiltCard");
-      if (heroTiltCard) bind3DTilt(heroTiltCard, 9);
-      document.querySelectorAll("[data-tilt-card]").forEach((card) => bind3DTilt(card, 7));
+      if (heroTiltCard) {
+        bind3DTilt(heroTiltCard, 9);
+      }
+      document.querySelectorAll("[data-tilt-card]").forEach((card) => {
+        bind3DTilt(card, 7);
+      });
 
+      // Accordion Linux sound feedback
       document.querySelectorAll("details summary").forEach((sum) => {
         sum.addEventListener("click", () => {
-          playLinuxTerminalBell();
+          if (audioEnabled) {
+            playLinuxTerminalBell();
+          }
         });
       });
 
-      // Scroll Reveal & Counters
+      // Scroll Reveal & Animated Metric Counters
       const revealEls = document.querySelectorAll(".reveal");
       const counterEls = document.querySelectorAll("[data-count]");
       const countedSet = new WeakSet();
@@ -4498,7 +4960,9 @@
           const eased = 1 - Math.pow(1 - progress, 3);
           const current = Math.round(target * eased);
           el.textContent = `${prefix}${current}${suffix}`;
-          if (progress < 1) requestAnimationFrame(step);
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
         }
         requestAnimationFrame(step);
       }
@@ -4533,14 +4997,18 @@
       function openCertModal() {
         if (!certModal) return;
         certModal.hidden = false;
-        requestAnimationFrame(() => { certModal.classList.add("open"); });
-        playLinuxTerminalBell();
+        requestAnimationFrame(() => {
+          certModal.classList.add("open");
+        });
+        if (audioEnabled) playLinuxTerminalBell();
       }
 
       function closeCertModal() {
         if (!certModal) return;
         certModal.classList.remove("open");
-        setTimeout(() => { certModal.hidden = true; }, 220);
+        setTimeout(() => {
+          certModal.hidden = true;
+        }, 220);
       }
 
       openCertBtns.forEach((btn) => {
@@ -4554,16 +5022,23 @@
         });
       });
 
-      if (closeCertModalBtn) closeCertModalBtn.addEventListener("click", closeCertModal);
+      if (closeCertModalBtn) {
+        closeCertModalBtn.addEventListener("click", closeCertModal);
+      }
+
       if (certModal) {
         certModal.addEventListener("click", (e) => {
           if (e.target === certModal) closeCertModal();
         });
       }
+
       window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && certModal && !certModal.hidden) closeCertModal();
+        if (e.key === "Escape" && certModal && !certModal.hidden) {
+          closeCertModal();
+        }
       });
 
+      // Clipboard helper
       function copyText(text, successMsg) {
         const tempInput = document.createElement("textarea");
         tempInput.value = text;
@@ -4594,18 +5069,22 @@
         });
       }
 
-      // Resume downloader
+      // Direct PDF Resume Downloader from GitHub with forced filename "Dhayanidhi_V_Resume.pdf"
       const RESUME_RAW_URL = "https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf";
       const RESUME_FILENAME = "Dhayanidhi_V_Resume.pdf";
 
       async function downloadResume(event) {
-        if (event) event.preventDefault();
+        if (event) {
+          event.preventDefault();
+        }
         showToast("Downloading Dhayanidhi_V_Resume.pdf...");
-        playLinuxTerminalBell();
+        if (audioEnabled) playLinuxTerminalBell();
 
         try {
           const response = await fetch(RESUME_RAW_URL);
-          if (!response.ok) throw new Error("Network response not ok");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
           const blob = await response.blob();
           const pdfBlob = new Blob([blob], { type: "application/pdf" });
           const blobUrl = URL.createObjectURL(pdfBlob);
@@ -4641,7 +5120,7 @@
       });
 
       // =========================================================================
-      // ARCADE MINI-GAMES
+      // DEVOPS & CLOUD INTERACTIVE ARCADE (3 MINI-GAMES)
       // =========================================================================
       const arcadeTabs = document.querySelectorAll("[data-arcade-tab]");
       const arcadePanes = {
@@ -4657,13 +5136,17 @@
           const target = tab.getAttribute("data-arcade-tab");
           arcadeTabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
           Object.keys(arcadePanes).forEach((k) => {
-            if (arcadePanes[k]) arcadePanes[k].classList.toggle("active", k === target);
+            if (arcadePanes[k]) {
+              arcadePanes[k].classList.toggle("active", k === target);
+            }
           });
-          playLinuxTerminalBell();
+          if (audioEnabled) playLinuxTerminalBell();
         });
       });
 
-      // Game 1: Slasher
+      // -------------------------------------------------------------------------
+      // GAME 1: AWS FINOPS COST SLASHER
+      // -------------------------------------------------------------------------
       const slasherCanvas = document.getElementById("slasherCanvas");
       const slasherStartBtn = document.getElementById("slasherStartBtn");
       const slasherScoreEl = document.getElementById("slasherScore");
@@ -4715,20 +5198,34 @@
           playRetroBootFanfare();
         }
 
-        if (slasherStartBtn) slasherStartBtn.addEventListener("click", startSlasherGame);
+        if (slasherStartBtn) {
+          slasherStartBtn.addEventListener("click", startSlasherGame);
+        }
 
         slasherCanvas.addEventListener("mousemove", (e) => {
           const rect = slasherCanvas.getBoundingClientRect();
-          player.x = (e.clientX - rect.left) * (slasherCanvas.width / rect.width) - player.width / 2;
+          const scaleX = slasherCanvas.width / rect.width;
+          player.x = (e.clientX - rect.left) * scaleX - player.width / 2;
         });
+
+        slasherCanvas.addEventListener("touchmove", (e) => {
+          if (!e.touches[0]) return;
+          const rect = slasherCanvas.getBoundingClientRect();
+          const scaleX = slasherCanvas.width / rect.width;
+          player.x = (e.touches[0].clientX - rect.left) * scaleX - player.width / 2;
+        }, { passive: true });
 
         if (slasherLeftBtn) {
           slasherLeftBtn.addEventListener("mousedown", () => { player.moveDir = -1; });
           slasherLeftBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
+          slasherLeftBtn.addEventListener("touchstart", () => { player.moveDir = -1; }, { passive: true });
+          slasherLeftBtn.addEventListener("touchend", () => { player.moveDir = 0; });
         }
         if (slasherRightBtn) {
           slasherRightBtn.addEventListener("mousedown", () => { player.moveDir = 1; });
           slasherRightBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
+          slasherRightBtn.addEventListener("touchstart", () => { player.moveDir = 1; }, { passive: true });
+          slasherRightBtn.addEventListener("touchend", () => { player.moveDir = 0; });
         }
 
         if (slasherDashBtn) {
@@ -4746,33 +5243,55 @@
               savedK += empGain;
               updateSlasherHud();
               playLightningClickSynth(true);
-              showToast(`⚡ FinOps EMP saved +$${empGain}K/yr!`);
+              showToast(`⚡ FinOps Right-Sizing EMP saved +$${empGain}K/yr!`);
             }
           });
         }
+
+        window.addEventListener("keydown", (e) => {
+          if (!arcadePanes.slasher || !arcadePanes.slasher.classList.contains("active")) return;
+          if (e.key === "ArrowLeft") player.moveDir = -1;
+          if (e.key === "ArrowRight") player.moveDir = 1;
+        });
+        window.addEventListener("keyup", (e) => {
+          if (e.key === "ArrowLeft" || e.key === "ArrowRight") player.moveDir = 0;
+        });
 
         function renderSlasherLoop() {
           const W = slasherCanvas.width;
           const H = slasherCanvas.height;
           sctx.clearRect(0, 0, W, H);
 
+          // Cyber Grid Floor
           sctx.strokeStyle = "rgba(0, 240, 255, 0.08)";
           sctx.lineWidth = 1;
           for (let gx = 0; gx < W; gx += 45) {
-            sctx.beginPath(); sctx.moveTo(gx, 0); sctx.lineTo(gx, H); sctx.stroke();
+            sctx.beginPath();
+            sctx.moveTo(gx, 0);
+            sctx.lineTo(gx, H);
+            sctx.stroke();
           }
           for (let gy = 0; gy < H; gy += 45) {
-            sctx.beginPath(); sctx.moveTo(0, gy); sctx.lineTo(W, gy); sctx.stroke();
+            sctx.beginPath();
+            sctx.moveTo(0, gy);
+            sctx.lineTo(W, gy);
+            sctx.stroke();
           }
 
           player.x = Math.max(10, Math.min(W - player.width - 10, player.x + player.moveDir * player.speed));
 
+          // Draw FinOps Lightning Interceptor Paddle
           const py = H - 38;
           const grad = sctx.createLinearGradient(player.x, py, player.x + player.width, py);
-          grad.addColorStop(0, "#00f0ff"); grad.addColorStop(0.5, "#f7b801"); grad.addColorStop(1, "#00f5a0");
+          grad.addColorStop(0, "#00f0ff");
+          grad.addColorStop(0.5, "#f7b801");
+          grad.addColorStop(1, "#00f5a0");
           sctx.fillStyle = grad;
-          sctx.shadowColor = "#00f0ff"; sctx.shadowBlur = 14;
-          sctx.beginPath(); sctx.roundRect(player.x, py, player.width, player.height, 8); sctx.fill();
+          sctx.shadowColor = "#00f0ff";
+          sctx.shadowBlur = 14;
+          sctx.beginPath();
+          sctx.roundRect(player.x, py, player.width, player.height, 8);
+          sctx.fill();
           sctx.shadowBlur = 0;
 
           sctx.fillStyle = "#031018";
@@ -4789,8 +5308,11 @@
             sctx.fillStyle = "#00f0ff";
             sctx.font = '12px "JetBrains Mono", monospace';
             sctx.fillText(
-              lives <= 0 ? `Total Cloud Savings: $${savedK}K/year` : "Click 'Start FinOps Run' to play!",
-              W / 2, H / 2 + 18
+              lives <= 0
+                ? `Total Cloud Savings: $${savedK}K/year — Click Start to Play Again`
+                : "Click 'Start FinOps Run' above & move mouse to slash idle AWS resources!",
+              W / 2,
+              H / 2 + 18
             );
           } else {
             spawnTick++;
@@ -4811,41 +5333,61 @@
               const it = items[i];
               it.y += it.vy;
 
+              // Draw Falling Cloud Resource Pill
               sctx.fillStyle = "rgba(8, 16, 32, 0.92)";
               sctx.strokeStyle = it.color;
               sctx.lineWidth = 2;
-              sctx.beginPath(); sctx.roundRect(it.x - 42, it.y - 14, 84, 28, 7); sctx.fill(); sctx.stroke();
+              sctx.beginPath();
+              sctx.roundRect(it.x - 42, it.y - 14, 84, 28, 7);
+              sctx.fill();
+              sctx.stroke();
 
               sctx.fillStyle = it.color;
               sctx.font = '700 10px "JetBrains Mono", monospace';
               sctx.fillText(it.label, it.x, it.y + 4);
 
+              // Check Paddle Collision
               if (
-                it.y + 14 >= py && it.y - 14 <= py + player.height &&
-                it.x + 36 >= player.x && it.x - 36 <= player.x + player.width
+                it.y + 14 >= py &&
+                it.y - 14 <= py + player.height &&
+                it.x + 36 >= player.x &&
+                it.x - 36 <= player.x + player.width
               ) {
                 if (it.bad) {
-                  lives--; streak = 1;
+                  lives--;
+                  streak = 1;
                   playArcadePowerupSfx(false);
                   popups.push({ x: it.x, y: py - 10, text: "OUTAGE! -1♥", color: "#ff3b5c", alpha: 1 });
-                  if (lives <= 0) slasherRunning = false;
+                  if (lives <= 0) {
+                    slasherRunning = false;
+                  }
                 } else {
-                  savedK += it.val;
+                  const gain = it.val;
+                  savedK += gain;
                   streak = Math.min(streak + 1, 8);
                   playArcadePowerupSfx(true);
-                  popups.push({ x: it.x, y: py - 10, text: `+$${it.val}K/yr`, color: it.color, alpha: 1 });
+                  popups.push({ x: it.x, y: py - 10, text: `+$${gain}K/yr`, color: it.color, alpha: 1 });
+                  if (savedK === 36 || (savedK > 36 && savedK - gain < 36)) {
+                    playRetroBootFanfare();
+                    showToast("🏆 $36K/YR SAVED! You matched Dhayanidhi's real AWS FinOps record!");
+                  }
                 }
                 updateSlasherHud();
                 items.splice(i, 1);
                 continue;
               }
-              if (it.y > H + 20) items.splice(i, 1);
+
+              if (it.y > H + 20) {
+                items.splice(i, 1);
+              }
             }
           }
 
+          // Floating Score Popups
           for (let i = popups.length - 1; i >= 0; i--) {
             const p = popups[i];
-            p.y -= 1.2; p.alpha -= 0.025;
+            p.y -= 1.2;
+            p.alpha -= 0.025;
             sctx.save();
             sctx.globalAlpha = Math.max(0, p.alpha);
             sctx.fillStyle = p.color;
@@ -4860,7 +5402,9 @@
         requestAnimationFrame(renderSlasherLoop);
       }
 
-      // Game 2: Defender
+      // -------------------------------------------------------------------------
+      // GAME 2: K8S & OPENSHIFT ROSA POD DEFENDER
+      // -------------------------------------------------------------------------
       const defenderCanvas = document.getElementById("defenderCanvas");
       const defenderStartBtn = document.getElementById("defenderStartBtn");
       const defenderScoreEl = document.getElementById("defenderScore");
@@ -4902,8 +5446,12 @@
 
         function startDefenderGame() {
           ensureAudioContext();
-          defScore = 0; defWave = 1; defUptime = 99.99;
-          lasers = []; bugs = []; defRunning = true;
+          defScore = 0;
+          defWave = 1;
+          defUptime = 99.99;
+          lasers = [];
+          bugs = [];
+          defRunning = true;
           updateDefenderHud();
           if (defenderStartBtn) defenderStartBtn.textContent = "↻ Redeploy Cluster";
           playRetroBootFanfare();
@@ -4911,13 +5459,27 @@
 
         if (defenderStartBtn) defenderStartBtn.addEventListener("click", startDefenderGame);
         if (defFireBtn) defFireBtn.addEventListener("click", () => {
-          if (!defRunning) startDefenderGame(); else fireArgoLaser();
+          if (!defRunning) startDefenderGame();
+          else fireArgoLaser();
         });
 
         defenderCanvas.addEventListener("mousemove", (e) => {
           const rect = defenderCanvas.getBoundingClientRect();
           turretX = ((e.clientX - rect.left) / rect.width) * defenderCanvas.width;
         });
+        defenderCanvas.addEventListener("click", () => {
+          if (!defRunning) startDefenderGame();
+          else fireArgoLaser();
+        });
+
+        if (defLeftBtn) {
+          defLeftBtn.addEventListener("mousedown", () => { turretDir = -1; });
+          defLeftBtn.addEventListener("mouseup", () => { turretDir = 0; });
+        }
+        if (defRightBtn) {
+          defRightBtn.addEventListener("mousedown", () => { turretDir = 1; });
+          defRightBtn.addEventListener("mouseup", () => { turretDir = 0; });
+        }
 
         function renderDefenderLoop() {
           const W = defenderCanvas.width;
@@ -4926,8 +5488,14 @@
 
           turretX = Math.max(36, Math.min(W - 36, turretX + turretDir * 7));
 
-          dctx.fillStyle = "#326ce5"; dctx.strokeStyle = "#00f0ff"; dctx.lineWidth = 2;
-          dctx.beginPath(); dctx.roundRect(turretX - 34, H - 36, 68, 22, 6); dctx.fill(); dctx.stroke();
+          // Draw Kubernetes Ingress Turret
+          dctx.fillStyle = "#326ce5";
+          dctx.strokeStyle = "#00f0ff";
+          dctx.lineWidth = 2;
+          dctx.beginPath();
+          dctx.roundRect(turretX - 34, H - 36, 68, 22, 6);
+          dctx.fill();
+          dctx.stroke();
 
           dctx.fillStyle = "#ffffff";
           dctx.font = '700 9px "JetBrains Mono", monospace';
@@ -4942,10 +5510,12 @@
             dctx.fillText(defUptime <= 95 ? "CLUSTER DEGRADED!" : "K8S POD DEFENDER", W / 2, H / 2 - 18);
             dctx.fillStyle = "#00f0ff";
             dctx.font = '12px "JetBrains Mono", monospace';
-            dctx.fillText("Click 'Deploy Ingress Turret' to play!", W / 2, H / 2 + 18);
+            dctx.fillText("Click 'Deploy Ingress Turret' to shoot down CrashLoopBackOff bugs!", W / 2, H / 2 + 18);
           } else {
             defTick++;
-            if (defTick % 16 === 0) fireArgoLaser();
+            if (defTick % 16 === 0) {
+              fireArgoLaser();
+            }
             if (defTick % Math.max(24, 52 - defWave * 4) === 0) {
               const b = BUG_LABELS[Math.floor(Math.random() * BUG_LABELS.length)];
               bugs.push({
@@ -4958,6 +5528,7 @@
               });
             }
 
+            // Lasers
             for (let i = lasers.length - 1; i >= 0; i--) {
               const l = lasers[i];
               l.y -= 9;
@@ -4966,6 +5537,7 @@
               if (l.y < -15) lasers.splice(i, 1);
             }
 
+            // Bugs
             for (let i = bugs.length - 1; i >= 0; i--) {
               const bg = bugs[i];
               bg.y += bg.vy;
@@ -4973,12 +5545,16 @@
               dctx.fillStyle = "rgba(18, 12, 34, 0.92)";
               dctx.strokeStyle = bg.color;
               dctx.lineWidth = 2;
-              dctx.beginPath(); dctx.roundRect(bg.x - 38, bg.y - 13, 76, 26, 6); dctx.fill(); dctx.stroke();
+              dctx.beginPath();
+              dctx.roundRect(bg.x - 38, bg.y - 13, 76, 26, 6);
+              dctx.fill();
+              dctx.stroke();
 
               dctx.fillStyle = bg.color;
               dctx.font = '700 10px "JetBrains Mono", monospace';
               dctx.fillText(bg.name, bg.x, bg.y + 4);
 
+              // Laser hit check
               let hit = false;
               for (let j = lasers.length - 1; j >= 0; j--) {
                 const l = lasers[j];
@@ -5003,7 +5579,9 @@
                 playArcadePowerupSfx(false);
                 updateDefenderHud();
                 bugs.splice(i, 1);
-                if (defUptime <= 95.0) defRunning = false;
+                if (defUptime <= 95.0) {
+                  defRunning = false;
+                }
               }
             }
           }
@@ -5013,7 +5591,9 @@
         requestAnimationFrame(renderDefenderLoop);
       }
 
-      // Game 3: Terminal CLI
+      // -------------------------------------------------------------------------
+      // GAME 3: LINUX & GITOPS SPEED TERMINAL
+      // -------------------------------------------------------------------------
       const PROD_COMMANDS = [
         { cmd: "argocd app sync banking-platform --prune", task: "// Sync Equitas Banking GitOps Application" },
         { cmd: "oc get pods -n banking-prod -o wide", task: "// Inspect OpenShift ROSA Production Pods" },
@@ -5049,8 +5629,11 @@
         for (let i = 0; i < target.length; i++) {
           const ch = target[i];
           if (i < typedValue.length) {
-            if (typedValue[i] === ch) html += `<span class="cmd-char-ok">${ch}</span>`;
-            else html += `<span class="cmd-char-err">${ch}</span>`;
+            if (typedValue[i] === ch) {
+              html += `<span class="cmd-char-ok">${ch}</span>`;
+            } else {
+              html += `<span class="cmd-char-err">${ch}</span>`;
+            }
           } else {
             html += `<span class="cmd-char-pending">${ch}</span>`;
           }
@@ -5060,19 +5643,28 @@
 
       function nextTerminalCommand() {
         currentCmdIdx = (currentCmdIdx + 1) % PROD_COMMANDS.length;
-        if (termInputField) { termInputField.value = ""; termInputField.focus(); }
+        if (termInputField) {
+          termInputField.value = "";
+          termInputField.focus();
+        }
         renderTargetCommand("");
       }
 
       function startTerminalSprint() {
         ensureAudioContext();
         clearInterval(termInterval);
-        termCompleted = 0; termCharsTyped = 0; termSecondsLeft = 45;
-        termStartTime = performance.now(); termActive = true;
+        termCompleted = 0;
+        termCharsTyped = 0;
+        termSecondsLeft = 45;
+        termStartTime = performance.now();
+        termActive = true;
         if (termScoreEl) termScoreEl.textContent = "0";
         if (termWpmEl) termWpmEl.textContent = "0 WPM";
         if (termTimerEl) termTimerEl.textContent = "45s";
-        if (termInputField) { termInputField.value = ""; termInputField.focus(); }
+        if (termInputField) {
+          termInputField.value = "";
+          termInputField.focus();
+        }
         renderTargetCommand("");
         playRetroBootFanfare();
 
@@ -5082,7 +5674,9 @@
           if (termSecondsLeft <= 0) {
             clearInterval(termInterval);
             termActive = false;
-            if (termFeedbackMsg) termFeedbackMsg.textContent = `🏁 SLA Sprint Complete! ${termCompleted} commands deployed.`;
+            if (termFeedbackMsg) {
+              termFeedbackMsg.textContent = `🏁 SLA Sprint Complete! ${termCompleted} production commands deployed.`;
+            }
             playLinuxTerminalBell();
           }
         }, 1000);
@@ -5090,13 +5684,16 @@
 
       if (termStartBtn) termStartBtn.addEventListener("click", startTerminalSprint);
       if (termSkipCmdBtn) termSkipCmdBtn.addEventListener("click", () => {
-        nextTerminalCommand(); playNvmeSeekTick();
+        nextTerminalCommand();
+        playNvmeSeekTick();
       });
 
       if (termInputField) {
         renderTargetCommand("");
         termInputField.addEventListener("input", () => {
-          if (!termActive) startTerminalSprint();
+          if (!termActive) {
+            startTerminalSprint();
+          }
           playNvmeSeekTick();
           const val = termInputField.value;
           const target = PROD_COMMANDS[currentCmdIdx].cmd;
@@ -5111,7 +5708,9 @@
             termCharsTyped += target.length;
             termSecondsLeft = Math.min(60, termSecondsLeft + 3);
             if (termScoreEl) termScoreEl.textContent = String(termCompleted);
-            if (termFeedbackMsg) termFeedbackMsg.textContent = `✓ Executed: '${target}' (+3s SLA bonus!)`;
+            if (termFeedbackMsg) {
+              termFeedbackMsg.textContent = `✓ Executed: '${target}' (+3s SLA bonus!)`;
+            }
             playArcadePowerupSfx(true);
             nextTerminalCommand();
           }
@@ -5119,36 +5718,28 @@
       }
 
       // =========================================================================
-      // BACKGROUND WEATHER ENGINE (CLOUD + LIGHTNING, RAIN, OFF MODES)
+      // CUSTOM CLOUD + LIGHTNING CURSOR + MULTI-LAYER 3D STORM & DATA-RAIN ENGINE
       // =========================================================================
       const canvas = document.getElementById("webgl");
+      const customCursor = document.getElementById("customCursor");
+      const cursorModeText = document.getElementById("cursorModeText");
       const toggleWeatherBtn = document.getElementById("toggleWeatherBtn");
-      let weatherMode = 2; // 2: Cloud+Lightning ON, 1: Rain Only, 0: OFF
+      let weatherEnabled = true;
 
       if (toggleWeatherBtn) {
         toggleWeatherBtn.addEventListener("click", () => {
-          weatherMode = (weatherMode + 1) % 3;
-          if (weatherMode === 2) {
-            toggleWeatherBtn.setAttribute("aria-pressed", "true");
-            toggleWeatherBtn.textContent = "🌧️ Storm: ON";
-            showToast("🌧️ Storm Mode: Volumetric Clouds & Lightning Active");
-          } else if (weatherMode === 1) {
-            toggleWeatherBtn.setAttribute("aria-pressed", "true");
-            toggleWeatherBtn.textContent = "☁️ Rain Only";
-            showToast("☁️ Rain Only Mode Active");
-          } else {
-            toggleWeatherBtn.setAttribute("aria-pressed", "false");
-            toggleWeatherBtn.textContent = "⚡ Storm: OFF";
-            showToast("⚡ Minimal Cloud Mode Active");
-          }
+          weatherEnabled = !weatherEnabled;
+          toggleWeatherBtn.setAttribute("aria-pressed", String(weatherEnabled));
+          toggleWeatherBtn.textContent = weatherEnabled ? "🌧️ Rain: ON" : "☁️ Rain: OFF";
+          showToast(weatherEnabled ? "🌧️ 3D Cloud Storm & Data-Rain enabled" : "☁️ Minimal Cloud Mode enabled");
         });
       }
 
+      // Cursor spark trail & click lightning bolts rendered on canvas
       const cursorSparks = [];
       const clickBolts = [];
 
       function spawnCursorSpark(x, y, boost = false) {
-        if (!customCursorActive) return;
         const count = boost ? 12 : 2;
         for (let i = 0; i < count; i++) {
           const angle = Math.random() * Math.PI * 2;
@@ -5163,7 +5754,9 @@
             color: Math.random() > 0.42 ? "#00f0ff" : "#ff9900"
           });
         }
-        if (cursorSparks.length > 90) cursorSparks.splice(0, cursorSparks.length - 90);
+        if (cursorSparks.length > 90) {
+          cursorSparks.splice(0, cursorSparks.length - 90);
+        }
       }
 
       function spawnClickLightningBolt(x, y) {
@@ -5185,37 +5778,50 @@
         let width = (canvas.width = window.innerWidth);
         let height = (canvas.height = window.innerHeight);
 
-        const mouse = { x: width * 0.5, y: height * 0.35, targetX: width * 0.5, targetY: height * 0.35 };
+        const mouse = {
+          x: width * 0.5,
+          y: height * 0.35,
+          targetX: width * 0.5,
+          targetY: height * 0.35
+        };
 
+        // Track interactive hover targets for Custom Cloud-Flash Cursor
         const INTERACTIVE_SELECTOR = "a, button, summary, [role='button'], .tech-node, .tool-card, details";
         document.addEventListener("mouseover", (e) => {
-          if (!customCursor || !customCursorActive) return;
+          if (!customCursor) return;
           const target = e.target.closest(INTERACTIVE_SELECTOR);
           if (target) {
             customCursor.classList.add("is-hover");
-            if (cursorModeText) cursorModeText.textContent = "⚡ SUPERCHARGED";
+            if (cursorModeText) {
+              cursorModeText.textContent = "⚡ SUPERCHARGED";
+            }
           } else {
             customCursor.classList.remove("is-hover");
           }
         });
 
         window.addEventListener("mousedown", (e) => {
-          if (customCursor && customCursorActive) customCursor.classList.add("is-clicking");
+          if (customCursor) {
+            customCursor.classList.add("is-clicking");
+          }
           spawnCursorSpark(e.clientX, e.clientY, true);
           spawnClickLightningBolt(e.clientX, e.clientY);
           playLightningClickSynth(false);
         });
 
         window.addEventListener("mouseup", () => {
-          if (customCursor) customCursor.classList.remove("is-clicking");
+          if (customCursor) {
+            customCursor.classList.remove("is-clicking");
+          }
         });
 
+        // 1. Volumetric Storm Clouds (Top & Horizon layers)
         const clouds = [];
         const CLOUD_COLORS = [
-          { r: 0, g: 240, b: 255 },
-          { r: 77, g: 124, b: 255 },
-          { r: 184, g: 92, b: 255 },
-          { r: 255, g: 153, b: 0 }
+          { r: 0, g: 240, b: 255 },   // Cyber Cyan
+          { r: 77, g: 124, b: 255 },  // Electric Blue
+          { r: 184, g: 92, b: 255 },  // Neon Violet
+          { r: 255, g: 153, b: 0 }    // AWS Amber accent
         ];
 
         for (let i = 0; i < 14; i++) {
@@ -5232,6 +5838,7 @@
           });
         }
 
+        // 2. 3D Rain Streaks & Cyber Data Drops
         const raindrops = [];
         const RAIN_COUNT = Math.min(135, Math.floor(width / 10));
         const DATA_CHARS = ["0", "1", "K8S", "AWS", "OCI", "GIT", "SRE", "LINUX", "⚡"];
@@ -5250,7 +5857,10 @@
           });
         }
 
+        // 3. 3D Splash Ripples on the Perspective Floor
         const ripples = [];
+
+        // 4. Floating 3D Cloud Nodes
         const nodes = [];
         const NODE_COUNT = Math.min(45, Math.floor((width * height) / 32000));
         for (let i = 0; i < NODE_COUNT; i++) {
@@ -5286,54 +5896,50 @@
           mouse.x += (mouse.targetX - mouse.x) * 0.22;
           mouse.y += (mouse.targetY - mouse.y) * 0.22;
 
+          // Update Custom Cloud + Flash Cursor position smoothly
           if (customCursor) {
-            if (customCursorActive) {
-              customCursor.style.display = "block";
-              customCursor.style.transform = `translate3d(${mouse.x.toFixed(1)}px, ${mouse.y.toFixed(1)}px, 0)`;
-            } else {
-              customCursor.style.display = "none";
-            }
+            customCursor.style.transform = `translate3d(${mouse.x.toFixed(1)}px, ${mouse.y.toFixed(1)}px, 0)`;
           }
 
           const parallaxX = (mouse.x - width / 2) * 0.03;
           const parallaxY = (mouse.y - height / 2) * 0.025;
 
-          // Clouds & Lightning (Mode 2)
-          if (weatherMode >= 2) {
-            for (let i = 0; i < clouds.length; i++) {
-              const c = clouds[i];
-              c.x += c.vx;
-              if (c.x - c.radiusX > width) c.x = -c.radiusX;
-              if (c.x + c.radiusX < 0) c.x = width + c.radiusX;
+          // --- LAYER 1: Volumetric Glowing Cyber Clouds & Subtle Lightning Pulses ---
+          for (let i = 0; i < clouds.length; i++) {
+            const c = clouds[i];
+            c.x += c.vx;
+            if (c.x - c.radiusX > width) c.x = -c.radiusX;
+            if (c.x + c.radiusX < 0) c.x = width + c.radiusX;
 
-              if (Math.random() < 0.0022) {
-                c.flash = 0.28;
-              }
-              if (c.flash > 0) c.flash *= 0.9;
-
-              const cx = c.x + parallaxX * 0.5;
-              const cy = c.y + parallaxY * 0.3;
-              const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, c.radiusX);
-              const totalAlpha = Math.min(c.alpha + c.flash, 0.38);
-
-              grad.addColorStop(0, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${totalAlpha.toFixed(3)})`);
-              grad.addColorStop(0.55, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${(totalAlpha * 0.4).toFixed(3)})`);
-              grad.addColorStop(1, "rgba(3, 5, 11, 0)");
-
-              ctx.save();
-              ctx.translate(cx, cy);
-              ctx.scale(1, c.radiusY / c.radiusX);
-              ctx.translate(-cx, -cy);
-              ctx.fillStyle = grad;
-              ctx.beginPath();
-              ctx.arc(cx, cy, c.radiusX, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.restore();
+            if (weatherEnabled && Math.random() < 0.0018) {
+              c.flash = 0.22;
             }
+            if (c.flash > 0) {
+              c.flash *= 0.9;
+            }
+
+            const cx = c.x + parallaxX * 0.5;
+            const cy = c.y + parallaxY * 0.3;
+            const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, c.radiusX);
+            const totalAlpha = Math.min(c.alpha + c.flash, 0.35);
+
+            grad.addColorStop(0, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${totalAlpha.toFixed(3)})`);
+            grad.addColorStop(0.55, `rgba(${c.color.r}, ${c.color.g}, ${c.color.b}, ${(totalAlpha * 0.4).toFixed(3)})`);
+            grad.addColorStop(1, "rgba(3, 5, 11, 0)");
+
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.scale(1, c.radiusY / c.radiusX);
+            ctx.translate(-cx, -cy);
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, c.radiusX, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
           }
 
-          // Rain & Data Drops (Modes 1 and 2)
-          if (weatherMode >= 1) {
+          // --- LAYER 2: 3D Rain Streaks, Cyber Data Droplets & Floor Splash Ripples ---
+          if (weatherEnabled) {
             ctx.lineCap = "round";
             const windOffset = ((mouse.x - width / 2) / width) * 2.5;
 
@@ -5349,7 +5955,12 @@
               if (r.y >= floorY) {
                 if (ripples.length < 45 && Math.random() < 0.35) {
                   ripples.push({
-                    x: r.x, y: floorY, radius: 1.5, maxRadius: 12 + r.z * 14, alpha: 0.45 * r.z, color: r.hue
+                    x: r.x,
+                    y: floorY,
+                    radius: 1.5,
+                    maxRadius: 12 + r.z * 14,
+                    alpha: 0.45 * r.z,
+                    color: r.hue
                   });
                 }
                 r.y = -20;
@@ -5381,6 +5992,7 @@
               }
             }
 
+            // Render expanding 3D splash ripples
             for (let i = ripples.length - 1; i >= 0; i--) {
               const rp = ripples[i];
               rp.radius += 0.65;
@@ -5395,11 +6007,13 @@
               ctx.stroke();
               ctx.restore();
 
-              if (rp.radius >= rp.maxRadius || rp.alpha < 0.03) ripples.splice(i, 1);
+              if (rp.radius >= rp.maxRadius || rp.alpha < 0.03) {
+                ripples.splice(i, 1);
+              }
             }
           }
 
-          // Nodes
+          // --- LAYER 3: 3D Connected Cloud Constellation Nodes ---
           for (let i = 0; i < nodes.length; i++) {
             const a = nodes[i];
             a.x += a.vx * a.z;
@@ -5436,23 +6050,25 @@
             }
           }
 
-          // Sparks & Bolts
-          if (customCursorActive) {
-            for (let i = cursorSparks.length - 1; i >= 0; i--) {
-              const sp = cursorSparks[i];
-              sp.x += sp.vx; sp.y += sp.vy; sp.alpha *= 0.92;
+          // --- LAYER 4: Cursor Cloud Electric Sparks & Click Lightning Bolts ---
+          for (let i = cursorSparks.length - 1; i >= 0; i--) {
+            const sp = cursorSparks[i];
+            sp.x += sp.vx;
+            sp.y += sp.vy;
+            sp.alpha *= 0.92;
 
-              ctx.save();
-              ctx.globalAlpha = sp.alpha;
-              ctx.fillStyle = sp.color;
-              ctx.shadowColor = sp.color;
-              ctx.shadowBlur = 8;
-              ctx.beginPath();
-              ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.restore();
+            ctx.save();
+            ctx.globalAlpha = sp.alpha;
+            ctx.fillStyle = sp.color;
+            ctx.shadowColor = sp.color;
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
 
-              if (sp.alpha < 0.04) cursorSparks.splice(i, 1);
+            if (sp.alpha < 0.04) {
+              cursorSparks.splice(i, 1);
             }
           }
 
@@ -5468,3 +6084,24 @@
             ctx.lineWidth = 2.2;
             ctx.beginPath();
             for (let s = 0; s < bolt.segments.length; s++) {
+              const seg = bolt.segments[s];
+              ctx.moveTo(seg.x1, seg.y1);
+              ctx.lineTo(seg.x2, seg.y2);
+            }
+            ctx.stroke();
+            ctx.restore();
+
+            if (bolt.alpha < 0.05) {
+              clickBolts.splice(i, 1);
+            }
+          }
+
+          requestAnimationFrame(renderScene);
+        }
+
+        window.addEventListener("load", renderScene);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -41,12 +41,11 @@
       --green: #00f5a0;
       --orange: #ff9900;
       --red: #ff3b5c;
-      --line: rgba(100, 232, 255, 0.18);
-      --line-bright: rgba(0, 240, 255, 0.55);
-      --radius: 24px;
-      --max: 1480px;
+      --line: rgba(158, 178, 204, 0.16);
+      --line-bright: rgba(0, 240, 255, 0.42);
+      --radius: 22px;
       --max-width: 1480px;
-      --shadow: 0 28px 90px rgba(0, 0, 0, 0.65), 0 0 40px rgba(0, 240, 255, 0.08);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
     }
 
     *, *::before, *::after {
@@ -62,9 +61,8 @@
       margin: 0;
       overflow-x: hidden;
       background:
-        radial-gradient(circle at 15% 8%, rgba(77, 124, 255, 0.22), transparent 36%),
-        radial-gradient(circle at 85% 18%, rgba(0, 240, 255, 0.16), transparent 34%),
-        radial-gradient(circle at 50% 65%, rgba(184, 92, 255, 0.12), transparent 45%),
+        radial-gradient(circle at 12% 4%, rgba(77, 124, 255, 0.11), transparent 34%),
+        radial-gradient(circle at 92% 22%, rgba(0, 240, 255, 0.08), transparent 30%),
         var(--bg);
       color: var(--text);
       font-family: "Inter", sans-serif;
@@ -72,11 +70,43 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Hide native cursor on desktop devices with fine pointer */
+    /* Hide native cursor on desktop devices with fine pointer unless Normal Cursor Mode is active */
     @media (hover: hover) and (pointer: fine) {
-      body, a, button, summary, [role="button"], input, textarea, .tech-node, .tool-card {
+      body:not(.cursor-normal),
+      body:not(.cursor-normal) a,
+      body:not(.cursor-normal) button,
+      body:not(.cursor-normal) summary,
+      body:not(.cursor-normal) [role="button"],
+      body:not(.cursor-normal) input,
+      body:not(.cursor-normal) textarea,
+      body:not(.cursor-normal) .tech-node,
+      body:not(.cursor-normal) .tool-card {
         cursor: none !important;
       }
+    }
+
+    body.cursor-normal,
+    body.cursor-normal a,
+    body.cursor-normal button,
+    body.cursor-normal summary,
+    body.cursor-normal [role="button"],
+    body.cursor-normal .tech-node,
+    body.cursor-normal .tool-card {
+      cursor: auto !important;
+    }
+
+    body.cursor-normal a,
+    body.cursor-normal button,
+    body.cursor-normal summary,
+    body.cursor-normal [role="button"],
+    body.cursor-normal .tech-node,
+    body.cursor-normal .tool-card {
+      cursor: pointer !important;
+    }
+
+    body.cursor-normal #customCursor {
+      display: none !important;
+      opacity: 0 !important;
     }
 
     body::before {
@@ -202,6 +232,22 @@
     .cursor-strike-arc {
       opacity: 0;
       transition: opacity 0.12s ease;
+    }
+
+    /* Mode 2: Flash Only Cursor (Hide Cloud Body, Emphasize Lightning Bolt) */
+    #customCursor[data-mode="flash-only"] #cursorCloudGroup,
+    #customCursor[data-mode="flash-only"] .cursor-cloud-path {
+      display: none !important;
+      opacity: 0 !important;
+    }
+
+    #customCursor[data-mode="flash-only"] .cursor-bolt-path {
+      transform: translate(0px, -6px) scale(1.38);
+      filter: drop-shadow(0 0 14px #ff9900) drop-shadow(0 0 24px #00f0ff);
+    }
+
+    #customCursor[data-mode="flash-only"].is-hover .cursor-bolt-path {
+      transform: translate(0px, -8px) scale(1.52) rotate(-4deg);
     }
 
     /* Hover State: Supercharged Flash Mode */
@@ -336,32 +382,18 @@
       z-index: 3;
     }
 
-    .boot-audio-pill {
+    .boot-status-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 12px;
       border-radius: 99px;
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      background: rgba(0, 240, 255, 0.08);
-      color: var(--cyan);
+      border: 1px solid rgba(0, 245, 160, 0.42);
+      background: rgba(0, 245, 160, 0.09);
+      color: var(--green);
       font-size: 0.62rem;
       font-weight: 600;
-      box-shadow: 0 0 18px rgba(0, 240, 255, 0.18);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .boot-audio-pill.locked {
-      border-color: rgba(255, 59, 92, 0.65);
-      background: rgba(255, 59, 92, 0.14);
-      color: #ff8da1;
-      animation: statusPulsePill 1.4s ease-in-out infinite;
-    }
-
-    @keyframes statusPulsePill {
-      0%, 100% { box-shadow: 0 0 12px rgba(255, 59, 92, 0.25); }
-      50% { box-shadow: 0 0 26px rgba(255, 59, 92, 0.65); }
+      box-shadow: 0 0 18px rgba(0, 245, 160, 0.18);
     }
 
     .boot-terminal-wrap {
@@ -1039,6 +1071,7 @@
 
     .weather-btn,
     .audio-btn,
+    .cursor-mode-btn,
     .weather-toggle {
       border-color: rgba(0, 245, 160, 0.38);
       color: #a8ffdf;
@@ -1047,6 +1080,24 @@
       font-size: 0.68rem;
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    .cursor-mode-btn {
+      border-color: rgba(0, 240, 255, 0.45);
+      color: #b8f9ff;
+      background: rgba(0, 240, 255, 0.1);
+    }
+
+    .cursor-mode-btn[data-cursor-mode="flash-only"] {
+      border-color: rgba(255, 153, 0, 0.58);
+      color: #ffe09e;
+      background: rgba(255, 153, 0, 0.14);
+    }
+
+    .cursor-mode-btn[data-cursor-mode="normal"] {
+      border-color: var(--line);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .weather-btn[aria-pressed="false"],
@@ -3019,9 +3070,10 @@
   <div id="bootLoader" role="dialog" aria-label="DV_CLOUD_SRE Kernel Initialization Screen">
     <div class="boot-corner-telemetry">
       <span>MEM_ADDR: <strong id="bootHexAddr" style="color:var(--cyan);">0x7FFF8A00</strong> // DEDSEC_GITOPS_SYNC</span>
-      <button type="button" class="boot-audio-pill" id="bootAudioEnableBtn">
-        🔊 WATCH_DOGS DATA-COPY SYNTH: ACTIVE
-      </button>
+      <span class="boot-status-tag">
+        <span class="status-dot" style="width:6px;height:6px;"></span>
+        WATCH_DOGS DATA-COPY SYNTH: AUTO-ENABLED
+      </span>
     </div>
 
     <div class="boot-terminal-wrap">
@@ -3073,7 +3125,6 @@
         </div>
 
         <div class="boot-controls">
-          <button type="button" class="boot-btn" id="bootSoundToggleBtn">⚡ Toggle Synth Track</button>
           <button type="button" class="boot-btn secondary" id="bootSkipBtn">Skip Boot ⏭</button>
         </div>
       </div>
@@ -3083,7 +3134,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Custom Interactive 3D Cloud + Lightning Flash Cursor -->
-  <div id="customCursor" aria-hidden="true">
+  <div id="customCursor" data-mode="cloud-flash" aria-hidden="true">
     <div class="cursor-ring"></div>
     <svg class="cursor-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -3098,8 +3149,10 @@
           <stop offset="100%" stop-color="#FF3B5C"/>
         </linearGradient>
       </defs>
-      <!-- 3D Storm Cloud Silhouette -->
-      <path class="cursor-cloud-path" d="M20 39H46C51.5 39 56 34.8 56 29.5C56 24.5 52.1 20.4 47.2 20C45.4 13.6 39.5 9 32.5 9C24.2 9 17.4 15.5 17 23.7C12.4 24.8 9 28.9 9 33.8C9 36.8 11.4 39 14.5 39H20Z" fill="rgba(8, 18, 38, 0.9)" stroke="url(#cursorCloudGrad)" stroke-width="2.6" stroke-linejoin="round"/>
+      <!-- 3D Storm Cloud Silhouette Group -->
+      <g id="cursorCloudGroup">
+        <path class="cursor-cloud-path" d="M20 39H46C51.5 39 56 34.8 56 29.5C56 24.5 52.1 20.4 47.2 20C45.4 13.6 39.5 9 32.5 9C24.2 9 17.4 15.5 17 23.7C12.4 24.8 9 28.9 9 33.8C9 36.8 11.4 39 14.5 39H20Z" fill="rgba(8, 18, 38, 0.9)" stroke="url(#cursorCloudGrad)" stroke-width="2.6" stroke-linejoin="round"/>
+      </g>
       <!-- High-Voltage Lightning Flash Bolt -->
       <path class="cursor-bolt-path" d="M34 22L22 38H32L28 56L44 36H33.5L34 22Z" fill="url(#cursorBoltGrad)" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
       <!-- Click Thunder Arcs -->
@@ -3125,19 +3178,22 @@
       <div class="nav-links" id="navLinks">
         <a href="#expertise">Expertise</a>
         <a href="#impact">Impact</a>
-        <a href="#stack">3D Stack</a>
+        <a href="#stack">Services &amp; Stack</a>
         <a href="#arcade">🎮 Arcade</a>
         <a href="#experience">Experience</a>
         <a href="#credentials">Credentials</a>
         <a href="#contact">Contact</a>
       </div>
 
-      <div class="nav-actions">
+      <div class="nav-actions hud-group">
         <button class="btn btn-small btn-secondary" type="button" id="replayBootBtn" title="Replay DV_CLOUD_SRE Kernel Boot Screen">
           👾 Boot
         </button>
-        <button class="btn btn-small audio-btn" type="button" id="toggleAudioBtn" aria-pressed="false" title="Toggle Server Room & Linux Terminal Audio Synthesizer">
-          🔊 Audio: OFF
+        <button class="btn btn-small cursor-mode-btn" type="button" id="toggleCursorModeBtn" data-cursor-mode="cloud-flash" title="Switch Cursor Style: Cloud+Flash / Flash Only / Normal Mouse">
+          ☁️⚡ Cursor: Cloud+Flash
+        </button>
+        <button class="btn btn-small audio-btn" type="button" id="toggleAudioBtn" aria-pressed="true" title="Toggle Server Room & Linux Terminal Audio Synthesizer">
+          🔊 Audio: ON
         </button>
         <button class="btn btn-small btn-secondary" type="button" id="openAudioDeckBtn" title="Open Linux & Data-Center Sound Tester">
           🎛️ SFX
@@ -3491,10 +3547,10 @@
     <section class="section container" id="stack">
       <div class="section-heading reveal">
         <div>
-          <p class="section-kicker">03 / 3D Official Brand Stack</p>
-          <h2>AWS Cloud Services &amp; DevOps Tools.</h2>
+          <p class="section-kicker">03 / Services Worked &amp; Well-Known Stack</p>
+          <h2>Services Worked &amp; Well-Known Cloud Technologies.</h2>
         </div>
-        <p>Harness the cloud to speed up development, simplify deployments, and keep projects running smoothly. With automation and scalability at your fingertips, you can focus on creating great software while the heavy lifting happens in the background.</p>
+        <p>Production-tested cloud platforms, container orchestration engines, GitOps delivery pipelines, and observability tools I have worked on extensively across enterprise banking infrastructure.</p>
       </div>
 
       <div class="stack-toolbar reveal" role="group" aria-label="Filter technologies">
@@ -3828,8 +3884,8 @@
         <p>Available for DevOps Engineer, Site Reliability Engineer (SRE), Platform Engineer, and AWS / Multi-Cloud Engineering opportunities.</p>
 
         <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:dhayanidhiv019@gmail.com">Email Dhayanidhi <span>↗</span></a>
-          <button class="btn btn-secondary" type="button" id="copyEmailBtn" data-email="dhayanidhiv019@gmail.com">Copy Email Address</button>
+          <a class="btn btn-primary" href="mailto:dhayanidhiv.devops@gmail.com">Email Dhayanidhi <span>↗</span></a>
+          <button class="btn btn-secondary" type="button" id="copyEmailBtn" data-email="dhayanidhiv.devops@gmail.com">Copy Email Address</button>
           <a class="btn btn-secondary" href="https://raw.githubusercontent.com/Dhaya7/html--resume/bd59256d769c7a384519ae1e0ff8423a5070d539/Dhayanidhi_V_DevOps_SRE_Cloud_Engineer_Resume.pdf" download="Dhayanidhi_V_Resume.pdf" data-download-resume>Download Full Résumé (PDF) <span>↓</span></a>
         </div>
 
@@ -3926,10 +3982,11 @@
       }
 
       // =========================================================================
-      // WEB AUDIO API: SERVER ROOM HUM & LINUX TERMINAL SOUND ENGINE
+      // WEB AUDIO API: SERVER ROOM HUM & LINUX TERMINAL SOUND ENGINE (AUTO-ENABLED)
       // =========================================================================
       let audioCtx = null;
-      let audioEnabled = false;
+      let audioEnabled = true;
+      let bootAudioUnlocked = true;
       let serverDroneNodes = null;
       let nvmeTickInterval = null;
 
@@ -3942,19 +3999,32 @@
         if (!audioCtx) {
           const AudioContextClass = window.AudioContext || window.webkitAudioContext;
           if (AudioContextClass) {
-            audioCtx = new AudioContextClass();
+            try {
+              audioCtx = new AudioContextClass();
+            } catch (e) {}
           }
         }
         if (audioCtx && audioCtx.state === "suspended") {
-          audioCtx.resume();
+          audioCtx.resume().catch(() => {});
         }
         return audioCtx;
       }
 
+      const AudioEngine = {
+        init() {
+          ensureAudioContext();
+          if (audioEq) {
+            audioEq.classList.toggle("active", audioEnabled);
+          }
+        }
+      };
+
       // Ambient Data-Center Server Hum + Cooling Fan + NVMe Seek Clicks
       function startServerRoomAmbience() {
+        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || serverDroneNodes) return;
+        if (ctx.state !== "running") return;
 
         const now = ctx.currentTime;
         const masterGain = ctx.createGain();
@@ -4008,12 +4078,16 @@
         serverDroneNodes = { osc60, osc120, whiteNoise, masterGain };
 
         // Subtle periodic NVMe / HDD RAID telemetry activity ticks
+        if (nvmeTickInterval) clearInterval(nvmeTickInterval);
         nvmeTickInterval = setInterval(() => {
           if (audioEnabled && Math.random() < 0.65) {
             playNvmeSeekTick();
           }
         }, 900);
       }
+
+      // Alias for seamless background activation
+      const startServerDrone = startServerRoomAmbience;
 
       function stopServerRoomAmbience() {
         if (nvmeTickInterval) {
@@ -4150,101 +4224,73 @@
         noise.start(now);
       }
 
-      // =========================================================================
-      // WATCH DOGS 2 / DEDSEC DATA-COPYING & PACKET EXFILTRATION SYNTH SEQUENCER
-      // =========================================================================
-      // Produces the signature Watch Dogs 2 hacking / data-download progress track:
-      // 1. Driving dark-electro bass arpeggio pulse (D-minor cyber synth)
-      // 2. High-speed frequency-hopped data-copy telemetry chirps (1.2kHz - 4.8kHz)
-      // 3. Bit-stream granular modem ticks on every 1% progress step
-      // 4. Dual-tone kernel log lock-in confirmation blips
-      let wd2StepCounter = 0;
-
-      function playWatchDogsDataPacketTick(percent) {
+      // Watch Dogs 2 / DedSec Data-Copy Packet Tick & Dark-Electro Arpeggio Synth
+      function playWatchDogsDataPacketTick(stepPercent = 0) {
+        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
-
         const now = ctx.currentTime;
-        wd2StepCounter++;
 
-        // Layer A: High-Speed Data-Copy Telemetry Chirp (every percent tick)
-        const chirpOsc = ctx.createOscillator();
+        // 1. High-tech packet exfiltration chirp
+        const chirp = ctx.createOscillator();
         const chirpGain = ctx.createGain();
-        // Watch Dogs 2 style pentatonic/cyber frequency hopping
-        const wd2DataFreqs = [1480, 1760, 1975, 2349, 2637, 2960, 3520, 3951];
-        const f1 = wd2DataFreqs[(percent + wd2StepCounter) % wd2DataFreqs.length];
-        const f2 = wd2DataFreqs[(percent * 3 + 2) % wd2DataFreqs.length];
+        const scale = [587.33, 659.25, 698.46, 880, 1046.5, 1174.66, 1318.5];
+        const freq = scale[stepPercent % scale.length] + (stepPercent * 3.2);
 
-        chirpOsc.type = percent % 2 === 0 ? "square" : "sawtooth";
-        chirpOsc.frequency.setValueAtTime(f1, now);
-        chirpOsc.frequency.setValueAtTime(f2, now + 0.018);
+        chirp.type = "square";
+        chirp.frequency.setValueAtTime(freq, now);
+        chirp.frequency.exponentialRampToValueAtTime(freq * 1.18, now + 0.024);
 
-        const bandFilter = ctx.createBiquadFilter();
-        bandFilter.type = "bandpass";
-        bandFilter.frequency.setValueAtTime(2400, now);
-        bandFilter.Q.value = 2.8;
+        chirpGain.gain.setValueAtTime(0.014, now);
+        chirpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.028);
 
-        chirpGain.gain.setValueAtTime(0.022, now);
-        chirpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.036);
-
-        chirpOsc.connect(bandFilter);
-        bandFilter.connect(chirpGain);
+        chirp.connect(chirpGain);
         chirpGain.connect(ctx.destination);
+        chirp.start(now);
+        chirp.stop(now + 0.03);
 
-        chirpOsc.start(now);
-        chirpOsc.stop(now + 0.038);
-
-        // Layer B: Driving Watch Dogs 2 Dark-Electro Synth Bass Arpeggio (every 3% step)
-        if (percent % 3 === 0) {
-          const bassNotes = [73.42, 87.31, 110.0, 146.83, 130.81, 110.0, 164.81, 146.83]; // D2, F2, A2, D3, C3, A2, E3, D3
-          const noteFreq = bassNotes[(percent / 3) % bassNotes.length];
-
-          const bassOsc = ctx.createOscillator();
-          const subOsc = ctx.createOscillator();
+        // 2. Driving D-Minor Dark-Electro Bass Pulse every 4%
+        if (stepPercent % 4 === 0) {
+          const bassNotes = [73.42, 87.31, 98.0, 110.0, 65.41, 73.42];
+          const bassFreq = bassNotes[(stepPercent / 4) % bassNotes.length];
+          const bass = ctx.createOscillator();
           const bassFilter = ctx.createBiquadFilter();
           const bassGain = ctx.createGain();
 
-          bassOsc.type = "sawtooth";
-          subOsc.type = "square";
-          bassOsc.frequency.setValueAtTime(noteFreq, now);
-          subOsc.frequency.setValueAtTime(noteFreq * 0.5, now);
+          bass.type = "sawtooth";
+          bass.frequency.setValueAtTime(bassFreq, now);
 
           bassFilter.type = "lowpass";
-          // Filter opens up as percentage increases from 0% to 100%
-          const cutoff = 320 + (percent / 100) * 1400;
-          bassFilter.frequency.setValueAtTime(cutoff, now);
-          bassFilter.frequency.exponentialRampToValueAtTime(160, now + 0.11);
-          bassFilter.Q.value = 4.5;
+          bassFilter.frequency.setValueAtTime(380, now);
+          bassFilter.frequency.exponentialRampToValueAtTime(110, now + 0.11);
 
-          bassGain.gain.setValueAtTime(0.042, now);
+          bassGain.gain.setValueAtTime(0.032, now);
           bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
 
-          bassOsc.connect(bassFilter);
-          subOsc.connect(bassFilter);
+          bass.connect(bassFilter);
           bassFilter.connect(bassGain);
           bassGain.connect(ctx.destination);
-
-          bassOsc.start(now);
-          subOsc.start(now);
-          bassOsc.stop(now + 0.125);
-          subOsc.stop(now + 0.125);
+          bass.start(now);
+          bass.stop(now + 0.13);
         }
       }
 
-      // Kernel Log Line Lock-In Confirmation Chirp
-      function playKernelLogLockSfx(stepIdx) {
+      // Kernel Log Line Lock-In Confirmation Tone
+      function playKernelLogLockSfx(logIndex = 0) {
+        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
         const now = ctx.currentTime;
 
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = "triangle";
-        const base = 660 + stepIdx * 140;
-        osc.frequency.setValueAtTime(base, now);
-        osc.frequency.setValueAtTime(base * 1.5, now + 0.04);
+        const baseFreq = 520 + logIndex * 110;
 
-        gain.gain.setValueAtTime(0.038, now);
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.setValueAtTime(baseFreq * 1.25, now + 0.04);
+
+        gain.gain.setValueAtTime(0.035, now);
         gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
 
         osc.connect(gain);
@@ -4253,50 +4299,34 @@
         osc.stop(now + 0.12);
       }
 
+      // 100% Boot Complete Cyber Chord & Retro Boot Fanfare
       function playRetroBootFanfare() {
+        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (!ctx || ctx.state !== "running") return;
-        // Watch Dogs 2 "HACK COMPLETE / ACCESS GRANTED" Cyber Chord + Sub Drop
-        const notes = [293.66, 440.0, 587.33, 739.99, 880.0, 1174.66]; // D major/9th cyber chord
+        const now = ctx.currentTime;
+
+        const notes = [587.33, 739.99, 880, 1174.66]; // D Major / Cyber resolution
         notes.forEach((freq, idx) => {
-          const now = ctx.currentTime + idx * 0.055;
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
-          osc.type = idx < 2 ? "sawtooth" : "triangle";
-          osc.frequency.setValueAtTime(freq, now);
-          gain.gain.setValueAtTime(0.034, now);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+          const start = now + idx * 0.055;
+
+          osc.type = idx % 2 === 0 ? "triangle" : "sine";
+          osc.frequency.setValueAtTime(freq, start);
+
+          gain.gain.setValueAtTime(0.038, start);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.36);
+
           osc.connect(gain);
           gain.connect(ctx.destination);
-          osc.start(now);
-          osc.stop(now + 0.34);
+          osc.start(start);
+          osc.stop(start + 0.38);
         });
       }
 
-      function playArcadePowerupSfx(isGood = true) {
-        const ctx = ensureAudioContext();
-        if (!ctx) return;
-        const now = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = isGood ? "square" : "sawtooth";
-        if (isGood) {
-          osc.frequency.setValueAtTime(587.33, now);
-          osc.frequency.setValueAtTime(880, now + 0.05);
-        } else {
-          osc.frequency.setValueAtTime(190, now);
-          osc.frequency.linearRampToValueAtTime(75, now + 0.18);
-        }
-        gain.gain.setValueAtTime(0.032, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + (isGood ? 0.12 : 0.2));
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + (isGood ? 0.13 : 0.21));
-      }
-
       // =========================================================================
-      // CYBERPUNK SRE KERNEL PRELOADER CONTROLLER (0% -> 100% + AUTO AUDIO)
+      // CYBERPUNK SRE KERNEL PRELOADER CONTROLLER (0% -> 100% + SILENT AUTO AUDIO)
       // =========================================================================
       const bootLoader = document.getElementById("bootLoader");
       const bootBarFrame = document.getElementById("bootBarFrame");
@@ -4306,61 +4336,31 @@
       const bootHexAddr = document.getElementById("bootHexAddr");
       const bootPacketRate = document.getElementById("bootPacketRate");
       const wd2EqBars = document.querySelectorAll("#wd2EqBars span");
-      const bootAudioEnableBtn = document.getElementById("bootAudioEnableBtn");
-      const bootSoundToggleBtn = document.getElementById("bootSoundToggleBtn");
       const bootSkipBtn = document.getElementById("bootSkipBtn");
       const replayBootBtn = document.getElementById("replayBootBtn");
 
       let bootInterval = null;
       let bootPercent = 0;
       let lastActivatedLogIdx = -1;
-      let bootAudioMuted = false;
 
-      function updateBootAudioPillUI() {
-        if (!bootAudioEnableBtn) return;
-        if (bootAudioMuted) {
-          bootAudioEnableBtn.classList.add("locked");
-          bootAudioEnableBtn.textContent = "🔇 WATCH_DOGS SYNTH: MUTED (CLICK TO UNMUTE)";
-          return;
-        }
-        if (audioCtx && audioCtx.state === "running") {
-          bootAudioEnableBtn.classList.remove("locked");
-          bootAudioEnableBtn.textContent = "🔊 WATCH_DOGS DATA-COPY SYNTH: STREAMING";
-        } else {
-          bootAudioEnableBtn.classList.add("locked");
-          bootAudioEnableBtn.textContent = "⚡ MOVE CURSOR OR CLICK FOR WATCH_DOGS AUDIO STREAM";
-        }
-      }
-
-      // Attempt automatic Web Audio unlock on load & on first micro-interaction
-      function tryAutoUnlockBootAudio() {
-        if (bootAudioMuted) return;
+      // Silent, zero-friction background AudioContext unlock on any micro-event
+      function silentBackgroundAudioResume() {
+        if (!audioEnabled) return;
         const ctx = ensureAudioContext();
         if (ctx && ctx.state === "running") {
-          if (!audioEnabled) {
-            setAudioState(true, false);
+          if (bootLoader && bootLoader.classList.contains("boot-complete") && !serverDroneNodes) {
+            startServerDrone();
           }
-          updateBootAudioPillUI();
-        } else {
-          updateBootAudioPillUI();
         }
       }
 
-      ["pointerdown", "pointermove", "mousemove", "keydown", "touchstart", "click"].forEach((evtName) => {
-        window.addEventListener(evtName, function onFirstInteract() {
-          if (!bootAudioMuted && (!audioCtx || audioCtx.state !== "running")) {
-            tryAutoUnlockBootAudio();
-          }
-          if (audioCtx && audioCtx.state === "running") {
-            updateBootAudioPillUI();
-            window.removeEventListener(evtName, onFirstInteract);
-          }
-        }, { passive: true });
+      ["mousemove", "pointermove", "pointerdown", "keydown", "touchstart", "wheel", "focus", "click"].forEach((evtName) => {
+        window.addEventListener(evtName, silentBackgroundAudioResume, { passive: true });
       });
 
       function animateWd2Equalizer(active) {
         if (!wd2EqBars.length) return;
-        wd2EqBars.forEach((bar, i) => {
+        wd2EqBars.forEach((bar) => {
           if (!active) {
             bar.style.height = "3px";
           } else {
@@ -4389,8 +4389,9 @@
         }
         animateWd2Equalizer(false);
 
-        if (!bootAudioMuted) {
+        if (audioEnabled) {
           playRetroBootFanfare();
+          startServerDrone();
         }
 
         setTimeout(() => {
@@ -4413,7 +4414,7 @@
           item.classList.remove("active", "done");
         });
 
-        tryAutoUnlockBootAudio();
+        AudioEngine.init();
 
         bootInterval = setInterval(() => {
           if (bootPercent < 100) {
@@ -4453,51 +4454,22 @@
 
             if (currentLogIdx !== lastActivatedLogIdx) {
               lastActivatedLogIdx = currentLogIdx;
-              if (!bootAudioMuted) {
+              if (audioEnabled) {
                 playKernelLogLockSfx(currentLogIdx);
               }
             }
 
-            // Play Watch Dogs 2 Data-Copy Synth + animate EQ bars
-            if (!bootAudioMuted) {
+            // Play Watch Dogs 2 Data-Copy Synth + animate EQ bars automatically
+            if (audioEnabled) {
               playWatchDogsDataPacketTick(bootPercent);
               animateWd2Equalizer(true);
             } else {
               animateWd2Equalizer(false);
             }
-
-            updateBootAudioPillUI();
           } else {
             completeBootSequence();
           }
         }, 38);
-      }
-
-      if (bootAudioEnableBtn) {
-        bootAudioEnableBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          bootAudioMuted = false;
-          ensureAudioContext();
-          setAudioState(true, false);
-          updateBootAudioPillUI();
-          playKernelLogLockSfx(2);
-        });
-      }
-
-      if (bootSoundToggleBtn) {
-        bootSoundToggleBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          bootAudioMuted = !bootAudioMuted;
-          if (!bootAudioMuted) {
-            ensureAudioContext();
-            setAudioState(true, false);
-            bootSoundToggleBtn.textContent = "🔊 Mute Synth Track";
-          } else {
-            setAudioState(false, false);
-            bootSoundToggleBtn.textContent = "⚡ Enable Synth Track";
-          }
-          updateBootAudioPillUI();
-        });
       }
 
       if (bootSkipBtn) {
@@ -4509,14 +4481,13 @@
 
       if (replayBootBtn) {
         replayBootBtn.addEventListener("click", () => {
-          bootAudioMuted = false;
-          ensureAudioContext();
           setAudioState(true, false);
           startBootSequence();
         });
       }
 
-      // Start DV_CLOUD_SRE Kernel preloader & Watch Dogs 2 audio stream immediately
+      // Immediately initialize audio & start DV_CLOUD_SRE Kernel preloader on load
+      AudioEngine.init();
       startBootSequence();
 
       function setAudioState(enable, announce = true) {
@@ -5064,7 +5035,7 @@
       const copyEmailBtn = document.getElementById("copyEmailBtn");
       if (copyEmailBtn) {
         copyEmailBtn.addEventListener("click", () => {
-          const email = copyEmailBtn.getAttribute("data-email") || "dhayanidhiv019@gmail.com";
+          const email = copyEmailBtn.getAttribute("data-email") || "dhayanidhiv.devops@gmail.com";
           copyText(email, "✓ Email address copied: " + email);
         });
       }
@@ -5120,611 +5091,76 @@
       });
 
       // =========================================================================
-      // DEVOPS & CLOUD INTERACTIVE ARCADE (3 MINI-GAMES)
-      // =========================================================================
-      const arcadeTabs = document.querySelectorAll("[data-arcade-tab]");
-      const arcadePanes = {
-        slasher: document.getElementById("pane-slasher"),
-        defender: document.getElementById("pane-defender"),
-        terminal: document.getElementById("pane-terminal")
-      };
-      const arcadeGlobalBestEl = document.getElementById("arcadeGlobalBest");
-      let bestFinOpsSaved = 36;
-
-      arcadeTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          const target = tab.getAttribute("data-arcade-tab");
-          arcadeTabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
-          Object.keys(arcadePanes).forEach((k) => {
-            if (arcadePanes[k]) {
-              arcadePanes[k].classList.toggle("active", k === target);
-            }
-          });
-          if (audioEnabled) playLinuxTerminalBell();
-        });
-      });
-
-      // -------------------------------------------------------------------------
-      // GAME 1: AWS FINOPS COST SLASHER
-      // -------------------------------------------------------------------------
-      const slasherCanvas = document.getElementById("slasherCanvas");
-      const slasherStartBtn = document.getElementById("slasherStartBtn");
-      const slasherScoreEl = document.getElementById("slasherScore");
-      const slasherStreakEl = document.getElementById("slasherStreak");
-      const slasherLivesEl = document.getElementById("slasherLives");
-      const slasherLeftBtn = document.getElementById("slasherLeftBtn");
-      const slasherRightBtn = document.getElementById("slasherRightBtn");
-      const slasherDashBtn = document.getElementById("slasherDashBtn");
-
-      if (slasherCanvas) {
-        const sctx = slasherCanvas.getContext("2d");
-        let slasherRunning = false;
-        let savedK = 0;
-        let streak = 1;
-        let lives = 3;
-        let items = [];
-        let popups = [];
-        let spawnTick = 0;
-        const player = { x: 300, width: 112, height: 22, speed: 8, moveDir: 0 };
-
-        const ITEM_TYPES = [
-          { label: "IDLE EC2", val: 2, color: "#00f5a0", bad: false },
-          { label: "OLD EBS", val: 1, color: "#00f0ff", bad: false },
-          { label: "SNAP-OLD", val: 2, color: "#4d7cff", bad: false },
-          { label: "SPOT PLAN", val: 5, color: "#f7b801", bad: false },
-          { label: "PROD DROP!", val: 0, color: "#ff3b5c", bad: true }
-        ];
-
-        function updateSlasherHud() {
-          if (slasherScoreEl) slasherScoreEl.textContent = `$${savedK}K/yr`;
-          if (slasherStreakEl) slasherStreakEl.textContent = `x${streak}`;
-          if (slasherLivesEl) slasherLivesEl.textContent = lives > 0 ? "♥".repeat(lives) : "OUTAGE";
-          if (savedK > bestFinOpsSaved) {
-            bestFinOpsSaved = savedK;
-            if (arcadeGlobalBestEl) arcadeGlobalBestEl.textContent = `$${bestFinOpsSaved}K`;
-          }
-        }
-
-        function startSlasherGame() {
-          ensureAudioContext();
-          savedK = 0;
-          streak = 1;
-          lives = 3;
-          items = [];
-          popups = [];
-          slasherRunning = true;
-          updateSlasherHud();
-          if (slasherStartBtn) slasherStartBtn.textContent = "↻ Restart FinOps Run";
-          playRetroBootFanfare();
-        }
-
-        if (slasherStartBtn) {
-          slasherStartBtn.addEventListener("click", startSlasherGame);
-        }
-
-        slasherCanvas.addEventListener("mousemove", (e) => {
-          const rect = slasherCanvas.getBoundingClientRect();
-          const scaleX = slasherCanvas.width / rect.width;
-          player.x = (e.clientX - rect.left) * scaleX - player.width / 2;
-        });
-
-        slasherCanvas.addEventListener("touchmove", (e) => {
-          if (!e.touches[0]) return;
-          const rect = slasherCanvas.getBoundingClientRect();
-          const scaleX = slasherCanvas.width / rect.width;
-          player.x = (e.touches[0].clientX - rect.left) * scaleX - player.width / 2;
-        }, { passive: true });
-
-        if (slasherLeftBtn) {
-          slasherLeftBtn.addEventListener("mousedown", () => { player.moveDir = -1; });
-          slasherLeftBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
-          slasherLeftBtn.addEventListener("touchstart", () => { player.moveDir = -1; }, { passive: true });
-          slasherLeftBtn.addEventListener("touchend", () => { player.moveDir = 0; });
-        }
-        if (slasherRightBtn) {
-          slasherRightBtn.addEventListener("mousedown", () => { player.moveDir = 1; });
-          slasherRightBtn.addEventListener("mouseup", () => { player.moveDir = 0; });
-          slasherRightBtn.addEventListener("touchstart", () => { player.moveDir = 1; }, { passive: true });
-          slasherRightBtn.addEventListener("touchend", () => { player.moveDir = 0; });
-        }
-
-        if (slasherDashBtn) {
-          slasherDashBtn.addEventListener("click", () => {
-            if (!slasherRunning) startSlasherGame();
-            let empGain = 0;
-            items.forEach((it) => {
-              if (!it.bad) {
-                empGain += it.val;
-                popups.push({ x: it.x, y: it.y, text: `+$${it.val}K`, color: "#f7b801", alpha: 1 });
-              }
-            });
-            items = [];
-            if (empGain > 0) {
-              savedK += empGain;
-              updateSlasherHud();
-              playLightningClickSynth(true);
-              showToast(`⚡ FinOps Right-Sizing EMP saved +$${empGain}K/yr!`);
-            }
-          });
-        }
-
-        window.addEventListener("keydown", (e) => {
-          if (!arcadePanes.slasher || !arcadePanes.slasher.classList.contains("active")) return;
-          if (e.key === "ArrowLeft") player.moveDir = -1;
-          if (e.key === "ArrowRight") player.moveDir = 1;
-        });
-        window.addEventListener("keyup", (e) => {
-          if (e.key === "ArrowLeft" || e.key === "ArrowRight") player.moveDir = 0;
-        });
-
-        function renderSlasherLoop() {
-          const W = slasherCanvas.width;
-          const H = slasherCanvas.height;
-          sctx.clearRect(0, 0, W, H);
-
-          // Cyber Grid Floor
-          sctx.strokeStyle = "rgba(0, 240, 255, 0.08)";
-          sctx.lineWidth = 1;
-          for (let gx = 0; gx < W; gx += 45) {
-            sctx.beginPath();
-            sctx.moveTo(gx, 0);
-            sctx.lineTo(gx, H);
-            sctx.stroke();
-          }
-          for (let gy = 0; gy < H; gy += 45) {
-            sctx.beginPath();
-            sctx.moveTo(0, gy);
-            sctx.lineTo(W, gy);
-            sctx.stroke();
-          }
-
-          player.x = Math.max(10, Math.min(W - player.width - 10, player.x + player.moveDir * player.speed));
-
-          // Draw FinOps Lightning Interceptor Paddle
-          const py = H - 38;
-          const grad = sctx.createLinearGradient(player.x, py, player.x + player.width, py);
-          grad.addColorStop(0, "#00f0ff");
-          grad.addColorStop(0.5, "#f7b801");
-          grad.addColorStop(1, "#00f5a0");
-          sctx.fillStyle = grad;
-          sctx.shadowColor = "#00f0ff";
-          sctx.shadowBlur = 14;
-          sctx.beginPath();
-          sctx.roundRect(player.x, py, player.width, player.height, 8);
-          sctx.fill();
-          sctx.shadowBlur = 0;
-
-          sctx.fillStyle = "#031018";
-          sctx.font = '700 10px "JetBrains Mono", monospace';
-          sctx.textAlign = "center";
-          sctx.fillText("⚡ FINOPS SHIELD", player.x + player.width / 2, py + 14);
-
-          if (!slasherRunning) {
-            sctx.fillStyle = "rgba(3, 8, 20, 0.76)";
-            sctx.fillRect(0, 0, W, H);
-            sctx.fillStyle = "#ffffff";
-            sctx.font = '15px "Press Start 2P", monospace';
-            sctx.fillText(lives <= 0 ? "SLA BREACHED!" : "AWS COST SLASHER", W / 2, H / 2 - 20);
-            sctx.fillStyle = "#00f0ff";
-            sctx.font = '12px "JetBrains Mono", monospace';
-            sctx.fillText(
-              lives <= 0
-                ? `Total Cloud Savings: $${savedK}K/year — Click Start to Play Again`
-                : "Click 'Start FinOps Run' above & move mouse to slash idle AWS resources!",
-              W / 2,
-              H / 2 + 18
-            );
-          } else {
-            spawnTick++;
-            if (spawnTick % 36 === 0) {
-              const t = ITEM_TYPES[Math.floor(Math.random() * ITEM_TYPES.length)];
-              items.push({
-                x: 40 + Math.random() * (W - 80),
-                y: -20,
-                vy: 2.3 + Math.random() * 2.2 + Math.min(savedK * 0.02, 2.2),
-                label: t.label,
-                val: t.val,
-                color: t.color,
-                bad: t.bad
-              });
-            }
-
-            for (let i = items.length - 1; i >= 0; i--) {
-              const it = items[i];
-              it.y += it.vy;
-
-              // Draw Falling Cloud Resource Pill
-              sctx.fillStyle = "rgba(8, 16, 32, 0.92)";
-              sctx.strokeStyle = it.color;
-              sctx.lineWidth = 2;
-              sctx.beginPath();
-              sctx.roundRect(it.x - 42, it.y - 14, 84, 28, 7);
-              sctx.fill();
-              sctx.stroke();
-
-              sctx.fillStyle = it.color;
-              sctx.font = '700 10px "JetBrains Mono", monospace';
-              sctx.fillText(it.label, it.x, it.y + 4);
-
-              // Check Paddle Collision
-              if (
-                it.y + 14 >= py &&
-                it.y - 14 <= py + player.height &&
-                it.x + 36 >= player.x &&
-                it.x - 36 <= player.x + player.width
-              ) {
-                if (it.bad) {
-                  lives--;
-                  streak = 1;
-                  playArcadePowerupSfx(false);
-                  popups.push({ x: it.x, y: py - 10, text: "OUTAGE! -1♥", color: "#ff3b5c", alpha: 1 });
-                  if (lives <= 0) {
-                    slasherRunning = false;
-                  }
-                } else {
-                  const gain = it.val;
-                  savedK += gain;
-                  streak = Math.min(streak + 1, 8);
-                  playArcadePowerupSfx(true);
-                  popups.push({ x: it.x, y: py - 10, text: `+$${gain}K/yr`, color: it.color, alpha: 1 });
-                  if (savedK === 36 || (savedK > 36 && savedK - gain < 36)) {
-                    playRetroBootFanfare();
-                    showToast("🏆 $36K/YR SAVED! You matched Dhayanidhi's real AWS FinOps record!");
-                  }
-                }
-                updateSlasherHud();
-                items.splice(i, 1);
-                continue;
-              }
-
-              if (it.y > H + 20) {
-                items.splice(i, 1);
-              }
-            }
-          }
-
-          // Floating Score Popups
-          for (let i = popups.length - 1; i >= 0; i--) {
-            const p = popups[i];
-            p.y -= 1.2;
-            p.alpha -= 0.025;
-            sctx.save();
-            sctx.globalAlpha = Math.max(0, p.alpha);
-            sctx.fillStyle = p.color;
-            sctx.font = '700 11px "Press Start 2P", monospace';
-            sctx.fillText(p.text, p.x, p.y);
-            sctx.restore();
-            if (p.alpha <= 0) popups.splice(i, 1);
-          }
-
-          requestAnimationFrame(renderSlasherLoop);
-        }
-        requestAnimationFrame(renderSlasherLoop);
-      }
-
-      // -------------------------------------------------------------------------
-      // GAME 2: K8S & OPENSHIFT ROSA POD DEFENDER
-      // -------------------------------------------------------------------------
-      const defenderCanvas = document.getElementById("defenderCanvas");
-      const defenderStartBtn = document.getElementById("defenderStartBtn");
-      const defenderScoreEl = document.getElementById("defenderScore");
-      const defenderWaveEl = document.getElementById("defenderWave");
-      const defenderUptimeEl = document.getElementById("defenderUptime");
-      const defLeftBtn = document.getElementById("defLeftBtn");
-      const defRightBtn = document.getElementById("defRightBtn");
-      const defFireBtn = document.getElementById("defFireBtn");
-
-      if (defenderCanvas) {
-        const dctx = defenderCanvas.getContext("2d");
-        let defRunning = false;
-        let defScore = 0;
-        let defWave = 1;
-        let defUptime = 99.99;
-        let turretX = 340;
-        let turretDir = 0;
-        let lasers = [];
-        let bugs = [];
-        let defTick = 0;
-
-        const BUG_LABELS = [
-          { name: "CrashLoop", pts: 100, color: "#00f0ff" },
-          { name: "OOMKilled", pts: 200, color: "#f7b801" },
-          { name: "CVE-Crit", pts: 350, color: "#b85cff" }
-        ];
-
-        function updateDefenderHud() {
-          if (defenderScoreEl) defenderScoreEl.textContent = String(defScore);
-          if (defenderWaveEl) defenderWaveEl.textContent = String(defWave);
-          if (defenderUptimeEl) defenderUptimeEl.textContent = Math.max(0, defUptime).toFixed(2) + "%";
-        }
-
-        function fireArgoLaser() {
-          if (!defRunning) return;
-          lasers.push({ x: turretX, y: defenderCanvas.height - 46 });
-          playLinuxHoverBlip(320);
-        }
-
-        function startDefenderGame() {
-          ensureAudioContext();
-          defScore = 0;
-          defWave = 1;
-          defUptime = 99.99;
-          lasers = [];
-          bugs = [];
-          defRunning = true;
-          updateDefenderHud();
-          if (defenderStartBtn) defenderStartBtn.textContent = "↻ Redeploy Cluster";
-          playRetroBootFanfare();
-        }
-
-        if (defenderStartBtn) defenderStartBtn.addEventListener("click", startDefenderGame);
-        if (defFireBtn) defFireBtn.addEventListener("click", () => {
-          if (!defRunning) startDefenderGame();
-          else fireArgoLaser();
-        });
-
-        defenderCanvas.addEventListener("mousemove", (e) => {
-          const rect = defenderCanvas.getBoundingClientRect();
-          turretX = ((e.clientX - rect.left) / rect.width) * defenderCanvas.width;
-        });
-        defenderCanvas.addEventListener("click", () => {
-          if (!defRunning) startDefenderGame();
-          else fireArgoLaser();
-        });
-
-        if (defLeftBtn) {
-          defLeftBtn.addEventListener("mousedown", () => { turretDir = -1; });
-          defLeftBtn.addEventListener("mouseup", () => { turretDir = 0; });
-        }
-        if (defRightBtn) {
-          defRightBtn.addEventListener("mousedown", () => { turretDir = 1; });
-          defRightBtn.addEventListener("mouseup", () => { turretDir = 0; });
-        }
-
-        function renderDefenderLoop() {
-          const W = defenderCanvas.width;
-          const H = defenderCanvas.height;
-          dctx.clearRect(0, 0, W, H);
-
-          turretX = Math.max(36, Math.min(W - 36, turretX + turretDir * 7));
-
-          // Draw Kubernetes Ingress Turret
-          dctx.fillStyle = "#326ce5";
-          dctx.strokeStyle = "#00f0ff";
-          dctx.lineWidth = 2;
-          dctx.beginPath();
-          dctx.roundRect(turretX - 34, H - 36, 68, 22, 6);
-          dctx.fill();
-          dctx.stroke();
-
-          dctx.fillStyle = "#ffffff";
-          dctx.font = '700 9px "JetBrains Mono", monospace';
-          dctx.textAlign = "center";
-          dctx.fillText("☸ ROSA-INGRESS", turretX, H - 21);
-
-          if (!defRunning) {
-            dctx.fillStyle = "rgba(3, 8, 20, 0.78)";
-            dctx.fillRect(0, 0, W, H);
-            dctx.fillStyle = "#ffffff";
-            dctx.font = '15px "Press Start 2P", monospace';
-            dctx.fillText(defUptime <= 95 ? "CLUSTER DEGRADED!" : "K8S POD DEFENDER", W / 2, H / 2 - 18);
-            dctx.fillStyle = "#00f0ff";
-            dctx.font = '12px "JetBrains Mono", monospace';
-            dctx.fillText("Click 'Deploy Ingress Turret' to shoot down CrashLoopBackOff bugs!", W / 2, H / 2 + 18);
-          } else {
-            defTick++;
-            if (defTick % 16 === 0) {
-              fireArgoLaser();
-            }
-            if (defTick % Math.max(24, 52 - defWave * 4) === 0) {
-              const b = BUG_LABELS[Math.floor(Math.random() * BUG_LABELS.length)];
-              bugs.push({
-                x: 50 + Math.random() * (W - 100),
-                y: -18,
-                vy: 1.4 + Math.random() * 1.4 + defWave * 0.22,
-                name: b.name,
-                pts: b.pts,
-                color: b.color
-              });
-            }
-
-            // Lasers
-            for (let i = lasers.length - 1; i >= 0; i--) {
-              const l = lasers[i];
-              l.y -= 9;
-              dctx.fillStyle = "#00f5a0";
-              dctx.fillRect(l.x - 2, l.y - 12, 4, 14);
-              if (l.y < -15) lasers.splice(i, 1);
-            }
-
-            // Bugs
-            for (let i = bugs.length - 1; i >= 0; i--) {
-              const bg = bugs[i];
-              bg.y += bg.vy;
-
-              dctx.fillStyle = "rgba(18, 12, 34, 0.92)";
-              dctx.strokeStyle = bg.color;
-              dctx.lineWidth = 2;
-              dctx.beginPath();
-              dctx.roundRect(bg.x - 38, bg.y - 13, 76, 26, 6);
-              dctx.fill();
-              dctx.stroke();
-
-              dctx.fillStyle = bg.color;
-              dctx.font = '700 10px "JetBrains Mono", monospace';
-              dctx.fillText(bg.name, bg.x, bg.y + 4);
-
-              // Laser hit check
-              let hit = false;
-              for (let j = lasers.length - 1; j >= 0; j--) {
-                const l = lasers[j];
-                if (Math.abs(l.x - bg.x) < 40 && Math.abs(l.y - bg.y) < 18) {
-                  lasers.splice(j, 1);
-                  hit = true;
-                  break;
-                }
-              }
-
-              if (hit) {
-                defScore += bg.pts;
-                defWave = 1 + Math.floor(defScore / 1200);
-                playArcadePowerupSfx(true);
-                updateDefenderHud();
-                bugs.splice(i, 1);
-                continue;
-              }
-
-              if (bg.y > H - 30) {
-                defUptime = Math.max(94.0, defUptime - 1.25);
-                playArcadePowerupSfx(false);
-                updateDefenderHud();
-                bugs.splice(i, 1);
-                if (defUptime <= 95.0) {
-                  defRunning = false;
-                }
-              }
-            }
-          }
-
-          requestAnimationFrame(renderDefenderLoop);
-        }
-        requestAnimationFrame(renderDefenderLoop);
-      }
-
-      // -------------------------------------------------------------------------
-      // GAME 3: LINUX & GITOPS SPEED TERMINAL
-      // -------------------------------------------------------------------------
-      const PROD_COMMANDS = [
-        { cmd: "argocd app sync banking-platform --prune", task: "// Sync Equitas Banking GitOps Application" },
-        { cmd: "oc get pods -n banking-prod -o wide", task: "// Inspect OpenShift ROSA Production Pods" },
-        { cmd: "ansible-playbook hardening-rhel.yml --check", task: "// Run RHEL Security Compliance Playbook" },
-        { cmd: "kubectl rollout status deploy/payment-api", task: "// Verify Zero-Downtime K8s Deployment" },
-        { cmd: "tkn pipeline start release-build --showlog", task: "// Trigger Tekton CI/CD Release Pipeline" },
-        { cmd: "aws ce get-cost-and-usage --granularity DAILY", task: "// Audit AWS FinOps Cost Explorer Savings" }
-      ];
-
-      const termTargetDisplay = document.getElementById("termTargetDisplay");
-      const termTaskLabel = document.getElementById("termTaskLabel");
-      const termInputField = document.getElementById("termInputField");
-      const termStartBtn = document.getElementById("termStartBtn");
-      const termSkipCmdBtn = document.getElementById("termSkipCmdBtn");
-      const termScoreEl = document.getElementById("termScore");
-      const termWpmEl = document.getElementById("termWpm");
-      const termTimerEl = document.getElementById("termTimer");
-      const termFeedbackMsg = document.getElementById("termFeedbackMsg");
-
-      let currentCmdIdx = 0;
-      let termCompleted = 0;
-      let termCharsTyped = 0;
-      let termSecondsLeft = 45;
-      let termStartTime = 0;
-      let termInterval = null;
-      let termActive = false;
-
-      function renderTargetCommand(typedValue = "") {
-        if (!termTargetDisplay) return;
-        const target = PROD_COMMANDS[currentCmdIdx].cmd;
-        if (termTaskLabel) termTaskLabel.textContent = PROD_COMMANDS[currentCmdIdx].task;
-        let html = "";
-        for (let i = 0; i < target.length; i++) {
-          const ch = target[i];
-          if (i < typedValue.length) {
-            if (typedValue[i] === ch) {
-              html += `<span class="cmd-char-ok">${ch}</span>`;
-            } else {
-              html += `<span class="cmd-char-err">${ch}</span>`;
-            }
-          } else {
-            html += `<span class="cmd-char-pending">${ch}</span>`;
-          }
-        }
-        termTargetDisplay.innerHTML = html;
-      }
-
-      function nextTerminalCommand() {
-        currentCmdIdx = (currentCmdIdx + 1) % PROD_COMMANDS.length;
-        if (termInputField) {
-          termInputField.value = "";
-          termInputField.focus();
-        }
-        renderTargetCommand("");
-      }
-
-      function startTerminalSprint() {
-        ensureAudioContext();
-        clearInterval(termInterval);
-        termCompleted = 0;
-        termCharsTyped = 0;
-        termSecondsLeft = 45;
-        termStartTime = performance.now();
-        termActive = true;
-        if (termScoreEl) termScoreEl.textContent = "0";
-        if (termWpmEl) termWpmEl.textContent = "0 WPM";
-        if (termTimerEl) termTimerEl.textContent = "45s";
-        if (termInputField) {
-          termInputField.value = "";
-          termInputField.focus();
-        }
-        renderTargetCommand("");
-        playRetroBootFanfare();
-
-        termInterval = setInterval(() => {
-          termSecondsLeft--;
-          if (termTimerEl) termTimerEl.textContent = `${Math.max(0, termSecondsLeft)}s`;
-          if (termSecondsLeft <= 0) {
-            clearInterval(termInterval);
-            termActive = false;
-            if (termFeedbackMsg) {
-              termFeedbackMsg.textContent = `🏁 SLA Sprint Complete! ${termCompleted} production commands deployed.`;
-            }
-            playLinuxTerminalBell();
-          }
-        }, 1000);
-      }
-
-      if (termStartBtn) termStartBtn.addEventListener("click", startTerminalSprint);
-      if (termSkipCmdBtn) termSkipCmdBtn.addEventListener("click", () => {
-        nextTerminalCommand();
-        playNvmeSeekTick();
-      });
-
-      if (termInputField) {
-        renderTargetCommand("");
-        termInputField.addEventListener("input", () => {
-          if (!termActive) {
-            startTerminalSprint();
-          }
-          playNvmeSeekTick();
-          const val = termInputField.value;
-          const target = PROD_COMMANDS[currentCmdIdx].cmd;
-          renderTargetCommand(val);
-
-          const elapsedMin = Math.max(0.05, (performance.now() - termStartTime) / 60000);
-          const wpm = Math.round(((termCharsTyped + val.length) / 5) / elapsedMin);
-          if (termWpmEl) termWpmEl.textContent = `${wpm} WPM`;
-
-          if (val === target) {
-            termCompleted++;
-            termCharsTyped += target.length;
-            termSecondsLeft = Math.min(60, termSecondsLeft + 3);
-            if (termScoreEl) termScoreEl.textContent = String(termCompleted);
-            if (termFeedbackMsg) {
-              termFeedbackMsg.textContent = `✓ Executed: '${target}' (+3s SLA bonus!)`;
-            }
-            playArcadePowerupSfx(true);
-            nextTerminalCommand();
-          }
-        });
-      }
-
-      // =========================================================================
-      // CUSTOM CLOUD + LIGHTNING CURSOR + MULTI-LAYER 3D STORM & DATA-RAIN ENGINE
+      // CUSTOM 3-MODE CURSOR (CLOUD+FLASH / FLASH ONLY / NORMAL) + 3D STORM ENGINE
       // =========================================================================
       const canvas = document.getElementById("webgl");
       const customCursor = document.getElementById("customCursor");
       const cursorModeText = document.getElementById("cursorModeText");
+      const toggleCursorModeBtn = document.getElementById("toggleCursorModeBtn");
       const toggleWeatherBtn = document.getElementById("toggleWeatherBtn");
       let weatherEnabled = true;
+
+      // 3 Cursor Modes: "cloud-flash" -> "flash-only" -> "normal"
+      const CURSOR_MODES = [
+        {
+          id: "cloud-flash",
+          btnLabel: "☁️⚡ Cursor: Cloud+Flash",
+          badgeText: "⚡ FLASH READY",
+          toastMsg: "☁️⚡ Cursor Mode: 3D Cloud + Lightning Flash"
+        },
+        {
+          id: "flash-only",
+          btnLabel: "⚡ Cursor: Flash Only",
+          badgeText: "⚡ HIGH VOLTAGE",
+          toastMsg: "⚡ Cursor Mode: Pure Lightning Bolt Only"
+        },
+        {
+          id: "normal",
+          btnLabel: "🖱️ Cursor: Normal",
+          badgeText: "",
+          toastMsg: "🖱️ Cursor Mode: Standard System Pointer"
+        }
+      ];
+      let currentCursorModeIdx = 0;
+      let cursorMode = CURSOR_MODES[0].id;
+
+      function applyCursorMode(modeIdx, announce = true) {
+        currentCursorModeIdx = modeIdx % CURSOR_MODES.length;
+        const modeObj = CURSOR_MODES[currentCursorModeIdx];
+        cursorMode = modeObj.id;
+
+        if (toggleCursorModeBtn) {
+          toggleCursorModeBtn.setAttribute("data-cursor-mode", cursorMode);
+          toggleCursorModeBtn.textContent = modeObj.btnLabel;
+        }
+
+        if (customCursor) {
+          customCursor.setAttribute("data-mode", cursorMode);
+        }
+
+        if (cursorMode === "normal") {
+          document.body.classList.add("cursor-normal");
+          cursorSparks.length = 0;
+          clickBolts.length = 0;
+        } else {
+          document.body.classList.remove("cursor-normal");
+          if (cursorModeText) {
+            cursorModeText.textContent = modeObj.badgeText;
+          }
+        }
+
+        if (announce) {
+          if (audioEnabled) playLinuxHoverBlip(200);
+          showToast(modeObj.toastMsg);
+        }
+      }
+
+      if (toggleCursorModeBtn) {
+        toggleCursorModeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          applyCursorMode(currentCursorModeIdx + 1, true);
+        });
+      }
 
       if (toggleWeatherBtn) {
         toggleWeatherBtn.addEventListener("click", () => {
@@ -5740,18 +5176,21 @@
       const clickBolts = [];
 
       function spawnCursorSpark(x, y, boost = false) {
+        if (cursorMode === "normal") return;
         const count = boost ? 12 : 2;
         for (let i = 0; i < count; i++) {
           const angle = Math.random() * Math.PI * 2;
           const speed = boost ? 2 + Math.random() * 5.5 : 0.6 + Math.random() * 2.2;
           cursorSparks.push({
             x: x + (Math.random() - 0.5) * 14,
-            y: y + 8 + (Math.random() - 0.5) * 10,
+            y: y + (cursorMode === "flash-only" ? 2 : 8) + (Math.random() - 0.5) * 10,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed + (boost ? 0.5 : 1.6),
             size: boost ? 2 + Math.random() * 2.5 : 1.3 + Math.random() * 1.8,
             alpha: 0.95,
-            color: Math.random() > 0.42 ? "#00f0ff" : "#ff9900"
+            color: cursorMode === "flash-only"
+              ? (Math.random() > 0.3 ? "#ff9900" : "#00f0ff")
+              : (Math.random() > 0.42 ? "#00f0ff" : "#ff9900")
           });
         }
         if (cursorSparks.length > 90) {
@@ -5760,6 +5199,7 @@
       }
 
       function spawnClickLightningBolt(x, y) {
+        if (cursorMode === "normal") return;
         const segments = [];
         let currX = x;
         let currY = y + 10;
@@ -5785,10 +5225,10 @@
           targetY: height * 0.35
         };
 
-        // Track interactive hover targets for Custom Cloud-Flash Cursor
+        // Track interactive hover targets for Custom Cloud-Flash / Flash-Only Cursor
         const INTERACTIVE_SELECTOR = "a, button, summary, [role='button'], .tech-node, .tool-card, details";
         document.addEventListener("mouseover", (e) => {
-          if (!customCursor) return;
+          if (!customCursor || cursorMode === "normal") return;
           const target = e.target.closest(INTERACTIVE_SELECTOR);
           if (target) {
             customCursor.classList.add("is-hover");
@@ -5797,11 +5237,14 @@
             }
           } else {
             customCursor.classList.remove("is-hover");
+            if (cursorModeText) {
+              cursorModeText.textContent = CURSOR_MODES[currentCursorModeIdx].badgeText;
+            }
           }
         });
 
         window.addEventListener("mousedown", (e) => {
-          if (customCursor) {
+          if (customCursor && cursorMode !== "normal") {
             customCursor.classList.add("is-clicking");
           }
           spawnCursorSpark(e.clientX, e.clientY, true);
@@ -6100,6 +5543,411 @@
         }
 
         window.addEventListener("load", renderScene);
+      }
+
+      // =========================================================================
+      // INTERACTIVE DEVOPS & CLOUD ARCADE ENGINE (3 PLAYABLE GAMES)
+      // =========================================================================
+      const arcadeTabs = document.querySelectorAll("[data-arcade-tab]");
+      const arcadePanes = {
+        slasher: document.getElementById("pane-slasher"),
+        defender: document.getElementById("pane-defender"),
+        terminal: document.getElementById("pane-terminal")
+      };
+      const arcadeGlobalBest = document.getElementById("arcadeGlobalBest");
+      let bestFinOpsSaved = 36;
+
+      arcadeTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-arcade-tab");
+          arcadeTabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+          Object.keys(arcadePanes).forEach((key) => {
+            if (arcadePanes[key]) {
+              arcadePanes[key].classList.toggle("active", key === target);
+            }
+          });
+          if (audioEnabled) playLinuxTerminalBell();
+        });
+      });
+
+      // --- GAME 1: AWS FINOPS COST SLASHER ---
+      const slasherCanvas = document.getElementById("slasherCanvas");
+      const slasherStartBtn = document.getElementById("slasherStartBtn");
+      const slasherScoreEl = document.getElementById("slasherScore");
+      const slasherStreakEl = document.getElementById("slasherStreak");
+      const slasherLivesEl = document.getElementById("slasherLives");
+      const slasherLeftBtn = document.getElementById("slasherLeftBtn");
+      const slasherRightBtn = document.getElementById("slasherRightBtn");
+      const slasherDashBtn = document.getElementById("slasherDashBtn");
+
+      if (slasherCanvas) {
+        const sCtx = slasherCanvas.getContext("2d");
+        let sRunning = false;
+        let sScore = 0;
+        let sStreak = 1;
+        let sLives = 3;
+        const paddle = { x: 280, y: 336, w: 124, h: 18 };
+        const items = [];
+
+        function updateSlasherHud() {
+          if (slasherScoreEl) slasherScoreEl.textContent = `$${sScore}K/yr`;
+          if (slasherStreakEl) slasherStreakEl.textContent = `x${sStreak}`;
+          if (slasherLivesEl) slasherLivesEl.textContent = "♥".repeat(Math.max(0, sLives)) || "OUTAGE";
+          if (sScore > bestFinOpsSaved && arcadeGlobalBest) {
+            bestFinOpsSaved = sScore;
+            arcadeGlobalBest.textContent = `$${bestFinOpsSaved}K`;
+          }
+        }
+
+        function spawnSlasherItem() {
+          const types = [
+            { label: "IDLE EC2", val: 2, color: "#00f5a0", bad: false },
+            { label: "ORPHAN EBS", val: 1, color: "#00f0ff", bad: false },
+            { label: "SAVINGS PLAN", val: 5, color: "#f7b801", bad: false },
+            { label: "PROD DROP!", val: 0, color: "#ff3b5c", bad: true }
+          ];
+          const pick = Math.random() < 0.2 ? types[3] : types[Math.floor(Math.random() * 3)];
+          items.push({
+            x: 40 + Math.random() * (slasherCanvas.width - 80),
+            y: -20,
+            vy: 2.3 + Math.random() * 2.1,
+            ...pick
+          });
+        }
+
+        function drawSlasher() {
+          sCtx.clearRect(0, 0, slasherCanvas.width, slasherCanvas.height);
+
+          // Grid background
+          sCtx.strokeStyle = "rgba(0, 240, 255, 0.07)";
+          for (let x = 0; x < slasherCanvas.width; x += 40) {
+            sCtx.beginPath();
+            sCtx.moveTo(x, 0);
+            sCtx.lineTo(x, slasherCanvas.height);
+            sCtx.stroke();
+          }
+
+          // FinOps Shield Paddle
+          sCtx.fillStyle = "#00f0ff";
+          sCtx.beginPath();
+          sCtx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 8);
+          sCtx.fill();
+          sCtx.fillStyle = "#031018";
+          sCtx.font = "700 10px 'JetBrains Mono', monospace";
+          sCtx.textAlign = "center";
+          sCtx.fillText("FINOPS SHIELD", paddle.x + paddle.w / 2, paddle.y + 12);
+
+          if (sRunning) {
+            if (Math.random() < 0.038) spawnSlasherItem();
+
+            for (let i = items.length - 1; i >= 0; i--) {
+              const it = items[i];
+              it.y += it.vy;
+
+              sCtx.fillStyle = it.color;
+              sCtx.beginPath();
+              sCtx.roundRect(it.x - 42, it.y - 12, 84, 24, 6);
+              sCtx.fill();
+              sCtx.fillStyle = "#040814";
+              sCtx.font = "700 9px 'JetBrains Mono', monospace";
+              sCtx.fillText(it.label, it.x, it.y + 3);
+
+              const hitX = it.x > paddle.x - 30 && it.x < paddle.x + paddle.w + 30;
+              const hitY = it.y + 12 >= paddle.y && it.y - 12 <= paddle.y + paddle.h;
+
+              if (hitX && hitY) {
+                if (it.bad) {
+                  sLives -= 1;
+                  sStreak = 1;
+                  playLightningClickSynth(false);
+                  if (sLives <= 0) {
+                    sRunning = false;
+                    showToast(`FinOps Run Complete! Saved $${sScore}K/yr`);
+                  }
+                } else {
+                  sScore += it.val;
+                  sStreak = Math.min(8, sStreak + 1);
+                  playLinuxHoverBlip(sScore * 12);
+                  if (sScore === 36 || sScore === 37) {
+                    playRetroBootFanfare();
+                    showToast("🏆 $36K/yr AWS FinOps Target Reached!");
+                  }
+                }
+                updateSlasherHud();
+                items.splice(i, 1);
+              } else if (it.y > slasherCanvas.height + 20) {
+                items.splice(i, 1);
+              }
+            }
+          } else {
+            sCtx.fillStyle = "#9eb2cc";
+            sCtx.font = "600 13px 'JetBrains Mono', monospace";
+            sCtx.textAlign = "center";
+            sCtx.fillText("Click '▶ Start FinOps Run' & move mouse to slash idle AWS costs!", slasherCanvas.width / 2, slasherCanvas.height / 2);
+          }
+
+          requestAnimationFrame(drawSlasher);
+        }
+
+        slasherCanvas.addEventListener("mousemove", (e) => {
+          const rect = slasherCanvas.getBoundingClientRect();
+          const scaleX = slasherCanvas.width / rect.width;
+          paddle.x = Math.max(10, Math.min(slasherCanvas.width - paddle.w - 10, (e.clientX - rect.left) * scaleX - paddle.w / 2));
+        });
+
+        if (slasherStartBtn) {
+          slasherStartBtn.addEventListener("click", () => {
+            sScore = 0;
+            sStreak = 1;
+            sLives = 3;
+            items.length = 0;
+            sRunning = true;
+            updateSlasherHud();
+            playLinuxTerminalBell();
+          });
+        }
+        if (slasherLeftBtn) slasherLeftBtn.addEventListener("click", () => { paddle.x = Math.max(10, paddle.x - 48); });
+        if (slasherRightBtn) slasherRightBtn.addEventListener("click", () => { paddle.x = Math.min(slasherCanvas.width - paddle.w - 10, paddle.x + 48); });
+        if (slasherDashBtn) {
+          slasherDashBtn.addEventListener("click", () => {
+            if (!sRunning) return;
+            let bonus = 0;
+            for (let i = items.length - 1; i >= 0; i--) {
+              if (!items[i].bad) {
+                bonus += items[i].val;
+                items.splice(i, 1);
+              }
+            }
+            if (bonus > 0) {
+              sScore += bonus;
+              updateSlasherHud();
+              playRetroBootFanfare();
+              showToast(`⚡ Right-Sized All Idle Resources: +$${bonus}K/yr!`);
+            }
+          });
+        }
+
+        drawSlasher();
+      }
+
+      // --- GAME 2: K8S POD DEFENDER ---
+      const defenderCanvas = document.getElementById("defenderCanvas");
+      const defenderStartBtn = document.getElementById("defenderStartBtn");
+      const defenderScoreEl = document.getElementById("defenderScore");
+      const defenderWaveEl = document.getElementById("defenderWave");
+      const defLeftBtn = document.getElementById("defLeftBtn");
+      const defRightBtn = document.getElementById("defRightBtn");
+      const defFireBtn = document.getElementById("defFireBtn");
+
+      if (defenderCanvas) {
+        const dCtx = defenderCanvas.getContext("2d");
+        let dRunning = false;
+        let dScore = 0;
+        let dWave = 1;
+        let turretX = 340;
+        const lasers = [];
+        const bugs = [];
+
+        function fireArgoLaser() {
+          if (!dRunning) return;
+          lasers.push({ x: turretX, y: 330 });
+          playLinuxHoverBlip(320);
+        }
+
+        function drawDefender() {
+          dCtx.clearRect(0, 0, defenderCanvas.width, defenderCanvas.height);
+
+          // Turret
+          dCtx.fillStyle = "#00f5a0";
+          dCtx.beginPath();
+          dCtx.roundRect(turretX - 38, 340, 76, 18, 6);
+          dCtx.fill();
+          dCtx.fillStyle = "#031018";
+          dCtx.font = "700 9px 'JetBrains Mono', monospace";
+          dCtx.textAlign = "center";
+          dCtx.fillText("ROSA-INGRESS", turretX, 352);
+
+          if (dRunning) {
+            if (Math.random() < 0.03) {
+              const labels = ["CrashLoop", "OOMKilled", "CVE-Crit"];
+              bugs.push({
+                x: 45 + Math.random() * (defenderCanvas.width - 90),
+                y: -15,
+                vy: 1.4 + Math.random() * 1.5,
+                label: labels[Math.floor(Math.random() * labels.length)]
+              });
+            }
+
+            for (let i = lasers.length - 1; i >= 0; i--) {
+              lasers[i].y -= 7;
+              dCtx.fillStyle = "#00f0ff";
+              dCtx.fillRect(lasers[i].x - 2, lasers[i].y, 4, 14);
+              if (lasers[i].y < -10) lasers.splice(i, 1);
+            }
+
+            for (let b = bugs.length - 1; b >= 0; b--) {
+              const bug = bugs[b];
+              bug.y += bug.vy;
+              dCtx.fillStyle = "#ff3b5c";
+              dCtx.beginPath();
+              dCtx.roundRect(bug.x - 36, bug.y - 11, 72, 22, 5);
+              dCtx.fill();
+              dCtx.fillStyle = "#ffffff";
+              dCtx.font = "700 9px 'JetBrains Mono', monospace";
+              dCtx.fillText(bug.label, bug.x, bug.y + 3);
+
+              for (let l = lasers.length - 1; l >= 0; l--) {
+                if (Math.abs(lasers[l].x - bug.x) < 38 && Math.abs(lasers[l].y - bug.y) < 16) {
+                  dScore += 150;
+                  dWave = 1 + Math.floor(dScore / 900);
+                  if (defenderScoreEl) defenderScoreEl.textContent = String(dScore);
+                  if (defenderWaveEl) defenderWaveEl.textContent = String(dWave);
+                  lasers.splice(l, 1);
+                  bugs.splice(b, 1);
+                  playKernelLogLockSfx(1);
+                  break;
+                }
+              }
+
+              if (bug && bug.y > defenderCanvas.height - 25) {
+                bugs.splice(b, 1);
+              }
+            }
+          } else {
+            dCtx.fillStyle = "#9eb2cc";
+            dCtx.font = "600 13px 'JetBrains Mono', monospace";
+            dCtx.textAlign = "center";
+            dCtx.fillText("Click '▶ Deploy Ingress Turret' & click canvas to fire Argo CD Sync Lasers!", defenderCanvas.width / 2, defenderCanvas.height / 2);
+          }
+
+          requestAnimationFrame(drawDefender);
+        }
+
+        defenderCanvas.addEventListener("mousemove", (e) => {
+          const rect = defenderCanvas.getBoundingClientRect();
+          const scaleX = defenderCanvas.width / rect.width;
+          turretX = Math.max(45, Math.min(defenderCanvas.width - 45, (e.clientX - rect.left) * scaleX));
+        });
+        defenderCanvas.addEventListener("click", fireArgoLaser);
+
+        if (defenderStartBtn) {
+          defenderStartBtn.addEventListener("click", () => {
+            dScore = 0;
+            dWave = 1;
+            bugs.length = 0;
+            lasers.length = 0;
+            dRunning = true;
+            if (defenderScoreEl) defenderScoreEl.textContent = "0";
+            if (defenderWaveEl) defenderWaveEl.textContent = "1";
+            playLinuxTerminalBell();
+          });
+        }
+        if (defLeftBtn) defLeftBtn.addEventListener("click", () => { turretX = Math.max(45, turretX - 45); });
+        if (defRightBtn) defRightBtn.addEventListener("click", () => { turretX = Math.min(defenderCanvas.width - 45, turretX + 45); });
+        if (defFireBtn) defFireBtn.addEventListener("click", fireArgoLaser);
+
+        drawDefender();
+      }
+
+      // --- GAME 3: LINUX & GITOPS SPEED TERMINAL ---
+      const termTargetDisplay = document.getElementById("termTargetDisplay");
+      const termInputField = document.getElementById("termInputField");
+      const termStartBtn = document.getElementById("termStartBtn");
+      const termSkipCmdBtn = document.getElementById("termSkipCmdBtn");
+      const termScoreEl = document.getElementById("termScore");
+      const termWpmEl = document.getElementById("termWpm");
+      const termTimerEl = document.getElementById("termTimer");
+      const termFeedbackMsg = document.getElementById("termFeedbackMsg");
+
+      const CLI_CHALLENGES = [
+        "argocd app sync banking-platform --prune",
+        "kubectl rollout restart deploy/payment-api -n prod",
+        "oc adm top nodes -l node-role.kubernetes.io/worker",
+        "ansible-playbook rhel-hardening.yml --check",
+        "tkn pipeline start microservice-build --showlog"
+      ];
+      let currentCliIdx = 0;
+      let cliScore = 0;
+      let cliTimeLeft = 45;
+      let cliTimer = null;
+      let cliStartTime = 0;
+      let cliCharsTyped = 0;
+
+      function renderCliTarget() {
+        if (!termTargetDisplay) return;
+        const target = CLI_CHALLENGES[currentCliIdx];
+        const typed = termInputField ? termInputField.value : "";
+        let html = "";
+        for (let i = 0; i < target.length; i++) {
+          if (i < typed.length) {
+            const ok = typed[i] === target[i];
+            html += `<span class="${ok ? "cmd-char-ok" : "cmd-char-err"}">${target[i]}</span>`;
+          } else {
+            html += `<span class="cmd-char-pending">${target[i]}</span>`;
+          }
+        }
+        termTargetDisplay.innerHTML = html;
+      }
+
+      if (termInputField) {
+        renderCliTarget();
+        termInputField.addEventListener("input", () => {
+          if (!cliStartTime) cliStartTime = performance.now();
+          cliCharsTyped += 1;
+          playNvmeSeekTick();
+          renderCliTarget();
+
+          const elapsedMin = Math.max(0.05, (performance.now() - cliStartTime) / 60000);
+          const wpm = Math.round((cliCharsTyped / 5) / elapsedMin);
+          if (termWpmEl) termWpmEl.textContent = `${wpm} WPM`;
+
+          if (termInputField.value === CLI_CHALLENGES[currentCliIdx]) {
+            cliScore += 1;
+            cliTimeLeft = Math.min(60, cliTimeLeft + 3);
+            if (termScoreEl) termScoreEl.textContent = String(cliScore);
+            if (termFeedbackMsg) termFeedbackMsg.textContent = `✓ Executed: ${CLI_CHALLENGES[currentCliIdx]} (+3s SLA bonus)`;
+            termInputField.value = "";
+            currentCliIdx = (currentCliIdx + 1) % CLI_CHALLENGES.length;
+            renderCliTarget();
+            playKernelLogLockSfx(2);
+          }
+        });
+      }
+
+      if (termStartBtn) {
+        termStartBtn.addEventListener("click", () => {
+          clearInterval(cliTimer);
+          cliScore = 0;
+          cliTimeLeft = 45;
+          cliCharsTyped = 0;
+          cliStartTime = performance.now();
+          if (termScoreEl) termScoreEl.textContent = "0";
+          if (termTimerEl) termTimerEl.textContent = "45s";
+          if (termInputField) {
+            termInputField.value = "";
+            termInputField.focus();
+          }
+          renderCliTarget();
+          playLinuxTerminalBell();
+
+          cliTimer = setInterval(() => {
+            cliTimeLeft -= 1;
+            if (termTimerEl) termTimerEl.textContent = `${cliTimeLeft}s`;
+            if (cliTimeLeft <= 0) {
+              clearInterval(cliTimer);
+              showToast(`SSH Sprint Complete! Commands Executed: ${cliScore}`);
+            }
+          }, 1000);
+        });
+      }
+
+      if (termSkipCmdBtn) {
+        termSkipCmdBtn.addEventListener("click", () => {
+          currentCliIdx = (currentCliIdx + 1) % CLI_CHALLENGES.length;
+          if (termInputField) termInputField.value = "";
+          renderCliTarget();
+          playLinuxHoverBlip(100);
+        });
       }
     })();
   </script>
